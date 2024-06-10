@@ -4,20 +4,10 @@ import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 export const COLORS = {
-  black: "#000000",
-  white: "#FFFFFF",
-  primary: "#0ea5e9",
-  secondary: "#4aa9ff",
-  button: "#4aa9ff",
+  primary: "white",
+  secondary: "#FBF9F1",
+  tertiary: "#CD3CA4",
   // Add more colors as needed
-};
-
-export const SIZES = {
-  something: "$11",
-  small: 12,
-  medium: 16,
-  large: 20,
-  // Add more sizes as needed
 };
 
 export const PERCENT = {

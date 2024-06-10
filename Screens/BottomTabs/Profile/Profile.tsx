@@ -1,10 +1,92 @@
-import { View, Text } from "react-native";
+import {
+  View,
+  Text,
+  Avatar,
+  AvatarFallbackText,
+  AvatarImage,
+  HStack,
+  ScrollView,
+} from "@gluestack-ui/themed";
 import React from "react";
+import { COLORS, PERCENT } from "../../../Constants/Constants";
+import RecordCard from "./components/RecordCard";
+import NavigationCard from "./components/NavigationCard";
+import { Entypo } from "@expo/vector-icons";
 
 const Profile = () => {
   return (
-    <View>
-      <Text>Profile</Text>
+    <View mt={"$8"} bg={COLORS.primary} flex={1}>
+      <View
+        bg={COLORS.secondary}
+        width={"100%"}
+        height={"20%"}
+        borderBottomLeftRadius={30}
+        borderBottomRightRadius={30}
+        elevation={5}
+      >
+        <Text alignSelf="center" size="4xl" fontWeight="bold" mt={"$4"}>
+          Profile
+        </Text>
+        <Entypo
+          name="log-out"
+          size={PERCENT[10]}
+          color={COLORS.tertiary}
+          style={{
+            position: "absolute",
+            right: 5,
+            top: 5,
+            borderWidth: 3,
+            borderColor: COLORS.tertiary,
+            borderRadius: PERCENT[100],
+            paddingLeft: PERCENT[3],
+            paddingTop: PERCENT[2],
+            alignSelf: "center",
+          }}
+        />
+      </View>
+      <Avatar size="2xl" alignSelf="center" mt={"-15%"} elevation={6}>
+        <AvatarFallbackText>SS</AvatarFallbackText>
+        <AvatarImage
+          alt="your profile pic"
+          source={{
+            uri: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
+          }}
+        />
+      </Avatar>
+      <Text fontWeight="bold" alignSelf="center">
+        User-Name
+      </Text>
+      <Text color="gray" size="2xs" alignSelf="center">
+        user1234@gmail.com
+      </Text>
+
+      <ScrollView mx={"$3"} showsVerticalScrollIndicator={false}>
+        <HStack justifyContent="space-evenly" py={"$2"}>
+          <RecordCard
+            image={require("../../../assets/images/oil.png")}
+            title={"Fuel Bought"}
+            amount={500}
+          />
+          <RecordCard
+            image={require("../../../assets/images/money.png")}
+            title={"Total Points"}
+            amount={500}
+          />
+          <RecordCard
+            image={require("../../../assets/images/points.png")}
+            title={"Money Saved"}
+            amount={500}
+          />
+        </HStack>
+        <View pr={"$4"}>
+          <NavigationCard name={"user"} title={"Personal Details"} />
+          <NavigationCard name={"lock"} title={"Change Password"} />
+          <NavigationCard name={"bell"} title={"Notifications"} />
+          <NavigationCard name={"chat"} title={"Customer Support"} />
+          <NavigationCard name={"documents"} title={"Privacy Policy"} />
+          <NavigationCard name={"log-out"} title={"Logout"} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
