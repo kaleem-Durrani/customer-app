@@ -15,13 +15,15 @@ const NavigationCard = ({ name, title }: any) => {
       mx={"$2"}
       my={"$1"}
     >
-      <Entypo
-        name={name}
-        size={PERCENT[10]}
-        color={COLORS.tertiary}
-        style={{ flex: 2, marginLeft: 10 }}
-      />
-      <Text fontWeight="bold" size="lg" flex={6}>
+      <View bg={`${COLORS.tertiary}40`} p={"$3"} borderRadius={"$full"}>
+        <Entypo
+          name={name}
+          size={PERCENT[10]}
+          color={COLORS.tertiary}
+          style={{ flex: 2 }}
+        />
+      </View>
+      <Text fontWeight="bold" size="lg" flex={6} ml={"$4"}>
         {title}
       </Text>
       <Entypo

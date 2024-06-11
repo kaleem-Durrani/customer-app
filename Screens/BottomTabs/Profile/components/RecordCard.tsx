@@ -13,7 +13,7 @@ const RecordCard = ({ image, amount, title }: any) => {
       borderRadius={15}
       elevation={3}
     >
-      <Image source={image} alt="something" size="sm" />
+      <Image source={image} alt="something" size="xs" />
       <Text
         color={COLORS.tertiary}
         borderWidth={1}
@@ -24,7 +24,7 @@ const RecordCard = ({ image, amount, title }: any) => {
       >
         {amount}
       </Text>
-      <Text color="gray" size="sm" mt={"$1"}>
+      <Text color="gray" size="xs" mt={"$1"}>
         {title}
       </Text>
     </VStack>
