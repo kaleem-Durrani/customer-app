@@ -1,10 +1,12 @@
 import { View, Text } from "@gluestack-ui/themed";
 import React from "react";
+import { COLORS } from "../../Constants/Constants";
+import TopRibbon from "../../components/TopRibbon";
 
-const LoyaltyScreen = () => {
+const LoyaltyScreen = ({ navigation }: any) => {
   return (
-    <View>
-      <Text>LoyaltyScreen</Text>
+    <View bg={COLORS.primary} flex={1}>
+      <TopRibbon navigation={navigation} title={"Loyalty Screen"} />
     </View>
   );
 };

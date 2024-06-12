@@ -1,10 +1,12 @@
 import { View, Text } from "@gluestack-ui/themed";
 import React from "react";
+import { COLORS } from "../../Constants/Constants";
+import TopRibbon from "../../components/TopRibbon";
 
-const MapLocator = () => {
+const MapLocator = ({ navigation }: any) => {
   return (
-    <View>
-      <Text>MapLocator</Text>
+    <View bg={COLORS.primary} flex={1}>
+      <TopRibbon navigation={navigation} title={"Map Locator"} />
     </View>
   );
 };

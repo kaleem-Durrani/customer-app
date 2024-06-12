@@ -8,7 +8,6 @@ import Profile from "../../Screens/BottomTabs/Profile/Profile";
 import { COLORS, PERCENT } from "../../Constants/Constants";
 import { FontAwesome } from "@expo/vector-icons";
 import { Animated } from "react-native";
-// import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +29,6 @@ export default function BottomTabNavigator() {
         tabBarStyle: [
           {
             backgroundColor: COLORS.secondary,
-            height: PERCENT[17],
           },
           null,
         ],
@@ -50,13 +48,13 @@ export default function BottomTabNavigator() {
             setIsAnimating(false);
             Animated.timing(opacity, {
               toValue: 1,
-              duration: 250,
+              duration: 300,
               useNativeDriver: true,
             }).start();
           }, [path]);
 
           return focused ? (
-            <VStack alignItems="center">
+            <HStack alignItems="center">
               {!isAnimating && (
                 <Animated.View style={{ opacity: opacity }}>
                   <View
@@ -78,7 +76,7 @@ export default function BottomTabNavigator() {
               >
                 {!isAnimating && route.name}
               </Animated.Text>
-            </VStack>
+            </HStack>
           ) : (
             <FontAwesome name={iconName} size={PERCENT[7]} color={iconColor} />
           );
@@ -90,11 +88,13 @@ export default function BottomTabNavigator() {
         component={Home}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
-            e.preventDefault();
-            setIsAnimating(true);
-            setOpacity(new Animated.Value(0));
-            setPath("home");
-            navigation.navigate("Home");
+            if (path !== "home") {
+              e.preventDefault();
+              setIsAnimating(true);
+              setOpacity(new Animated.Value(0));
+              setPath("home");
+              navigation.navigate("Home");
+            }
           },
         })}
       />
@@ -103,11 +103,13 @@ export default function BottomTabNavigator() {
         component={Purchase}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
-            e.preventDefault();
-            setIsAnimating(true);
-            setOpacity(new Animated.Value(0));
-            setPath("buy");
-            navigation.navigate("Buy");
+            if (path !== "buy") {
+              e.preventDefault();
+              setIsAnimating(true);
+              setOpacity(new Animated.Value(0));
+              setPath("buy");
+              navigation.navigate("Buy");
+            }
           },
         })}
       />
@@ -116,11 +118,13 @@ export default function BottomTabNavigator() {
         component={Profile}
         listeners={({ navigation, route }) => ({
           tabPress: (e) => {
-            e.preventDefault();
-            setIsAnimating(true);
-            setOpacity(new Animated.Value(0));
-            setPath("profile");
-            navigation.navigate("Profile");
+            if (path !== "profile") {
+              e.preventDefault();
+              setIsAnimating(true);
+              setOpacity(new Animated.Value(0));
+              setPath("profile");
+              navigation.navigate("Profile");
+            }
           },
         })}
       />

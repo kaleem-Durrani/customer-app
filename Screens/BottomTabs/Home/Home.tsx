@@ -13,7 +13,7 @@ const Home = ({ navigation }: any) => {
 
       <View
         borderRadius={20}
-        bg={"$trueGray700"}
+        bg={"$trueGray400"}
         overflow="hidden"
         elevation={5}
       >
@@ -41,7 +41,7 @@ const Home = ({ navigation }: any) => {
             p={"$3"}
             px={"$4"}
             alignItems="center"
-            bg="$trueGray600"
+            bg="$trueGray300"
             borderRadius={"$2xl"}
             elevation={5}
           >
@@ -61,7 +61,7 @@ const Home = ({ navigation }: any) => {
             p={"$3"}
             px={"$5"}
             alignItems="center"
-            bg="$trueGray600"
+            bg="$trueGray300"
             borderRadius={"$2xl"}
             elevation={5}
           >
@@ -80,7 +80,7 @@ const Home = ({ navigation }: any) => {
             p={"$3"}
             px={"$5"}
             alignItems="center"
-            bg="$trueGray600"
+            bg="$trueGray300"
             borderRadius={"$2xl"}
             elevation={5}
           >

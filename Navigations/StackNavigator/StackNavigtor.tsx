@@ -9,6 +9,11 @@ import Transfer from "../../Screens/Transfer/Transfer";
 import MapLocator from "../../Screens/MapLocator/MapLocator";
 import LoyaltyScreen from "../../Screens/LoyaltyScreen/LoyaltyScreen";
 import FAQs from "../../Screens/FAQs/FAQs";
+import PersonalDetails from "../../Screens/ProfileTabInnerScreens/PersonalDetails/PersonalDetails";
+import ChangePassword from "../../Screens/ProfileTabInnerScreens/ChangePassword/ChangePassword";
+import Notifications from "../../Screens/ProfileTabInnerScreens/Notifications/Notifications";
+import CustomerSupport from "../../Screens/ProfileTabInnerScreens/CustomerSupport/CustomerSupport";
+import PrivacyPolicy from "../../Screens/ProfileTabInnerScreens/PrivacyPolicy/PrivacyPolicy";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +31,11 @@ export default function StackNavigator() {
           <Stack.Screen name="MapLocator" component={MapLocator} />
           <Stack.Screen name="LoyaltyScreen" component={LoyaltyScreen} />
           <Stack.Screen name="FAQs" component={FAQs} />
+          <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
+          <Stack.Screen name="ChangePassword" component={ChangePassword} />
+          <Stack.Screen name="Notifications" component={Notifications} />
+          <Stack.Screen name="CustomerSupport" component={CustomerSupport} />
+          <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
         </Stack.Group>
       ) : (
         <Stack.Group>

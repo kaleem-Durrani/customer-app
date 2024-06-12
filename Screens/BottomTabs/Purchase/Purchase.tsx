@@ -4,26 +4,23 @@ import {
   HStack,
   Image,
   VStack,
-  Input,
-  InputField,
-  FormControl,
-  FormControlError,
-  FormControlErrorIcon,
-  AlertCircleIcon,
-  ScrollView,
-  FormControlErrorText,
   Button,
   ButtonText,
 } from "@gluestack-ui/themed";
 import React, { useState } from "react";
-import { COLORS } from "../../../Constants/Constants";
-import { TouchableOpacity } from "react-native";
+import { COLORS, PERCENT } from "../../../Constants/Constants";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet } from "react-native";
+import ScrollBadges from "./components/ScrollBadges";
+import MyInput from "./components/MyInput";
+import ImageButton from "./components/ImageButton";
 
 const Purchase = () => {
   const [amount, setAmount] = useState("");
   const [litres, setLitres] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(0);
   const [petrolPrice] = useState(280);
+  const [selectedFuel, setSelectedFuel] = useState("");
 
   const handleAmountChange = (value: any) => {
     if (value === "") {
@@ -68,19 +65,62 @@ const Purchase = () => {
         <HStack
           bg={COLORS.secondary}
           elevation={5}
-          p={"$3"}
+          p={"$2"}
           borderRadius={20}
           justifyContent="space-evenly"
         >
-          <Image
-            source={require("../../../assets/images/petrol.png")}
-            alt="petrol"
-          />
-          <Image
-            source={require("../../../assets/images/diesel.png")}
-            alt="diesel"
-          />
-          <Image source={require("../../../assets/images/cng.png")} alt="cng" />
+          <TouchableOpacity
+            onPress={() => setSelectedFuel("petrol")}
+            style={[
+              styles.fuelButton,
+              {
+                borderColor:
+                  selectedFuel === "petrol" ? COLORS.tertiary : "gray",
+                backgroundColor:
+                  selectedFuel === "petrol" ? COLORS.primary : COLORS.secondary,
+              },
+            ]}
+          >
+            <Image
+              source={require("../../../assets/images/petrol.png")}
+              alt="petrol"
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setSelectedFuel("diesel")}
+            style={[
+              styles.fuelButton,
+              {
+                borderColor:
+                  selectedFuel === "diesel" ? COLORS.tertiary : "gray",
+                backgroundColor:
+                  selectedFuel === "diesel" ? COLORS.primary : COLORS.secondary,
+              },
+            ]}
+          >
+            <Image
+              source={require("../../../assets/images/diesel.png")}
+              alt="diesel"
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setSelectedFuel("cng")}
+            style={[
+              styles.fuelButton,
+              {
+                borderColor: selectedFuel === "cng" ? COLORS.tertiary : "gray",
+                backgroundColor:
+                  selectedFuel === "cng" ? COLORS.primary : COLORS.secondary,
+              },
+            ]}
+          >
+            <Image
+              source={require("../../../assets/images/cng.png")}
+              alt="cng"
+            />
+          </TouchableOpacity>
         </HStack>
 
         <VStack m={"$3"}>
@@ -91,65 +131,78 @@ const Purchase = () => {
             </Text>
           </HStack>
 
-          {myInput(
-            amount,
-            handleAmountChange,
-            "Enter Amount",
-            "Enter the amount"
-          )}
+          {/* amount input */}
+          <MyInput
+            value={amount}
+            onChange={handleAmountChange}
+            placeholder={"Enter Amount"}
+            errorText={"Enter the amount"}
+          />
 
-          {scrollBadges(amountList, (value: string) =>
-            handleBadgePress(value, true)
-          )}
+          {/* quick buttons for instant input */}
+          <ScrollBadges
+            list={amountList}
+            onPressFunction={(value: string) => handleBadgePress(value, true)}
+          />
 
-          {myInput(
-            litres,
-            handleLitresChange,
-            "Enter Litres",
-            "Enter the number of litres"
-          )}
+          {/* litres input */}
+          <MyInput
+            value={litres}
+            onChange={handleLitresChange}
+            placeholder={"Enter Litres"}
+            errorText={"Enter the number of litres"}
+          />
 
-          {scrollBadges(litreList, (value: string) =>
-            handleBadgePress(value, false)
-          )}
+          {/* quick buttons for instant input */}
+          <ScrollBadges
+            list={litreList}
+            onPressFunction={(value: string) => handleBadgePress(value, false)}
+          />
         </VStack>
       </View>
+
+      {/* four images above the buy button for payment type selection */}
       <VStack bg={COLORS.primary} mt={"$2"} elevation={5} borderRadius={20}>
         <HStack justifyContent="space-evenly" mx={"$2"} mt={"$6"}>
-          {imageButton(
-            require("../../../assets/images/cash.png"),
-            "cash",
-            "Cash",
-            1,
-            selectedPaymentMethod,
-            setSelectedPaymentMethod
-          )}
-          {imageButton(
-            require("../../../assets/images/app.png"),
-            "app",
-            "App",
-            2,
-            selectedPaymentMethod,
-            setSelectedPaymentMethod
-          )}
-          {imageButton(
-            require("../../../assets/images/bonusPoints.png"),
-            "points",
-            "Points",
-            3,
-            selectedPaymentMethod,
-            setSelectedPaymentMethod
-          )}
-          {imageButton(
-            require("../../../assets/images/app+points.png"),
-            "app+points",
-            " App +\nPoints",
-            4,
-            selectedPaymentMethod,
-            setSelectedPaymentMethod
-          )}
+          <ImageButton
+            image={require("../../../assets/images/cash.png")}
+            alt={"cash"}
+            title={"cash"}
+            myNumber={1}
+            selectedNumber={selectedPaymentMethod}
+            setSelectedNumber={setSelectedPaymentMethod}
+          />
+
+          <ImageButton
+            image={require("../../../assets/images/app.png")}
+            alt={"app"}
+            title={"App"}
+            myNumber={2}
+            selectedNumber={selectedPaymentMethod}
+            setSelectedNumber={setSelectedPaymentMethod}
+          />
+
+          <ImageButton
+            image={require("../../../assets/images/bonusPoints.png")}
+            alt={"points"}
+            title={"Points"}
+            myNumber={3}
+            selectedNumber={selectedPaymentMethod}
+            setSelectedNumber={setSelectedPaymentMethod}
+          />
+
+          <ImageButton
+            image={require("../../../assets/images/app+points.png")}
+            alt={"app+points"}
+            title={"App + Points"}
+            myNumber={4}
+            selectedNumber={selectedPaymentMethod}
+            setSelectedNumber={setSelectedPaymentMethod}
+          />
         </HStack>
-        <Button backgroundColor={COLORS.tertiary} mx={"$7"} my={"$7"}>
+
+        {/* buy button */}
+        <Button backgroundColor={COLORS.tertiary} mx={"$7"} my={"$5"}>
           <ButtonText>Buy Now!</ButtonText>
         </Button>
       </VStack>
@@ -159,100 +212,11 @@ const Purchase = () => {
 
 export default Purchase;
 
-const imageButton = (
-  image: any,
-  alt: string,
-  title: string,
-  myNumber: Number,
-  selectedNumber: Number,
-  setSelectedNumber: any
-) => {
-  return (
-    <TouchableOpacity
-      style={{
-        alignItems: "center",
-
-        marginBottom: "2%",
-        borderRadius: 20,
-      }}
-      onPress={() => setSelectedNumber(myNumber)}
-    >
-      <Image
-        backgroundColor={
-          selectedNumber === myNumber ? COLORS.secondary : "transparent"
-        }
-        alt={alt}
-        source={image}
-        size="sm"
-        borderWidth={1}
-        borderColor={selectedNumber === myNumber ? COLORS.tertiary : "gray"}
-        borderRadius={15}
-      />
-      <Text color={selectedNumber === myNumber ? COLORS.tertiary : "gray"}>
-        {title}
-      </Text>
-    </TouchableOpacity>
-  );
-};
-
-// Input fields component
-const myInput = (
-  value: any,
-  onChange: any,
-  placeholder: string,
-  errorText: string
-) => {
-  return (
-    <FormControl
-      m={"$3"}
-      isDisabled={false}
-      isInvalid={false}
-      isReadOnly={false}
-      isRequired={true}
-    >
-      <Input variant="rounded" size="lg">
-        <InputField
-          type="text"
-          placeholder={placeholder}
-          value={value}
-          onChangeText={onChange}
-          keyboardType="numeric" // This will open the numeric keyboard
-          inputMode="numeric" // This ensures only numeric input is accepted
-        />
-      </Input>
-
-      <FormControlError>
-        <FormControlErrorIcon as={AlertCircleIcon} />
-        <FormControlErrorText>{errorText}</FormControlErrorText>
-      </FormControlError>
-    </FormControl>
-  );
-};
-
-// Horizontal scroll list component
-const scrollBadges = (list: any, onPressFunction: any) => {
-  return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} mt={"$3"}>
-      <HStack>
-        {list.map((listItem: any) => (
-          <View
-            key={listItem}
-            minWidth={"$11"}
-            bg={COLORS.secondary}
-            borderRadius={15}
-            m={"$2"}
-            elevation={5}
-            alignItems="center"
-            justifyContent="center"
-          >
-            <TouchableOpacity onPress={() => onPressFunction(listItem)}>
-              <Text p={"$3"} color={COLORS.tertiary}>
-                {listItem}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </HStack>
-    </ScrollView>
-  );
-};
+const styles = StyleSheet.create({
+  fuelButton: {
+    borderWidth: 1,
+    borderRadius: 10,
+    elevation: 5,
+    padding: PERCENT[1],
+  },
+});

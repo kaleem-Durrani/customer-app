@@ -13,7 +13,7 @@ import RecordCard from "./components/RecordCard";
 import NavigationCard from "./components/NavigationCard";
 import { Entypo } from "@expo/vector-icons";
 
-const Profile = () => {
+const Profile = ({ navigation }: any) => {
   return (
     <View mt={"$8"} bg={COLORS.primary} flex={1}>
       <View
@@ -79,12 +79,36 @@ const Profile = () => {
           />
         </HStack>
         <View pr={"$4"}>
-          <NavigationCard name={"user"} title={"Personal Details"} />
-          <NavigationCard name={"lock"} title={"Change Password"} />
-          <NavigationCard name={"bell"} title={"Notifications"} />
-          <NavigationCard name={"chat"} title={"Customer Support"} />
-          <NavigationCard name={"documents"} title={"Privacy Policy"} />
-          <NavigationCard name={"log-out"} title={"Logout"} />
+          <NavigationCard
+            name={"user"}
+            title={"Personal Details"}
+            onPress={() => navigation.navigate("PersonalDetails")}
+          />
+          <NavigationCard
+            name={"lock"}
+            title={"Change Password"}
+            onPress={() => navigation.navigate("ChangePassword")}
+          />
+          <NavigationCard
+            name={"bell"}
+            title={"Notifications"}
+            onPress={() => navigation.navigate("Notifications")}
+          />
+          <NavigationCard
+            name={"chat"}
+            title={"Customer Support"}
+            onPress={() => navigation.navigate("CustomerSupport")}
+          />
+          <NavigationCard
+            name={"documents"}
+            title={"Privacy Policy"}
+            onPress={() => navigation.navigate("PrivacyPolicy")}
+          />
+          <NavigationCard
+            name={"log-out"}
+            title={"Logout"}
+            onPress={() => console.log("Log out clicked")}
+          />
         </View>
       </ScrollView>
     </View>
