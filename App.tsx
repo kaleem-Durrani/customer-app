@@ -1,22 +1,26 @@
 import { config } from "@gluestack-ui/config";
-import { Box, GluestackUIProvider, Text, View } from "@gluestack-ui/themed";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { NavigationContainer } from "@react-navigation/native";
-import { ScrollView } from "react-native";
+import React, { useState } from "react";
 import "react-native-gesture-handler";
 import StackNavigator from "./Navigations/StackNavigator/StackNavigtor";
-import { useState } from "react";
 import { AuthContext } from "./Contexts/AuthContext";
+
+// Ensure gesture handler is at the top
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   const [user, setUser] = useState(null);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      <NavigationContainer>
-        <GluestackUIProvider config={config}>
-          <StackNavigator />
-        </GluestackUIProvider>
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <NavigationContainer>
+          <GluestackUIProvider config={config}>
+            <StackNavigator />
+          </GluestackUIProvider>
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </GestureHandlerRootView>
   );
 }

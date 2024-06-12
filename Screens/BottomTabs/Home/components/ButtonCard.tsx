@@ -2,8 +2,9 @@ import { View, Text, Image } from "@gluestack-ui/themed";
 // import { Image } from "react-native";
 import React from "react";
 import { COLORS } from "../../../../Constants/Constants";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const ButtonCard = ({ image, title }: any) => {
+const ButtonCard = ({ image, title, onPress }: any) => {
   return (
     <View
       alignItems="center"
@@ -14,7 +15,9 @@ const ButtonCard = ({ image, title }: any) => {
       borderRadius={15}
       elevation={4}
     >
-      <Image size="md" alt="something" source={image} />
+      <TouchableOpacity onPress={onPress}>
+        <Image size="md" alt="something" source={image} />
+      </TouchableOpacity>
       <Text alignSelf="center">{title}</Text>
     </View>
   );

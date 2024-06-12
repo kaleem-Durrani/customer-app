@@ -5,7 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Home = () => {
+const Home = ({ navigation }: any) => {
   return (
     <View flex={1} pt={"$8"} px={"$4"} bg={COLORS.primary}>
       <Text>Hello Nick</Text>
@@ -45,7 +45,7 @@ const Home = () => {
             borderRadius={"$2xl"}
             elevation={5}
           >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Transfer")}>
               <FontAwesome
                 name="refresh"
                 size={PERCENT[10]}
@@ -65,7 +65,7 @@ const Home = () => {
             borderRadius={"$2xl"}
             elevation={5}
           >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("TopUp")}>
               <FontAwesome
                 name="arrow-circle-o-up"
                 size={PERCENT[10]}
@@ -84,7 +84,7 @@ const Home = () => {
             borderRadius={"$2xl"}
             elevation={5}
           >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("History")}>
               <FontAwesome
                 name="history"
                 size={PERCENT[10]}
@@ -100,14 +100,17 @@ const Home = () => {
         <ButtonCard
           title={"  Map Locator"}
           image={require("../../../assets/images/map.png")}
+          onPress={() => navigation.navigate("MapLocator")}
         />
         <ButtonCard
           title={"Loyalty Screen"}
           image={require("../../../assets/images/gift.png")}
+          onPress={() => navigation.navigate("LoyaltyScreen")}
         />
         <ButtonCard
           title={"FAQs"}
           image={require("../../../assets/images/faq.png")}
+          onPress={() => navigation.navigate("FAQs")}
         />
       </HStack>
     </View>
