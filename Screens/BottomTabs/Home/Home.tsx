@@ -1,4 +1,11 @@
-import { View, Text, HStack, VStack, Image } from "@gluestack-ui/themed";
+import {
+  View,
+  Text,
+  HStack,
+  VStack,
+  Image,
+  Divider,
+} from "@gluestack-ui/themed";
 import React from "react";
 import ButtonCard from "./components/ButtonCard";
 import { FontAwesome } from "@expo/vector-icons";
@@ -8,40 +15,89 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const Home = ({ navigation }: any) => {
   return (
     <View flex={1} pt={"$8"} px={"$4"} bg={COLORS.primary}>
-      <Text>Hello Nick</Text>
-      <Text>Good Morning</Text>
+      <Text fontWeight="bold" size="3xl" color={COLORS.activeText}>
+        Hello Nick
+      </Text>
+      <Text mt={-6} mb={"$3"} size="sm" color="gray">
+        Good Morning
+      </Text>
 
-      <View
-        borderRadius={20}
-        bg={"$trueGray400"}
-        overflow="hidden"
-        elevation={5}
-      >
+      <View borderRadius={20} bg={"#EEEEEE"} overflow="hidden" elevation={5}>
         <View bg={COLORS.secondary} borderRadius={20} elevation={6}>
           <HStack justifyContent="space-around">
-            <VStack>
-              <Text>Balance</Text>
-              <Text>1000</Text>
+            <VStack
+              p={"$2"}
+              m={"$2"}
+              borderRadius={10}
+              borderWidth={1}
+              borderColor="lightgray"
+              alignSelf="center"
+              alignItems="center"
+              bg={COLORS.secondary}
+              elevation={5}
+            >
+              <Text size="xl">Balance</Text>
+              <Divider />
+              <Text size="xl" color={COLORS.activeText}>
+                1000
+              </Text>
             </VStack>
-            <VStack>
-              <Text>Points</Text>
-              <Text>100</Text>
+
+            <VStack
+              p={"$2"}
+              px={"$4"}
+              m={"$2"}
+              borderRadius={10}
+              borderWidth={1}
+              borderColor="lightgray"
+              alignSelf="center"
+              alignItems="center"
+              bg={COLORS.secondary}
+              elevation={5}
+            >
+              <Text size="xl">Points</Text>
+              <Divider />
+              <Text color={COLORS.activeText} size="xl">
+                100
+              </Text>
             </VStack>
           </HStack>
+          <Divider />
 
-          <VStack alignItems="center">
-            <Text>Fuel Price</Text>
-            <Text>280 Rs</Text>
+          <VStack
+            p={"$2"}
+            m={"$2"}
+            borderRadius={10}
+            borderWidth={1}
+            borderColor="lightgray"
+            alignSelf="center"
+            alignItems="center"
+            bg={COLORS.secondary}
+            elevation={5}
+          >
+            <Text size="xl">Fuel Price</Text>
+
+            <Text
+              borderRadius={10}
+              borderWidth={1}
+              borderColor={COLORS.tertiary}
+              color={COLORS.activeText}
+              size="xl"
+              p={"$1"}
+              m={"$1"}
+            >
+              280 Rs
+            </Text>
           </VStack>
         </View>
 
-        <HStack justifyContent="space-evenly">
+        <HStack justifyContent="space-evenly" mt={"$5"}>
           <View
             my={"$2"}
             p={"$3"}
             px={"$4"}
             alignItems="center"
-            bg="$trueGray300"
+            bg="#F3F7ECdd"
             borderRadius={"$2xl"}
             elevation={5}
           >
@@ -61,7 +117,7 @@ const Home = ({ navigation }: any) => {
             p={"$3"}
             px={"$5"}
             alignItems="center"
-            bg="$trueGray300"
+            bg="#F3F7ECdd"
             borderRadius={"$2xl"}
             elevation={5}
           >
@@ -80,7 +136,7 @@ const Home = ({ navigation }: any) => {
             p={"$3"}
             px={"$5"}
             alignItems="center"
-            bg="$trueGray300"
+            bg="#F3F7ECdd"
             borderRadius={"$2xl"}
             elevation={5}
           >
@@ -96,7 +152,7 @@ const Home = ({ navigation }: any) => {
         </HStack>
       </View>
 
-      <HStack justifyContent="space-evenly">
+      <HStack justifyContent="space-evenly" mt={"$5"}>
         <ButtonCard
           title={"  Map Locator"}
           image={require("../../../assets/images/map.png")}

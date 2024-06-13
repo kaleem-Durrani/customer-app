@@ -9,7 +9,7 @@ const ButtonCard = ({ image, title, onPress }: any) => {
     <View
       alignItems="center"
       bg={COLORS.secondary}
-      w={"30%"}
+      w={"31%"}
       mt={"$3"}
       p={"$3"}
       borderRadius={15}

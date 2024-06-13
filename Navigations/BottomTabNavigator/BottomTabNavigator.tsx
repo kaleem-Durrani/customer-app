@@ -48,7 +48,7 @@ export default function BottomTabNavigator() {
             setIsAnimating(false);
             Animated.timing(opacity, {
               toValue: 1,
-              duration: 300,
+              duration: 500,
               useNativeDriver: true,
             }).start();
           }, [path]);
@@ -78,7 +78,13 @@ export default function BottomTabNavigator() {
               </Animated.Text>
             </HStack>
           ) : (
-            <FontAwesome name={iconName} size={PERCENT[7]} color={iconColor} />
+            <Animated.View>
+              <FontAwesome
+                name={iconName}
+                size={PERCENT[7]}
+                color={iconColor}
+              />
+            </Animated.View>
           );
         },
       })}

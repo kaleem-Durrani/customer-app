@@ -16,7 +16,7 @@ const NavigationCard = ({ name, title, onPress }: any) => {
     >
       <TouchableOpacity onPress={onPress}>
         <HStack width={"100%"} alignItems="center">
-          <View bg={`${COLORS.tertiary}40`} p={"$3"} borderRadius={"$full"}>
+          <View bg={`${COLORS.tertiary}30`} p={"$3"} borderRadius={"$full"}>
             <Entypo
               name={name}
               size={PERCENT[10]}

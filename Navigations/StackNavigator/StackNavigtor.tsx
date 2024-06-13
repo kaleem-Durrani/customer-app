@@ -14,6 +14,7 @@ import ChangePassword from "../../Screens/ProfileTabInnerScreens/ChangePassword/
 import Notifications from "../../Screens/ProfileTabInnerScreens/Notifications/Notifications";
 import CustomerSupport from "../../Screens/ProfileTabInnerScreens/CustomerSupport/CustomerSupport";
 import PrivacyPolicy from "../../Screens/ProfileTabInnerScreens/PrivacyPolicy/PrivacyPolicy";
+import HistoryContainer from "../HistoryTopTabNavigator/HistoryContainer";
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,7 @@ export default function StackNavigator() {
       {user ? (
         <Stack.Group>
           <Stack.Screen name="BottomTabs" component={BottomTabNavigator} />
-          <Stack.Screen name="History" component={HistoryTopTabNavigator} />
+          <Stack.Screen name="History" component={HistoryContainer} />
           <Stack.Screen name="TopUp" component={TopUp} />
           <Stack.Screen name="Transfer" component={Transfer} />
           <Stack.Screen name="MapLocator" component={MapLocator} />
