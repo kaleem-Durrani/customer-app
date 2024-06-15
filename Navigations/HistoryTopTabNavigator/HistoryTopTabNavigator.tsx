@@ -11,10 +11,12 @@ const Tab = createMaterialTopTabNavigator();
 const HistoryTopTabNavigator = () => {
   return (
     <Tab.Navigator
+      tabBarPosition="bottom"
       screenOptions={{
         tabBarActiveTintColor: COLORS.tertiary,
         tabBarInactiveTintColor: "gray",
         tabBarPressColor: `${COLORS.tertiary}50`,
+
         tabBarStyle: {
           backgroundColor: COLORS.secondary,
           elevation: 7,

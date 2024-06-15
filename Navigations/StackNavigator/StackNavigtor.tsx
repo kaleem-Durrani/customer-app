@@ -15,33 +15,114 @@ import Notifications from "../../Screens/ProfileTabInnerScreens/Notifications/No
 import CustomerSupport from "../../Screens/ProfileTabInnerScreens/CustomerSupport/CustomerSupport";
 import PrivacyPolicy from "../../Screens/ProfileTabInnerScreens/PrivacyPolicy/PrivacyPolicy";
 import HistoryContainer from "../HistoryTopTabNavigator/HistoryContainer";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
+
+const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {user ? (
         <Stack.Group>
-          <Stack.Screen name="BottomTabs" component={BottomTabNavigator} />
-          <Stack.Screen name="History" component={HistoryContainer} />
-          <Stack.Screen name="TopUp" component={TopUp} />
-          <Stack.Screen name="Transfer" component={Transfer} />
-          <Stack.Screen name="MapLocator" component={MapLocator} />
-          <Stack.Screen name="LoyaltyScreen" component={LoyaltyScreen} />
-          <Stack.Screen name="FAQs" component={FAQs} />
-          <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
-          <Stack.Screen name="ChangePassword" component={ChangePassword} />
-          <Stack.Screen name="Notifications" component={Notifications} />
-          <Stack.Screen name="CustomerSupport" component={CustomerSupport} />
-          <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+          <Stack.Screen
+            // options={{ animation: "fade_from_bottom" }}
+            name="BottomTabs"
+            component={BottomTabNavigator}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_bottom",
+            }}
+            name="History"
+            component={HistoryContainer}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_bottom",
+            }}
+            name="TopUp"
+            component={TopUp}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_bottom",
+            }}
+            name="Transfer"
+            component={Transfer}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_left",
+            }}
+            name="MapLocator"
+            component={MapLocator}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_left",
+            }}
+            name="LoyaltyScreen"
+            component={LoyaltyScreen}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_left",
+            }}
+            name="FAQs"
+            component={FAQs}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_right",
+            }}
+            name="PersonalDetails"
+            component={PersonalDetails}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_right",
+            }}
+            name="ChangePassword"
+            component={ChangePassword}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_right",
+            }}
+            name="Notifications"
+            component={Notifications}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_right",
+            }}
+            name="CustomerSupport"
+            component={CustomerSupport}
+          />
+          <Stack.Screen
+            options={{
+              animation: "slide_from_right",
+            }}
+            name="PrivacyPolicy"
+            component={PrivacyPolicy}
+          />
         </Stack.Group>
       ) : (
         <Stack.Group>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen
+            options={{ animation: "slide_from_left" }}
+            name="Login"
+            component={Login}
+          />
+          <Stack.Screen
+            options={{ animation: "slide_from_right" }}
+            name="Signup"
+            component={Signup}
+          />
         </Stack.Group>
       )}
     </Stack.Navigator>
