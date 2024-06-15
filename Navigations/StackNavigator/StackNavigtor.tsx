@@ -19,7 +19,7 @@ import HistoryContainer from "../HistoryTopTabNavigator/HistoryContainer";
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(false);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
