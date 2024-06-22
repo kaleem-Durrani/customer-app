@@ -17,6 +17,7 @@ const TopRibbon = ({ navigation, title }: any) => {
       borderBottomRightRadius={PERCENT[8]}
       borderBottomLeftRadius={PERCENT[8]}
       elevation={5}
+      zIndex={1000}
     >
       <TouchableOpacity
         onPress={() => navigation.goBack()}
