@@ -9,16 +9,23 @@ import {
   ButtonText,
   HStack,
   Divider,
+  Toast,
+  ToastTitle,
+  VStack,
+  ToastDescription,
 } from "@gluestack-ui/themed";
 import React, { useContext, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { PERCENT } from "../../../Constants/Constants";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { AuthContext } from "../../../Contexts/AuthContext";
+import MyToast from "../../../components/MyToast";
 
 export default function Login({ navigation }: any) {
   const { user, setUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+
+  const toast = MyToast();
 
   return (
     <View style={styles.container}>
@@ -84,7 +91,15 @@ export default function Login({ navigation }: any) {
           mt={"$5"}
           bg="#0ea5e9"
           w={"$full"}
-          onPress={() => setUser(true)}
+          onPress={() => {
+            toast.show(
+              "accent",
+              "error",
+              "New Message",
+              "Hey, just wanted to touch base and see how you're doing. Let's catch up soon!",
+              3000
+            );
+          }}
         >
           <ButtonText>Sign in</ButtonText>
         </Button>
