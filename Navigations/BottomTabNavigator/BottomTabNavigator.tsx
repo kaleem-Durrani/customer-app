@@ -9,6 +9,7 @@ import { COLORS, HEIGHT, PERCENT } from "../../Constants/Constants";
 import { FontAwesome } from "@expo/vector-icons";
 import { Animated, Keyboard } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { LinearGradient } from "expo-linear-gradient";
 
 // const Tab = createBottomTabNavigator();
 
@@ -77,6 +78,7 @@ export default function BottomTabNavigator() {
         tabBarContentContainerStyle: [
           {
             display: isKeyboardOpen ? "none" : "flex",
+
             // borderRadius: 50,
             // backgroundColor: "cyan",
             // padding: 10,
@@ -111,6 +113,7 @@ export default function BottomTabNavigator() {
           },
           null,
         ],
+
         tabBarIcon: ({ color, focused }) => {
           let iconName;
           let iconColor = focused ? "white" : "gray";

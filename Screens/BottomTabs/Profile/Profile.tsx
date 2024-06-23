@@ -12,17 +12,22 @@ import { COLORS, PERCENT } from "../../../Constants/Constants";
 import RecordCard from "./components/RecordCard";
 import NavigationCard from "./components/NavigationCard";
 import { Entypo } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Profile = ({ navigation }: any) => {
   return (
     <View mt={"$0"} bg={COLORS.primary} flex={1}>
-      <View
-        bg={COLORS.secondary}
-        width={"100%"}
-        height={"20%"}
-        borderBottomLeftRadius={30}
-        borderBottomRightRadius={30}
-        elevation={5}
+      <LinearGradient
+        colors={[COLORS.secondary, COLORS.primary, COLORS.secondary]}
+        start={[0.4, -0.4]}
+        end={[1, 1]}
+        style={{
+          elevation: 3,
+          borderBottomRightRadius: 30,
+          borderBottomLeftRadius: 30,
+          width: "100%",
+          height: "20%",
+        }}
       >
         <Text alignSelf="center" size="4xl" fontWeight="bold" mt={"$4"}>
           Profile
@@ -43,7 +48,7 @@ const Profile = ({ navigation }: any) => {
             alignSelf: "center",
           }}
         />
-      </View>
+      </LinearGradient>
       <Avatar size="2xl" alignSelf="center" mt={"-15%"} elevation={6}>
         <AvatarFallbackText>SS</AvatarFallbackText>
         <AvatarImage
@@ -78,7 +83,7 @@ const Profile = ({ navigation }: any) => {
             amount={500}
           />
         </HStack>
-        <View pr={"$4"}>
+        <View p={"$2"}>
           <NavigationCard
             name={"user"}
             title={"Personal Details"}

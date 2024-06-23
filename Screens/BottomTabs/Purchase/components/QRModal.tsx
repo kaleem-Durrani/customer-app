@@ -65,18 +65,18 @@ const QRModal = ({ showModal, setShowModal, QRDictionary }: any) => {
             <VStack flex={1}>
               <HStack justifyContent="space-between">
                 <Text size="xs" color="gray">
-                  Fuel Type: {QRDictionary.selectedFuel}
+                  Fuel Type: {QRDictionary?.selectedFuel}
                 </Text>
                 <Text size="xs" color="gray">
-                  Amount: {QRDictionary.amount}
+                  Amount: {QRDictionary?.amount}
                 </Text>
               </HStack>
               <HStack mb={"$2"} justifyContent="space-between">
                 <Text size="xs" color="gray">
-                  Litres:{QRDictionary.litres}
+                  Litres:{QRDictionary?.litres}
                 </Text>
                 <Text size="xs" color="gray">
-                  Payment Method: {QRDictionary.selectedPaymentMethod}
+                  Payment Method: {QRDictionary?.selectedPaymentMethod}
                 </Text>
               </HStack>
 

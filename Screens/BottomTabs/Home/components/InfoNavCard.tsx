@@ -3,6 +3,7 @@ import React from "react";
 import { COLORS, PERCENT } from "../../../../Constants/Constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 const InfoNavCard = ({ navigation }: any) => {
   return (
@@ -11,138 +12,117 @@ const InfoNavCard = ({ navigation }: any) => {
       bg={COLORS.primary}
       overflow="visible"
       elevation={5}
+      m={"$3"}
+      // p={"$3"}
     >
-      <View bg={COLORS.secondary} borderRadius={20} elevation={6}>
-        <HStack justifyContent="space-around">
-          <VStack
-            p={"$2"}
-            m={"$2"}
-            borderRadius={10}
-            borderWidth={1}
-            borderColor="lightgray"
-            alignSelf="center"
-            alignItems="center"
-            bg={COLORS.secondary}
-            elevation={5}
-          >
-            <Text size="xl">Balance</Text>
-            <Divider />
-            <Text size="xl" color={COLORS.activeText}>
-              1000
-            </Text>
+      <LinearGradient
+        colors={["#f5f7fa", "#c3cfe2"]}
+        start={[0, 0]}
+        end={[1, 1]}
+        style={{
+          borderRadius: 20,
+          padding: 16,
+          elevation: 6,
+        }}
+      >
+        <HStack justifyContent="space-between">
+          <VStack flex={1} justifyContent="space-between">
+            <LinearGradient
+              colors={["#e0eafc", "#cfdef3"]}
+              start={[0, 0]}
+              end={[1, 1]}
+              style={{
+                borderRadius: 10,
+                padding: 16,
+                alignItems: "center",
+                marginBottom: 16,
+                elevation: 5,
+              }}
+            >
+              <Text size="lg" color={COLORS.activeText}>
+                Balance
+              </Text>
+              {/* <Divider my={"$2"} /> */}
+              <Text size="lg" color={COLORS.activeText}>
+                1000
+              </Text>
+            </LinearGradient>
+
+            <LinearGradient
+              colors={[COLORS.primary, COLORS.secondary]}
+              start={[1, 1]}
+              end={[0, 1]}
+              style={{
+                borderRadius: 10,
+                padding: 16,
+                alignItems: "center",
+                elevation: 5,
+              }}
+            >
+              <Text size="lg" color={COLORS.activeText}>
+                Points
+              </Text>
+              {/* <Divider my={"$2"} /> */}
+              <Text size="lg" color={COLORS.activeText}>
+                100
+              </Text>
+            </LinearGradient>
           </VStack>
 
-          <VStack
-            p={"$2"}
-            px={"$4"}
-            m={"$2"}
-            borderRadius={10}
-            borderWidth={1}
-            borderColor="lightgray"
-            alignSelf="center"
-            alignItems="center"
-            bg={COLORS.secondary}
-            elevation={5}
+          <LinearGradient
+            colors={["#e0eafc", "#cfdef3"]}
+            start={[0, 0]}
+            end={[1, 1]}
+            style={{
+              borderRadius: 10,
+              padding: 16,
+              alignItems: "center",
+              flex: 1,
+              marginLeft: 16,
+              elevation: 5,
+            }}
           >
-            <Text size="xl">Points</Text>
-            <Divider />
-            <Text color={COLORS.activeText} size="xl">
-              100
+            <Text size="lg" color={COLORS.activeText}>
+              Fuel Price
             </Text>
-          </VStack>
+            <Text
+              borderRadius={10}
+              borderWidth={1}
+              borderColor={COLORS.tertiary}
+              color={COLORS.activeText}
+              size="lg"
+              p={"$2"}
+              mt={"$2"}
+            >
+              280 Rs
+            </Text>
+          </LinearGradient>
         </HStack>
-        <Divider />
+      </LinearGradient>
 
-        <VStack
-          p={"$2"}
-          m={"$2"}
-          borderRadius={10}
-          borderWidth={1}
-          borderColor="lightgray"
-          alignSelf="center"
-          alignItems="center"
-          bg={COLORS.secondary}
-          elevation={5}
-        >
-          <Text size="xl">Fuel Price</Text>
-
-          <Text
-            borderRadius={10}
-            borderWidth={1}
-            borderColor={COLORS.tertiary}
-            color={COLORS.activeText}
-            size="xl"
-            p={"$1"}
-            m={"$1"}
+      <HStack justifyContent="space-evenly" mt={"$4"}>
+        {[
+          { name: "refresh", label: "Transfer", route: "Transfer" },
+          { name: "arrow-circle-o-up", label: "Top up", route: "TopUp" },
+          { name: "history", label: "History", route: "History" },
+        ].map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => navigation.navigate(item.route)}
+            style={{
+              alignItems: "center",
+              padding: 10,
+              marginHorizontal: 5,
+            }}
           >
-            280 Rs
-          </Text>
-        </VStack>
-      </View>
-
-      <HStack justifyContent="space-evenly" mt={"$2"}>
-        <View
-          //   my={"$2"}
-          p={"$2"}
-          px={"$4"}
-          alignItems="center"
-          bg={`${COLORS.tertiary}17`}
-          borderRadius={"$2xl"}
-          mb={"$1"}
-          //   elevation={5}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("Transfer")}>
             <FontAwesome
-              name="refresh"
+              name={item.name}
               size={PERCENT[10]}
               color={COLORS.tertiary}
             />
+            <Text color={COLORS.tertiary}>{item.label}</Text>
           </TouchableOpacity>
-          <Text color={COLORS.tertiary}>Transfer</Text>
-        </View>
-
-        <View
-          // bg="gray"
-          //   my={"$2"}
-          p={"$2"}
-          px={"$5"}
-          alignItems="center"
-          bg={`${COLORS.tertiary}17`}
-          borderRadius={"$2xl"}
-          mb={"$1"}
-
-          //   elevation={5}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("TopUp")}>
-            <FontAwesome
-              name="arrow-circle-o-up"
-              size={PERCENT[10]}
-              color={COLORS.tertiary}
-            />
-          </TouchableOpacity>
-          <Text color={COLORS.tertiary}>Top up</Text>
-        </View>
-        <View
-          // bg="gray"
-          //   my={"$2"}
-          p={"$2"}
-          px={"$5"}
-          alignItems="center"
-          bg={`${COLORS.tertiary}17`}
-          borderRadius={"$2xl"}
-          mb={"$1"}
-
-          //   elevation={5}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("History")}>
-            <FontAwesome
-              name="history"
-              size={PERCENT[10]}
-              color={COLORS.tertiary}
-            />
-          </TouchableOpacity>
-          <Text color={COLORS.tertiary}>History</Text>
-        </View>
+        ))}
       </HStack>
     </View>
   );

@@ -3,54 +3,55 @@ import React from "react";
 import { COLORS, PERCENT } from "../Constants/Constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
 const TopRibbon = ({ navigation, title }: any) => {
   return (
-    <View
-      flexDirection="row"
-      bg={COLORS.secondary}
-      height={"$24"}
-      alignItems="center"
-      pl={"$5"}
-      pr={"$12"}
-      justifyContent="space-between"
-      borderBottomRightRadius={PERCENT[8]}
-      borderBottomLeftRadius={PERCENT[8]}
-      elevation={5}
-      zIndex={1000}
+    <LinearGradient
+      colors={[COLORS.secondary, COLORS.primary, COLORS.secondary]}
+      start={[0, -1]}
+      end={[1, 1]}
+      style={{
+        elevation: 5,
+        overflow: "hidden",
+        borderBottomRightRadius: PERCENT[8],
+        borderBottomLeftRadius: PERCENT[8],
+        zIndex: 1000,
+      }}
     >
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={{
-          padding: PERCENT[1],
-          borderWidth: 2,
-          borderColor: COLORS.tertiary,
-          borderRadius: PERCENT[100],
-        }}
+      <View
+        flexDirection="row"
+        height={"$24"}
+        alignItems="center"
+        pl={"$5"}
+        pr={"$12"}
+        justifyContent="space-between"
       >
-        <FontAwesome
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <FontAwesome
+            style={{
+              textShadowColor: "gray",
+              textShadowOffset: { width: 1, height: 3 },
+              textShadowRadius: 9,
+            }}
+            name="chevron-left"
+            size={PERCENT[8]}
+            color={COLORS.tertiary}
+          />
+        </TouchableOpacity>
+        <Text
           style={{
             textShadowColor: "gray",
-            textShadowOffset: { width: 2, height: 4 },
+            textShadowOffset: { width: 1, height: 4 },
             textShadowRadius: 9,
           }}
-          name="long-arrow-left"
-          size={PERCENT[10]}
-          color={COLORS.tertiary}
-        />
-      </TouchableOpacity>
-      <Text
-        style={{
-          textShadowColor: "gray",
-          textShadowOffset: { width: 1, height: 4 },
-          textShadowRadius: 9,
-        }}
-        size="2xl"
-        fontWeight="bold"
-      >
-        {title}
-      </Text>
-    </View>
+          size="2xl"
+          fontWeight="bold"
+        >
+          {title}
+        </Text>
+      </View>
+    </LinearGradient>
   );
 };
 
