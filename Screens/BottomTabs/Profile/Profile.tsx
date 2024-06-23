@@ -15,7 +15,7 @@ import { Entypo } from "@expo/vector-icons";
 
 const Profile = ({ navigation }: any) => {
   return (
-    <View mt={"$8"} bg={COLORS.primary} flex={1}>
+    <View mt={"$0"} bg={COLORS.primary} flex={1}>
       <View
         bg={COLORS.secondary}
         width={"100%"}

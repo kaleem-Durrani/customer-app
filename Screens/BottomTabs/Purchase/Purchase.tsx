@@ -14,152 +14,73 @@ import { StyleSheet } from "react-native";
 import ScrollBadges from "./components/ScrollBadges";
 import MyInput from "./components/MyInput";
 import ImageButton from "./components/ImageButton";
+import FuelTypeAmountCard from "./components/FuelTypeAmountCard";
+import MyToast from "../../../components/MyToast";
 
 const Purchase = () => {
+  const toast = MyToast();
+  const [showingToast, setShowingToast] = useState(false);
+
   const [amount, setAmount] = useState("");
   const [litres, setLitres] = useState("");
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(0);
-  const [petrolPrice] = useState(280);
+
   const [selectedFuel, setSelectedFuel] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
-  const handleAmountChange = (value: any) => {
-    if (value === "") {
-      setLitres("");
-      setAmount("");
-      return;
-    }
-    if (/^\d*\.?\d*$/.test(value)) {
-      setAmount(value);
-      const litres = value / petrolPrice;
-      setLitres(litres.toFixed(2));
-    }
+  const showErrorToast = (title: string, description: string) => {
+    toast.show("accent", "error", title, description, 5000);
+    setShowingToast(true);
+    setTimeout(() => {
+      setShowingToast(false);
+    }, 4500);
   };
 
-  const handleLitresChange = (value: any) => {
-    if (value === "") {
-      setLitres("");
-      setAmount("");
-      return;
+  const onBuyPress = () => {
+    if (!selectedFuel) {
+      if (showingToast) return;
+      return showErrorToast(
+        "Fuel Type Not Selected",
+        "Please select the type of fuel you widh to purchase"
+      );
     }
-    if (/^\d*\.?\d*$/.test(value)) {
-      setLitres(value);
-      const amount = value * petrolPrice;
-      setAmount(amount.toString());
+    if (!amount || !litres) {
+      if (showingToast) return;
+      return showErrorToast(
+        "Amount or Litres Not Selected",
+        "Please select the amount for the fuel you want to buy or the number of litres"
+      );
     }
+    if (!selectedPaymentMethod) {
+      if (showingToast) return;
+      return showErrorToast(
+        "Payment Method Not Selected",
+        "Please select one of the four payment mehods at the bottom of the screen"
+      );
+    }
+    // all requirements fulfilled
+    toast.show(
+      "accent",
+      "success",
+      "All required Info Given",
+      `You wish to buy ${selectedFuel} of ${amount} amount and ${litres} litres your payment method is ${selectedPaymentMethod}`,
+      5000
+    );
   };
-
-  const handleBadgePress = (value: string, isAmount: boolean) => {
-    if (isAmount) {
-      handleAmountChange(value.toString());
-    } else {
-      handleLitresChange(value.toString());
-    }
-  };
-
-  const amountList = [100, 300, 500, 1000, 2000, 3000, 5000, 7000, 8000, 10000];
-  const litreList = [1, 2, 3, 5, 7, 8, 10, 11, 12, 15, 18, 20, 25, 30];
 
   return (
-    <View flex={1} bg={COLORS.primary} pt={"$8"} px={"$4"}>
-      <View bg={COLORS.primary} elevation={5} borderRadius={20}>
-        <HStack
-          bg={COLORS.secondary}
-          elevation={5}
-          p={"$2"}
-          borderRadius={20}
-          justifyContent="space-evenly"
-        >
-          <TouchableOpacity
-            onPress={() => setSelectedFuel("petrol")}
-            style={[
-              styles.fuelButton,
-              {
-                borderColor:
-                  selectedFuel === "petrol" ? COLORS.tertiary : "gray",
-                backgroundColor:
-                  selectedFuel === "petrol" ? COLORS.primary : COLORS.secondary,
-              },
-            ]}
-          >
-            <Image
-              source={require("../../../assets/images/petrol.png")}
-              alt="petrol"
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => setSelectedFuel("diesel")}
-            style={[
-              styles.fuelButton,
-              {
-                borderColor:
-                  selectedFuel === "diesel" ? COLORS.tertiary : "gray",
-                backgroundColor:
-                  selectedFuel === "diesel" ? COLORS.primary : COLORS.secondary,
-              },
-            ]}
-          >
-            <Image
-              source={require("../../../assets/images/diesel.png")}
-              alt="diesel"
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => setSelectedFuel("cng")}
-            style={[
-              styles.fuelButton,
-              {
-                borderColor: selectedFuel === "cng" ? COLORS.tertiary : "gray",
-                backgroundColor:
-                  selectedFuel === "cng" ? COLORS.primary : COLORS.secondary,
-              },
-            ]}
-          >
-            <Image
-              source={require("../../../assets/images/cng.png")}
-              alt="cng"
-            />
-          </TouchableOpacity>
-        </HStack>
-
-        <VStack m={"$3"}>
-          <HStack justifyContent="center" gap={"$10"} alignItems="center">
-            <Text>Price: </Text>
-            <Text borderWidth={1} borderRadius={10} p={"$2"}>
-              {petrolPrice} / litre
-            </Text>
-          </HStack>
-
-          {/* amount input */}
-          <MyInput
-            value={amount}
-            onChange={handleAmountChange}
-            placeholder={"Enter Amount"}
-            errorText={"Enter the amount"}
-          />
-
-          {/* quick buttons for instant input */}
-          <ScrollBadges
-            list={amountList}
-            onPressFunction={(value: string) => handleBadgePress(value, true)}
-          />
-
-          {/* litres input */}
-          <MyInput
-            value={litres}
-            onChange={handleLitresChange}
-            placeholder={"Enter Litres"}
-            errorText={"Enter the number of litres"}
-          />
-
-          {/* quick buttons for instant input */}
-          <ScrollBadges
-            list={litreList}
-            onPressFunction={(value: string) => handleBadgePress(value, false)}
-          />
-        </VStack>
-      </View>
+    <View flex={1} bg={COLORS.primary} pt={"$1"} px={"$4"}>
+      {/* 
+      the top card of the screen containing the fuel type selection
+      and form controls for the amount ano no of litres
+       */}
+      <FuelTypeAmountCard
+        selectedFuel={selectedFuel}
+        setSelectedFuel={setSelectedFuel}
+        amount={amount}
+        setAmount={setAmount}
+        litres={litres}
+        setLitres={setLitres}
+      />
 
       {/* four images above the buy button for payment type selection */}
       <VStack bg={COLORS.primary} mt={"$2"} elevation={5} borderRadius={20}>
@@ -168,41 +89,42 @@ const Purchase = () => {
             image={require("../../../assets/images/cash.png")}
             alt={"cash"}
             title={"cash"}
-            myNumber={1}
-            selectedNumber={selectedPaymentMethod}
-            setSelectedNumber={setSelectedPaymentMethod}
+            selectedPaymentMethod={selectedPaymentMethod}
+            setSelectedPaymentMethod={setSelectedPaymentMethod}
           />
 
           <ImageButton
             image={require("../../../assets/images/app.png")}
             alt={"app"}
             title={"App"}
-            myNumber={2}
-            selectedNumber={selectedPaymentMethod}
-            setSelectedNumber={setSelectedPaymentMethod}
+            selectedPaymentMethod={selectedPaymentMethod}
+            setSelectedPaymentMethod={setSelectedPaymentMethod}
           />
 
           <ImageButton
             image={require("../../../assets/images/bonusPoints.png")}
             alt={"points"}
             title={"Points"}
-            myNumber={3}
-            selectedNumber={selectedPaymentMethod}
-            setSelectedNumber={setSelectedPaymentMethod}
+            selectedPaymentMethod={selectedPaymentMethod}
+            setSelectedPaymentMethod={setSelectedPaymentMethod}
           />
 
           <ImageButton
             image={require("../../../assets/images/app+points.png")}
             alt={"app+points"}
             title={"App + Points"}
-            myNumber={4}
-            selectedNumber={selectedPaymentMethod}
-            setSelectedNumber={setSelectedPaymentMethod}
+            selectedPaymentMethod={selectedPaymentMethod}
+            setSelectedPaymentMethod={setSelectedPaymentMethod}
           />
         </HStack>
 
         {/* buy button */}
-        <Button backgroundColor={COLORS.tertiary} mx={"$7"} my={"$5"}>
+        <Button
+          backgroundColor={COLORS.tertiary}
+          mx={"$7"}
+          my={"$5"}
+          onPress={onBuyPress}
+        >
           <ButtonText>Buy Now!</ButtonText>
         </Button>
       </VStack>
@@ -211,12 +133,3 @@ const Purchase = () => {
 };
 
 export default Purchase;
-
-const styles = StyleSheet.create({
-  fuelButton: {
-    borderWidth: 1,
-    borderRadius: 10,
-    elevation: 5,
-    padding: PERCENT[1],
-  },
-});

@@ -8,8 +8,8 @@ const ImageButton = ({
   alt,
   title,
   myNumber,
-  selectedNumber,
-  setSelectedNumber,
+  selectedPaymentMethod,
+  setSelectedPaymentMethod,
 }: any) => {
   return (
     <TouchableOpacity
@@ -18,22 +18,22 @@ const ImageButton = ({
         marginBottom: "2%",
         borderRadius: 20,
       }}
-      onPress={() => setSelectedNumber(myNumber)}
+      onPress={() => setSelectedPaymentMethod(alt)}
     >
       <Image
         backgroundColor={
-          selectedNumber === myNumber ? COLORS.secondary : "transparent"
+          selectedPaymentMethod === myNumber ? COLORS.secondary : "transparent"
         }
         alt={alt}
         source={image}
-        size={selectedNumber === myNumber ? "md" : "sm"}
+        size={selectedPaymentMethod === alt ? "md" : "sm"}
         borderWidth={1}
-        borderColor={selectedNumber === myNumber ? COLORS.tertiary : "gray"}
+        borderColor={selectedPaymentMethod === alt ? COLORS.tertiary : "gray"}
         borderRadius={15}
       />
       <Text
         size="xs"
-        color={selectedNumber === myNumber ? COLORS.tertiary : "gray"}
+        color={selectedPaymentMethod === alt ? COLORS.tertiary : "gray"}
       >
         {title}
       </Text>

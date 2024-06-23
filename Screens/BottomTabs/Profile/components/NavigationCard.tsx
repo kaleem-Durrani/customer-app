@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const NavigationCard = ({ name, title, onPress }: any) => {
   return (
     <View
-      bg="white"
+      bg={COLORS.secondary}
       elevation={5}
       borderRadius={20}
       p={"$3"}

@@ -109,6 +109,7 @@ const MapLocator: React.FC<{ navigation: any }> = ({ navigation }) => {
   if (!location) {
     return (
       <View style={styles.container}>
+        <TopRibbon navigation={navigation} title={"Pump Locator"} />
         <Text>Loading location...</Text>
       </View>
     );
@@ -187,6 +188,7 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+    marginTop: -10,
   },
 });
 

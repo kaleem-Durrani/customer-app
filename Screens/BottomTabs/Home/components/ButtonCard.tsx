@@ -16,9 +16,11 @@ const ButtonCard = ({ image, title, onPress }: any) => {
       elevation={4}
     >
       <TouchableOpacity onPress={onPress}>
-        <Image size="md" alt="something" source={image} />
+        <Image size="sm" alt="something" source={image} />
       </TouchableOpacity>
-      <Text alignSelf="center">{title}</Text>
+      <Text size="xs" alignSelf="center">
+        {title}
+      </Text>
     </View>
   );
 };

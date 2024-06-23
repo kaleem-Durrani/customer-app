@@ -1,5 +1,12 @@
-import React from "react";
-import { View, Text, ScrollView } from "@gluestack-ui/themed";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Center,
+  Spinner,
+  HStack,
+} from "@gluestack-ui/themed";
 import TransactionCard from "../components/TransactionCard"; // Import your TransactionCard component
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../Constants/Constants";
@@ -53,11 +60,39 @@ const organizeByMonth = (transactions: Transaction[]) => {
 };
 
 const TransactionHistory = () => {
-  const transactions = generateTransactions(20);
-  const transactionsByMonth = organizeByMonth(transactions);
-  const sortedMonths = Object.keys(transactionsByMonth).sort(
-    (a, b) => new Date(b) - new Date(a)
-  );
+  const [loading, setLoading] = useState(true);
+  const [transactionsByMonth, setTransactionsByMonth] = useState<
+    Record<string, Transaction[]>
+  >({});
+  const [sortedMonths, setSortedMonths] = useState<string[]>([]);
+
+  useEffect(() => {
+    const transactions = generateTransactions(20);
+    const transactionsByMonthData = organizeByMonth(transactions);
+    const sortedMonthsData = Object.keys(transactionsByMonthData).sort(
+      (a, b) => new Date(b) - new Date(a)
+    );
+
+    setTimeout(() => {
+      setTransactionsByMonth(transactionsByMonthData);
+      setSortedMonths(sortedMonthsData);
+      setLoading(false);
+    }, 2500); // Adjust this delay as per your requirement
+  }, []);
+
+  if (loading) {
+    return (
+      <Center flex={1}>
+        <HStack alignItems="center">
+          <Spinner size="large" />
+
+          <Text ml={"$3"} size="2xl">
+            Loading...
+          </Text>
+        </HStack>
+      </Center>
+    );
+  }
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>

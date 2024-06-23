@@ -7,7 +7,7 @@ import Purchase from "../../Screens/BottomTabs/Purchase/Purchase";
 import Profile from "../../Screens/BottomTabs/Profile/Profile";
 import { COLORS, HEIGHT, PERCENT } from "../../Constants/Constants";
 import { FontAwesome } from "@expo/vector-icons";
-import { Animated } from "react-native";
+import { Animated, Keyboard } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 // const Tab = createBottomTabNavigator();
@@ -19,6 +19,28 @@ export default function BottomTabNavigator() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const [opacity, setOpacity] = useState(new Animated.Value(0));
+
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setIsKeyboardOpen(true);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setIsKeyboardOpen(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   return (
     <Tab.Navigator
@@ -54,6 +76,7 @@ export default function BottomTabNavigator() {
         ],
         tabBarContentContainerStyle: [
           {
+            display: isKeyboardOpen ? "none" : "flex",
             // borderRadius: 50,
             // backgroundColor: "cyan",
             // padding: 10,
@@ -88,7 +111,7 @@ export default function BottomTabNavigator() {
           },
           null,
         ],
-        tabBarIcon: ({ color, size, focused }) => {
+        tabBarIcon: ({ color, focused }) => {
           let iconName;
           let iconColor = focused ? "white" : "gray";
 
