@@ -1,4 +1,11 @@
-import { View, Text, HStack, Image, VStack } from "@gluestack-ui/themed";
+import {
+  View,
+  Text,
+  HStack,
+  Image,
+  VStack,
+  Divider,
+} from "@gluestack-ui/themed";
 import React, { useState } from "react";
 import { COLORS, PERCENT } from "../../../../Constants/Constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -126,34 +133,41 @@ const FuelTypeAmountCard = ({
             {petrolPrice} / litre
           </Text>
         </HStack>
+        {/* <Divider mt={"$3"} /> */}
 
         {/* amount input */}
-        <MyInput
-          value={amount}
-          onChange={handleAmountChange}
-          placeholder={"Enter Amount"}
-          errorText={"Enter the amount"}
-        />
+        <HStack alignItems="center" mb={"$5"}>
+          <MyInput
+            value={amount}
+            onChange={handleAmountChange}
+            placeholder={"Enter Amount"}
+            errorText={"Enter the amount"}
+          />
 
-        {/* quick buttons for instant input */}
-        <ScrollBadges
-          list={amountList}
-          onPressFunction={(value: string) => handleBadgePress(value, true)}
-        />
+          {/* quick buttons for instant input */}
+          <ScrollBadges
+            list={amountList}
+            onPressFunction={(value: string) => handleBadgePress(value, true)}
+          />
+        </HStack>
+
+        <Divider />
 
         {/* litres input */}
-        <MyInput
-          value={litres}
-          onChange={handleLitresChange}
-          placeholder={"Enter Litres"}
-          errorText={"Enter the number of litres"}
-        />
+        <HStack alignItems="center">
+          <MyInput
+            value={litres}
+            onChange={handleLitresChange}
+            placeholder={"Enter Litres"}
+            errorText={"Enter the number of litres"}
+          />
 
-        {/* quick buttons for instant input */}
-        <ScrollBadges
-          list={litreList}
-          onPressFunction={(value: string) => handleBadgePress(value, false)}
-        />
+          {/* quick buttons for instant input */}
+          <ScrollBadges
+            list={litreList}
+            onPressFunction={(value: string) => handleBadgePress(value, false)}
+          />
+        </HStack>
       </VStack>
     </View>
   );

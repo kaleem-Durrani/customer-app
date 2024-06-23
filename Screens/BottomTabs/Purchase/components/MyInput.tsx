@@ -14,6 +14,7 @@ import React from "react";
 const MyInput = ({ value, onChange, placeholder, errorText }: any) => {
   return (
     <FormControl
+      w={"$3/5"}
       m={"$3"}
       isDisabled={false}
       isInvalid={false}

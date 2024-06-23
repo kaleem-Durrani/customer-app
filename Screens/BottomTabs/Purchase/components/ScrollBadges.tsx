@@ -1,12 +1,26 @@
-import { View, Text, ScrollView, HStack } from "@gluestack-ui/themed";
-import React from "react";
+import { View, Text, ScrollView, HStack, VStack } from "@gluestack-ui/themed";
+import React, { useEffect, useRef } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { COLORS } from "../../../../Constants/Constants";
 
 const ScrollBadges = ({ list, onPressFunction }: any) => {
+  const scrollViewRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollViewRef.current) {
+      // Scroll to a specific position after the component has mounted
+      scrollViewRef.current.scrollTo({ y: 108, animated: true }); // Adjust y to the desired position
+    }
+  }, []);
+
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} mt={"$3"}>
-      <HStack>
+    <ScrollView
+      ref={scrollViewRef}
+      showsVerticalScrollIndicator={false}
+      mt={"$3"}
+      h={"$24"}
+    >
+      <VStack>
         {list.map((listItem: any) => (
           <View
             key={listItem}
@@ -25,7 +39,7 @@ const ScrollBadges = ({ list, onPressFunction }: any) => {
             </TouchableOpacity>
           </View>
         ))}
-      </HStack>
+      </VStack>
     </ScrollView>
   );
 };

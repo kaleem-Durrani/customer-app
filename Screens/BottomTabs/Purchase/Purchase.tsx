@@ -1,18 +1,6 @@
-import {
-  View,
-  Text,
-  HStack,
-  Image,
-  VStack,
-  Button,
-  ButtonText,
-} from "@gluestack-ui/themed";
+import { View, HStack, VStack, Button, ButtonText } from "@gluestack-ui/themed";
 import React, { useState } from "react";
-import { COLORS, PERCENT } from "../../../Constants/Constants";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { StyleSheet } from "react-native";
-import ScrollBadges from "./components/ScrollBadges";
-import MyInput from "./components/MyInput";
+import { COLORS } from "../../../Constants/Constants";
 import ImageButton from "./components/ImageButton";
 import FuelTypeAmountCard from "./components/FuelTypeAmountCard";
 import MyToast from "../../../components/MyToast";
