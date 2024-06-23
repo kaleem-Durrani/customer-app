@@ -12,77 +12,57 @@ const InfoNavCard = ({ navigation }: any) => {
       bg={COLORS.primary}
       overflow="visible"
       elevation={5}
-      m={"$3"}
-      // p={"$3"}
+      m={"$2"}
     >
       <LinearGradient
-        colors={["#f5f7fa", "#c3cfe2"]}
+        colors={[COLORS.secondary, COLORS.primary]}
         start={[0, 0]}
         end={[1, 1]}
         style={{
           borderRadius: 20,
-          padding: 16,
+          padding: PERCENT[3],
           elevation: 6,
         }}
       >
-        <HStack justifyContent="space-between">
-          <VStack flex={1} justifyContent="space-between">
-            <LinearGradient
-              colors={["#e0eafc", "#cfdef3"]}
-              start={[0, 0]}
-              end={[1, 1]}
-              style={{
-                borderRadius: 10,
-                padding: 16,
-                alignItems: "center",
-                marginBottom: 16,
-                elevation: 5,
-              }}
-            >
-              <Text size="lg" color={COLORS.activeText}>
-                Balance
-              </Text>
-              {/* <Divider my={"$2"} /> */}
-              <Text size="lg" color={COLORS.activeText}>
-                1000
-              </Text>
-            </LinearGradient>
-
-            <LinearGradient
-              colors={[COLORS.primary, COLORS.secondary]}
-              start={[1, 1]}
-              end={[0, 1]}
-              style={{
-                borderRadius: 10,
-                padding: 16,
-                alignItems: "center",
-                elevation: 5,
-              }}
-            >
-              <Text size="lg" color={COLORS.activeText}>
-                Points
-              </Text>
-              {/* <Divider my={"$2"} /> */}
-              <Text size="lg" color={COLORS.activeText}>
-                100
-              </Text>
-            </LinearGradient>
-          </VStack>
-
+        <HStack justifyContent="space-between" gap={"$3"}>
           <LinearGradient
-            colors={["#e0eafc", "#cfdef3"]}
-            start={[0, 0]}
-            end={[1, 1]}
+            colors={[COLORS.secondary, COLORS.primary]}
+            start={[1, 0]}
+            end={[0.3, 1]}
             style={{
               borderRadius: 10,
-              padding: 16,
-              alignItems: "center",
               flex: 1,
-              marginLeft: 16,
-              elevation: 5,
+              paddingLeft: PERCENT[2],
             }}
           >
-            <Text size="lg" color={COLORS.activeText}>
+            <Text size="lg" color={COLORS.text}>
+              Balance
+            </Text>
+
+            <Text ml={"$2"} size="md" color={COLORS.activeText}>
+              1000
+            </Text>
+            <Divider my={"$1"} />
+            <Text size="lg" color={COLORS.text}>
+              Points
+            </Text>
+            <Text ml={"$2"} size="md" color={COLORS.activeText}>
+              100
+            </Text>
+          </LinearGradient>
+
+          <LinearGradient
+            colors={[COLORS.secondary, COLORS.primary]}
+            start={[1, 0]}
+            end={[0.4, 1]}
+            style={{
+              borderRadius: 10,
+              alignItems: "center",
+              flex: 1,
+              // elevation: 5,
+            }}
+          >
+            <Text size="lg" color={COLORS.text}>
               Fuel Price
             </Text>
             <Text

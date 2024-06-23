@@ -5,25 +5,29 @@ import {
   VStack,
   Image,
   Divider,
+  Center,
 } from "@gluestack-ui/themed";
 import React from "react";
 import ButtonCard from "./components/ButtonCard";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import InfoNavCard from "./components/InfoNavCard";
+import MiniMap from "./components/MiniMap";
 
 const Home = ({ navigation }: any) => {
   return (
     <View flex={1} pt={"$1"} px={"$4"} bg={COLORS.primary}>
-      <Text fontWeight="bold" size="3xl" color={COLORS.activeText}>
+      <Text ml={"$2"} fontWeight="bold" size="3xl" color={COLORS.activeText}>
         Hello Nick
       </Text>
-      <Text mt={-6} mb={"$3"} size="sm" color="gray">
+      <Text ml={"$2"} mt={-6} mb={"$1"} size="sm" color="gray">
         Good Morning
       </Text>
 
       {/* info and navigation card */}
       <InfoNavCard navigation={navigation} />
+
+      {/* cards for map locator loyalty screen and faqs */}
 
       <HStack justifyContent="space-evenly" mt={"$5"}>
         <ButtonCard
@@ -42,6 +46,17 @@ const Home = ({ navigation }: any) => {
           onPress={() => navigation.navigate("FAQs")}
         />
       </HStack>
+
+      <Center
+        flex={1}
+        h={"$56"}
+        my={"$3"}
+        mx={"$2"}
+        borderRadius={10}
+        overflow="hidden"
+      >
+        <MiniMap />
+      </Center>
     </View>
   );
 };
