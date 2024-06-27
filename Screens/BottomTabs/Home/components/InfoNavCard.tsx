@@ -11,7 +11,7 @@ const InfoNavCard = ({ navigation }: any) => {
       borderRadius={20}
       bg={COLORS.primary}
       overflow="visible"
-      elevation={5}
+      elevation={2}
       m={"$2"}
     >
       <LinearGradient
@@ -21,7 +21,7 @@ const InfoNavCard = ({ navigation }: any) => {
         style={{
           borderRadius: 20,
           padding: PERCENT[3],
-          elevation: 6,
+          elevation: 2,
         }}
       >
         <HStack justifyContent="space-between" gap={"$3"}>

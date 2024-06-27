@@ -7,14 +7,17 @@ import {
   HStack,
   ScrollView,
 } from "@gluestack-ui/themed";
-import React from "react";
+import React, { useContext } from "react";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
 import RecordCard from "./components/RecordCard";
 import NavigationCard from "./components/NavigationCard";
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { AuthContext } from "../../../Contexts/AuthContext";
 
 const Profile = ({ navigation }: any) => {
+  const { user, setUser } = useContext(AuthContext);
+
   return (
     <View mt={"$0"} bg={COLORS.primary} flex={1}>
       <LinearGradient
@@ -112,7 +115,7 @@ const Profile = ({ navigation }: any) => {
           <NavigationCard
             name={"log-out"}
             title={"Logout"}
-            onPress={() => console.log("Log out clicked")}
+            onPress={() => setUser(false)}
           />
         </View>
       </ScrollView>

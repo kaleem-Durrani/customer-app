@@ -10,178 +10,159 @@ import {
   HStack,
   Divider,
   ScrollView,
+  Image,
 } from "@gluestack-ui/themed";
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { PERCENT } from "../../../Constants/Constants";
-import { FontAwesome6 } from "@expo/vector-icons";
+import { COLORS, PERCENT } from "../../../Constants/Constants";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function Signup({ navigation }: any) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.backArrow}
-        onPress={() => navigation.goBack()}
+    <View flex={1}>
+      <LinearGradient
+        colors={[COLORS.tertiary, COLORS.secondary]}
+        start={[0.1, 0.7]}
+        end={[1, -0.3]}
+        style={{
+          position: "relative",
+          top: 0,
+          height: "40%",
+          elevation: 5,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        <FontAwesome6 name="arrow-left-long" size={40} color="white" />
-      </TouchableOpacity>
-      <Text style={styles.text}>Sign up</Text>
+        <Image
+          source={require("../../../assets/images//auth/signup.png")}
+          alt="login"
+          size="2xl"
+          mb={"$12"}
+        />
+      </LinearGradient>
 
-      <View py={"$4"} style={styles.loginArea}>
-        <Text style={styles.heading}>Create your Account</Text>
-
-        <Text mt={"$3"} style={styles.subHeading}>
-          Enter your details below
+      <View
+        flex={1}
+        elevation={5}
+        bg={COLORS.secondary}
+        mt={"-$8"}
+        pt={"$4"}
+        px={"$10"}
+        borderTopLeftRadius={PERCENT[8]}
+        borderTopRightRadius={PERCENT[8]}
+      >
+        <Text fontWeight="bold" size="2xl" alignSelf="center">
+          Sign Up for Free
         </Text>
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ alignItems: "center" }}
-        >
-          {/* Name input */}
-
-          <Text mt={"$3"} style={styles.inputLogo}>
-            User name
-          </Text>
-          <Input
-            variant="rounded"
-            size="lg"
-            isDisabled={false}
-            isInvalid={false}
-            isReadOnly={false}
-          >
-            <InputSlot ml={"$3"}>
-              <FontAwesome6 name="user" size={20} color="gray" />
-            </InputSlot>
-            <InputField placeholder="Enter your Name" />
-          </Input>
-
-          {/* email input */}
-
-          <Text mt={"$3"} style={styles.inputLogo}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {/* email */}
+          <Text fontWeight="bold" color={COLORS.activeText} mt={"$6"}>
             Email
           </Text>
-          <Input
-            variant="rounded"
-            size="lg"
-            isDisabled={false}
-            isInvalid={false}
-            isReadOnly={false}
-          >
-            <InputSlot ml={"$3"}>
-              <FontAwesome6 name="envelope" size={20} color="gray" />
-            </InputSlot>
-            <InputField placeholder="Enter your Email" />
+          <Input variant="outline" size="lg" mt={"$1"}>
+            <InputField size="md" placeholder="Your Email Address" />
           </Input>
 
-          {/* password input */}
-
-          <Text mt={"$3"} style={styles.inputLogo}>
+          {/* password  */}
+          <Text fontWeight="bold" color={COLORS.activeText} mt={"$3"}>
             Password
           </Text>
-          <Input
-            variant="rounded"
-            size="lg"
-            isDisabled={false}
-            isInvalid={false}
-            isReadOnly={false}
-          >
-            <InputSlot ml={"$3"}>
-              <FontAwesome6 name="lock" size={20} color="gray" />
-            </InputSlot>
+          <Input variant="outline" size="lg" mt={"$1"}>
             <InputField
+              size="md"
+              placeholder="Your Password"
               type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
             />
-            <InputSlot mr={"$2"}>
+            <InputSlot mr={"$3"} bg={COLORS.secondary}>
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <FontAwesome6
-                  name={showPassword ? "eye" : "eye-slash"}
-                  size={20}
-                  color="gray"
+                <Ionicons
+                  name={showPassword ? "eye-outline" : "eye-off-outline"}
+                  size={24}
+                  color={showPassword ? COLORS.tertiary : "gray"}
                 />
               </TouchableOpacity>
             </InputSlot>
           </Input>
 
-          {/* Confirm Pasword */}
+          {/* confirm password */}
 
-          <Text mt={"$3"} style={styles.inputLogo}>
-            Confirm password
+          <Text fontWeight="bold" color={COLORS.activeText} mt={"$3"}>
+            Confirm Password
           </Text>
-          <Input
-            variant="rounded"
-            size="lg"
-            isDisabled={false}
-            isInvalid={false}
-            isReadOnly={false}
-          >
-            <InputSlot ml={"$3"}>
-              <FontAwesome6 name="lock" size={20} color="gray" />
-            </InputSlot>
+          <Input variant="outline" size="lg" mt={"$1"}>
             <InputField
+              size="md"
+              placeholder="Your Confirm Password"
               type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
             />
-            <InputSlot mr={"$2"}>
+            <InputSlot mr={"$3"} bg={COLORS.secondary}>
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <FontAwesome6
-                  name={showPassword ? "eye" : "eye-slash"}
-                  size={20}
-                  color="gray"
+                <Ionicons
+                  name={showPassword ? "eye-outline" : "eye-off-outline"}
+                  size={24}
+                  color={showPassword ? COLORS.tertiary : "gray"}
                 />
               </TouchableOpacity>
             </InputSlot>
           </Input>
 
+          {/* sign up button */}
           <Button
-            bg="#0ea5e9"
-            mt={"$4"}
-            w={"$full"}
-            onPress={() => navigation.goBack()}
+            mt={"$8"}
+            borderRadius={PERCENT[3]}
+            onPress={() => {
+              console.log("Sign up button clicked");
+              // alert("yoo");
+            }}
           >
-            <ButtonText>Sign up</ButtonText>
+            <ButtonText>Sign Up</ButtonText>
           </Button>
 
-          <HStack mt={"$3"} alignItems="center">
-            <Divider />
-            <Text>Or sign up with</Text>
-            <Divider />
+          <Text alignSelf="center" mt={"$6"}>
+            or Sign in with
+          </Text>
+
+          {/* google and facebook buttons */}
+          <HStack mt={"$3"} alignSelf="center" gap={PERCENT[10]}>
+            <TouchableOpacity
+              style={{
+                overflow: "hidden",
+                elevation: 1,
+                backgroundColor: COLORS.primary,
+                borderRadius: PERCENT[3],
+              }}
+            >
+              <View py={"$2"} px={"$3"}>
+                <FontAwesome name="google" size={PERCENT[12]} color="#ea580c" />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                overflow: "hidden",
+                elevation: 1,
+                backgroundColor: COLORS.primary,
+                borderRadius: PERCENT[3],
+              }}
+            >
+              <View py={"$2"} px={"$3"}>
+                <FontAwesome
+                  name="facebook-square"
+                  size={PERCENT[12]}
+                  color="blue"
+                />
+              </View>
+            </TouchableOpacity>
           </HStack>
 
-          <HStack mt={"$3"} gap={5}>
-            <HStack
-              flex={1}
-              p={"$3"}
-              justifyContent="center"
-              gap={10}
-              borderWidth={2}
-              borderColor="lightgray"
-              borderRadius={10}
-            >
-              <FontAwesome6 name="google" size={24} color="orange" />
-              <Text>Google</Text>
-            </HStack>
-            <HStack
-              flex={1}
-              p={"$3"}
-              justifyContent="center"
-              gap={10}
-              borderWidth={2}
-              borderColor="lightgray"
-              borderRadius={10}
-            >
-              <FontAwesome6 name="facebook" size={24} color="blue" />
-              <Text>Facebook</Text>
-            </HStack>
-          </HStack>
-
-          <HStack my={"$4"}>
-            <Text>Already have an account ? </Text>
+          <HStack alignSelf="center" alignItems="flex-end" mt={"$10"} mb={"$6"}>
+            <Text>Already have an Account? </Text>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Text style={styles.linkText}>Sign in</Text>
+              <Text color={COLORS.activeText}>Sign in</Text>
             </TouchableOpacity>
           </HStack>
         </ScrollView>
@@ -190,65 +171,4 @@ export default function Signup({ navigation }: any) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#7dd3fc",
-  },
-  text: {
-    marginTop: "15%",
-    alignSelf: "center",
-    color: "white",
-    fontSize: 50,
-    fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.4)", // Shadow color
-    textShadowOffset: { width: 2, height: 3 }, // Shadow offset
-    textShadowRadius: 3, // Shadow radius
-  },
-  loginArea: {
-    flex: 1,
-    marginTop: "20%",
-    backgroundColor: "white",
-    borderTopLeftRadius: PERCENT[15],
-    borderTopRightRadius: PERCENT[15],
-    elevation: 10,
-    paddingHorizontal: "10%",
-  },
-  backArrow: {
-    position: "absolute",
-    margin: "3%",
-    zIndex: 5,
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 100,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputLogo: {
-    color: "#0ea5e9",
-    fontSize: PERCENT[4],
-    alignSelf: "flex-start",
-    marginLeft: PERCENT[3],
-    fontWeight: "bold",
-    marginBottom: PERCENT[1],
-  },
-  heading: {
-    marginTop: "3%",
-    fontWeight: "bold",
-    fontSize: PERCENT[8],
-    alignSelf: "center",
-  },
-  subHeading: {
-    fontSize: PERCENT[4],
-    marginVertical: "3%",
-    alignSelf: "center",
-  },
-  linkText: {
-    color: "#0ea5e9",
-  },
-  textShadow: {
-    textShadowColor: "rgba(0, 0, 0, 0.4)", // Shadow color
-    textShadowOffset: { width: 2, height: 3 }, // Shadow offset
-    textShadowRadius: 3,
-  },
-});
+const styles = StyleSheet.create({});

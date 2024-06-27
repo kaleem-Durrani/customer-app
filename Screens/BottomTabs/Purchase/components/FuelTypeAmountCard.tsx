@@ -6,12 +6,13 @@ import {
   VStack,
   Divider,
 } from "@gluestack-ui/themed";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { COLORS, PERCENT } from "../../../../Constants/Constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ScrollBadges from "./ScrollBadges";
 import MyInput from "./MyInput";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Animated, Easing } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const FuelTypeAmountCard = ({
   selectedFuel,
@@ -25,6 +26,38 @@ const FuelTypeAmountCard = ({
 
   const amountList = [100, 300, 500, 1000, 2000, 3000, 5000, 7000, 8000, 10000];
   const litreList = [1, 2, 3, 5, 7, 8, 10, 11, 12, 15, 18, 20, 25, 30];
+
+  const petrolSizeAnim = useRef(new Animated.Value(0)).current;
+  const dieselSizeAnim = useRef(new Animated.Value(0)).current;
+  const cngSizeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    animateSize(petrolSizeAnim, selectedFuel === "petrol" ? 1 : 0);
+    animateSize(dieselSizeAnim, selectedFuel === "diesel" ? 1 : 0);
+    animateSize(cngSizeAnim, selectedFuel === "cng" ? 1 : 0);
+  }, [selectedFuel]);
+
+  const animateSize = (animValue, toValue) => {
+    Animated.timing(animValue, {
+      toValue,
+      duration: 300,
+      easing: Easing.out(Easing.exp),
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const getSizeStyle = (animValue) => {
+    return {
+      width: animValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [PERCENT[17], PERCENT[22]],
+      }),
+      height: animValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: [PERCENT[17], PERCENT[22]],
+      }),
+    };
+  };
 
   //   when amount is entered to the first form control it automatically
   //   updates the litres
@@ -66,65 +99,92 @@ const FuelTypeAmountCard = ({
   };
 
   return (
-    <View bg={COLORS.primary} elevation={5} borderRadius={20}>
-      <HStack
-        bg={COLORS.secondary}
-        elevation={5}
-        p={"$2"}
-        borderRadius={20}
-        justifyContent="space-evenly"
+    <View bg={COLORS.primary} elevation={2} borderRadius={20}>
+      <LinearGradient
+        colors={[
+          COLORS.secondary,
+          COLORS.primary,
+          COLORS.secondary,
+          COLORS.primary,
+          COLORS.secondary,
+        ]}
+        start={[0, -1]}
+        end={[1, 1]}
+        style={{
+          backgroundColor: "white",
+          elevation: 5,
+          overflow: "hidden",
+          borderRadius: 20,
+          // borderBottomRightRadius: PERCENT[8],
+          // borderBottomLeftRadius: PERCENT[8],
+          // zIndex: 1000,
+        }}
       >
-        <TouchableOpacity
-          onPress={() => setSelectedFuel("petrol")}
-          style={[
-            styles.fuelButton,
-            {
-              borderColor: selectedFuel === "petrol" ? COLORS.tertiary : "gray",
-              backgroundColor:
-                selectedFuel === "petrol" ? COLORS.primary : COLORS.secondary,
-            },
-          ]}
+        <HStack
+          // bg={COLORS.secondary}
+          // elevation={4}
+          p={"$2"}
+          // borderRadius={20}
+          justifyContent="space-evenly"
+          minHeight={"$32"}
         >
-          <Image
-            source={require("../../../../assets/images/petrol.png")}
-            alt="petrol"
-          />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setSelectedFuel("petrol")}
+            style={[
+              styles.fuelButton,
+              {
+                borderColor:
+                  selectedFuel === "petrol" ? COLORS.tertiary : "gray",
+                backgroundColor:
+                  selectedFuel === "petrol" ? COLORS.primary : "#f7f7f7",
+              },
+            ]}
+          >
+            <Animated.Image
+              style={[styles.image, getSizeStyle(petrolSizeAnim)]}
+              source={require("../../../../assets/images/petrol.png")}
+              alt="petrol"
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => setSelectedFuel("diesel")}
-          style={[
-            styles.fuelButton,
-            {
-              borderColor: selectedFuel === "diesel" ? COLORS.tertiary : "gray",
-              backgroundColor:
-                selectedFuel === "diesel" ? COLORS.primary : COLORS.secondary,
-            },
-          ]}
-        >
-          <Image
-            source={require("../../../../assets/images/diesel.png")}
-            alt="diesel"
-          />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setSelectedFuel("diesel")}
+            style={[
+              styles.fuelButton,
+              {
+                borderColor:
+                  selectedFuel === "diesel" ? COLORS.tertiary : "gray",
+                backgroundColor:
+                  selectedFuel === "diesel" ? COLORS.primary : "#f7f7f7",
+              },
+            ]}
+          >
+            <Animated.Image
+              style={[styles.image, getSizeStyle(dieselSizeAnim)]}
+              source={require("../../../../assets/images/diesel.png")}
+              alt="diesel"
+            />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => setSelectedFuel("cng")}
-          style={[
-            styles.fuelButton,
-            {
-              borderColor: selectedFuel === "cng" ? COLORS.tertiary : "gray",
-              backgroundColor:
-                selectedFuel === "cng" ? COLORS.primary : COLORS.secondary,
-            },
-          ]}
-        >
-          <Image
-            source={require("../../../../assets/images/cng.png")}
-            alt="cng"
-          />
-        </TouchableOpacity>
-      </HStack>
+          <TouchableOpacity
+            onPress={() => setSelectedFuel("cng")}
+            style={[
+              styles.fuelButton,
+              {
+                borderColor: selectedFuel === "cng" ? COLORS.tertiary : "gray",
+                backgroundColor:
+                  selectedFuel === "cng" ? COLORS.primary : "#f7f7f7",
+              },
+            ]}
+          >
+            <Animated.Image
+              style={[styles.image, getSizeStyle(cngSizeAnim)]}
+              source={require("../../../../assets/images/cng.png")}
+              alt="cng"
+            />
+          </TouchableOpacity>
+        </HStack>
+      </LinearGradient>
 
       <VStack m={"$3"}>
         <HStack justifyContent="center" gap={"$10"} alignItems="center">
@@ -181,5 +241,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 5,
     padding: PERCENT[1],
+  },
+  image: {
+    resizeMode: "contain",
   },
 });

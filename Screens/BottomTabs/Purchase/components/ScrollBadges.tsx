@@ -1,7 +1,8 @@
 import { View, Text, ScrollView, HStack, VStack } from "@gluestack-ui/themed";
 import React, { useEffect, useRef } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { COLORS } from "../../../../Constants/Constants";
+import { COLORS, PERCENT } from "../../../../Constants/Constants";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ScrollBadges = ({ list, onPressFunction }: any) => {
   const scrollViewRef = useRef(null);
@@ -22,22 +23,34 @@ const ScrollBadges = ({ list, onPressFunction }: any) => {
     >
       <VStack>
         {list.map((listItem: any) => (
-          <View
+          <LinearGradient
             key={listItem}
-            minWidth={"$11"}
-            bg={COLORS.secondary}
-            borderRadius={15}
-            m={"$2"}
-            elevation={5}
-            alignItems="center"
-            justifyContent="center"
+            colors={[
+              COLORS.secondary,
+              COLORS.primary,
+              COLORS.secondary,
+              COLORS.primary,
+              COLORS.secondary,
+            ]}
+            start={[0.4, -0.5]}
+            end={[1, 0.9]}
+            style={{
+              minWidth: PERCENT[5],
+              margin: PERCENT[2],
+              backgroundColor: COLORS.primary,
+              elevation: 1,
+              borderRadius: PERCENT[5],
+              overflow: "hidden",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <TouchableOpacity onPress={() => onPressFunction(listItem)}>
-              <Text p={"$3"} color={COLORS.tertiary}>
+              <Text fontWeight="bold" p={"$3"} color={COLORS.tertiary}>
                 {listItem}
               </Text>
             </TouchableOpacity>
-          </View>
+          </LinearGradient>
         ))}
       </VStack>
     </ScrollView>

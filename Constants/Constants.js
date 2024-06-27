@@ -5,11 +5,46 @@ const { width, height } = Dimensions.get("window");
 
 export const COLORS = {
   primary: "#FFF",
-  secondary: "#F3EEFC",
-  tertiary: "#D14DA5",
+  secondary: "#ebeeff",
+  tertiary: "#296DCE",
   text: "#000",
-  activeText: "#D14DA5",
+  activeText: "#296DCE",
 };
+
+// blue and titan white (light blue)
+// primary: "#FFF",
+//   secondary: "#ebeeff",
+//   tertiary: "#296DCE",
+//   text: "#000",
+//   activeText: "#296DCE",
+
+// blue and light blue
+// primary: "#FFF",
+//   secondary: "#dae4fe",
+//   tertiary: "#296DCE",
+//   text: "#000",
+//   activeText: "#296DCE",
+
+// pink light purple
+// primary: "#FFF",
+//   secondary: "#F3EEFC",
+//   tertiary: "#D14DA5",
+//   text: "#000",
+//   activeText: "#D14DA5",
+
+// brown and light brown
+// primary: "#F8F4E1",
+// secondary: "#AF8F6F",
+// tertiary: "#543310",
+// text: "#000",
+// activeText: "#D14DA5",
+
+// green and light green
+// primary: "#FFF",
+// secondary: "#E3F6DF",
+// tertiary: "#46B030",
+// text: "#000",
+// activeText: "#D14DA5",
 
 export const HEIGHT = height;
 export const WIDTH = width;

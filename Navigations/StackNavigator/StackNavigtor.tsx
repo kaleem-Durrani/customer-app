@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../../Screens/Auth/Login/Login";
 import Signup from "../../Screens/Auth/Signup/Signup";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import BottomTabNavigator from "../BottomTabNavigator/BottomTabNavigator";
 import HistoryTopTabNavigator from "../HistoryTopTabNavigator/HistoryTopTabNavigator";
 import TopUp from "../../Screens/TopUp/TopUp";
@@ -16,13 +16,14 @@ import CustomerSupport from "../../Screens/ProfileTabInnerScreens/CustomerSuppor
 import PrivacyPolicy from "../../Screens/ProfileTabInnerScreens/PrivacyPolicy/PrivacyPolicy";
 import HistoryContainer from "../HistoryTopTabNavigator/HistoryContainer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { AuthContext } from "../../Contexts/AuthContext";
 
 // const Stack = createStackNavigator();
 
 const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
-  const [user, setUser] = useState(true);
+  const { user, setUser } = useContext(AuthContext);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

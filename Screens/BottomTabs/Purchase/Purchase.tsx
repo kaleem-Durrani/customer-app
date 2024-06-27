@@ -8,12 +8,13 @@ import {
   Text,
   Center,
 } from "@gluestack-ui/themed";
-import { TouchableOpacity } from "react-native-gesture-handler";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 import { COLORS } from "../../../Constants/Constants";
 import ImageButton from "./components/ImageButton";
 import FuelTypeAmountCard from "./components/FuelTypeAmountCard";
 import MyToast from "../../../components/MyToast";
 import QRModal from "./components/QRModal";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface QRDictionary {
   selectedFuel: string;
@@ -97,12 +98,17 @@ const Purchase = () => {
       />
 
       {/* four images above the buy button for payment type selection */}
-      <VStack bg={COLORS.primary} mt={"$2"} elevation={5} borderRadius={20}>
-        <HStack justifyContent="space-evenly" mx={"$2"} mt={"$6"}>
+      <VStack bg={COLORS.primary} mt={"$2"} elevation={2} borderRadius={20}>
+        <HStack
+          justifyContent="space-evenly"
+          mx={"$2"}
+          mt={"$6"}
+          minHeight={"$32"}
+        >
           <ImageButton
             image={require("../../../assets/images/cash.png")}
             alt={"cash"}
-            title={"cash"}
+            title={"Cash"}
             selectedPaymentMethod={selectedPaymentMethod}
             setSelectedPaymentMethod={setSelectedPaymentMethod}
           />
@@ -133,14 +139,21 @@ const Purchase = () => {
         </HStack>
 
         {/* Buy button */}
-        <Button
-          backgroundColor={COLORS.tertiary}
-          mx={"$7"}
-          my={"$5"}
-          onPress={onBuyPress}
-        >
-          <ButtonText>Buy Now!</ButtonText>
-        </Button>
+
+        {/* giving a gluestack button a background color makes it lose its visual press effect
+            wrapping it in a touchable opacity brings back that press animation or visual effect
+        */}
+
+        <TouchableOpacity>
+          <Button
+            backgroundColor={COLORS.tertiary}
+            mx={"$7"}
+            my={"$5"}
+            onPress={onBuyPress}
+          >
+            <ButtonText>Buy Now!</ButtonText>
+          </Button>
+        </TouchableOpacity>
       </VStack>
       <QRModal
         showModal={showModal}
