@@ -22,8 +22,39 @@ export default function Login({ navigation }: any) {
   const { user, setUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const toast = MyToast();
 
+  const handleLogin = async () => {
+    // verify email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.match(emailRegex)) {
+      toast.show(
+        "accent",
+        "error",
+        "Invalid email",
+        "Please enter a valid email",
+        3000
+      );
+      return;
+    }
+
+    // make sure password length is at least 6
+    if (password.length < 6) {
+      toast.show(
+        "accent",
+        "error",
+        "Invalid Password Length",
+        "Please enter a password of at least 6 characters",
+        3000
+      );
+      return;
+    }
+
+    console.log("calling api");
+  };
   return (
     <View flex={1}>
       <LinearGradient
@@ -65,7 +96,12 @@ export default function Login({ navigation }: any) {
           Email
         </Text>
         <Input variant="outline" size="lg" mt={"$1"}>
-          <InputField size="md" placeholder="Your Email Address" />
+          <InputField
+            size="md"
+            placeholder="Your Email Address"
+            value={email}
+            onChangeText={setEmail}
+          />
         </Input>
 
         <Text fontWeight="bold" color={COLORS.activeText} mt={"$3"}>
@@ -76,6 +112,8 @@ export default function Login({ navigation }: any) {
             size="md"
             placeholder="Your Password"
             type={showPassword ? "text" : "password"}
+            value={password}
+            onChangeText={setPassword}
           />
           <InputSlot mr={"$3"} bg={COLORS.secondary}>
             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>

@@ -103,7 +103,7 @@ const Purchase = () => {
           justifyContent="space-evenly"
           mx={"$2"}
           mt={"$6"}
-          minHeight={"$32"}
+          minHeight={"$1/6"}
         >
           <ImageButton
             image={require("../../../assets/images/cash.png")}

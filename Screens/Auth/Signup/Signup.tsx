@@ -50,6 +50,8 @@ export default function Signup({ navigation }: any) {
         elevation={5}
         bg={COLORS.secondary}
         mt={"-$8"}
+        zIndex={5}
+        // mx={"$3"}
         pt={"$4"}
         px={"$10"}
         borderTopLeftRadius={PERCENT[8]}
@@ -60,12 +62,28 @@ export default function Signup({ navigation }: any) {
         </Text>
 
         <ScrollView showsVerticalScrollIndicator={false}>
-          {/* email */}
+          {/* name */}
           <Text fontWeight="bold" color={COLORS.activeText} mt={"$6"}>
+            Name
+          </Text>
+          <Input variant="outline" size="lg" mt={"$1"}>
+            <InputField size="md" placeholder="Your Name" />
+          </Input>
+
+          {/* email */}
+          <Text fontWeight="bold" color={COLORS.activeText} mt={"$3"}>
             Email
           </Text>
           <Input variant="outline" size="lg" mt={"$1"}>
             <InputField size="md" placeholder="Your Email Address" />
+          </Input>
+
+          {/* phone Number */}
+          <Text fontWeight="bold" color={COLORS.activeText} mt={"$3"}>
+            Phone Number
+          </Text>
+          <Input variant="outline" size="lg" mt={"$1"}>
+            <InputField size="md" placeholder="Your Phone Number" />
           </Input>
 
           {/* password  */}
@@ -113,7 +131,7 @@ export default function Signup({ navigation }: any) {
 
           {/* sign up button */}
           <Button
-            mt={"$8"}
+            mt={"$6"}
             borderRadius={PERCENT[3]}
             onPress={() => {
               console.log("Sign up button clicked");
@@ -123,7 +141,7 @@ export default function Signup({ navigation }: any) {
             <ButtonText>Sign Up</ButtonText>
           </Button>
 
-          <Text alignSelf="center" mt={"$6"}>
+          <Text alignSelf="center" mt={"$4"}>
             or Sign in with
           </Text>
 

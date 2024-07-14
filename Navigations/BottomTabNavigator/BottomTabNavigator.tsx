@@ -69,10 +69,10 @@ export default function BottomTabNavigator() {
 
         tabBarIndicatorStyle: [
           {
-            backgroundColor: COLORS.tertiary,
+            // backgroundColor: COLORS.tertiary,
             position: "relative",
-            borderRadius: 50,
-            width: "30%",
+            // borderRadius: 50,
+            // width: "30%",
           },
         ],
         tabBarContentContainerStyle: [
@@ -97,8 +97,9 @@ export default function BottomTabNavigator() {
           {
             alignContent: "center",
             height: HEIGHT * 0.055,
-            width: PERCENT[12],
+            width: PERCENT[17],
             alignItems: "center",
+            // backgroundColor: "lightgray",
             justifyContent: "center",
             padding: 0,
             margin: 0,
