@@ -6,6 +6,8 @@ import {
   Image,
   Divider,
   Center,
+  ButtonText,
+  Button,
 } from "@gluestack-ui/themed";
 import React, { useContext, useEffect } from "react";
 import ButtonCard from "./components/ButtonCard";
@@ -19,26 +21,23 @@ import customerApis from "../../../api/customer";
 import useProfile from "../../../hooks/useProfile";
 
 const Home = ({ navigation }: any) => {
-  const { profile, setProfile } = useProfile();
-
-  const getProfileApi = useApi(customerApis.getProfile);
+  const { profile, fetchProfile, refreshProfile } = useProfile();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      await getProfileApi.request();
-    };
-
     fetchProfile();
   }, []);
 
-  useEffect(() => {
-    if (getProfileApi.data) {
-      setProfile(getProfileApi.data.customer);
-    }
-  }, [getProfileApi.data]);
-
   return (
     <View flex={1} pt={"$1"} px={"$4"} bg={COLORS.primary}>
+      <Button
+        position="absolute"
+        right={20}
+        top={10}
+        zIndex={10}
+        onPress={() => refreshProfile()}
+      >
+        <ButtonText>refresh profile</ButtonText>
+      </Button>
       <Text ml={"$2"} fontWeight="bold" size="3xl" color={COLORS.activeText}>
         Hello {profile ? profile.name : "Loading..."}
       </Text>

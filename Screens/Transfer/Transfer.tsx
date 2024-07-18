@@ -26,7 +26,7 @@ const Transfer = ({ navigation }: any) => {
   const [receiver, setReceiver] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const { profile } = useProfile();
+  const { profile, refreshProfile } = useProfile();
 
   const toast = MyToast();
 
@@ -63,7 +63,7 @@ const Transfer = ({ navigation }: any) => {
         return toast.error("Invalid Inputs", "Please enter amount to transfer");
       }
       // make sure balance is enough
-      if (Number(amount) > profile.balance) {
+      if (Number(amount) > profile?.balance) {
         return toast.error(
           "Insufficient Balance",
           "Insufficient balance to transfer"
@@ -105,6 +105,7 @@ const Transfer = ({ navigation }: any) => {
       toast.success("Success", "Funds transferred successfully!");
       // console.log(transferFundsApi.data);
       // transferFundsApi.reset();
+      refreshProfile();
       return;
     }
     if (transferFundsApi.error) {
@@ -130,7 +131,7 @@ const Transfer = ({ navigation }: any) => {
         <HStack mt={"$2"} alignSelf="flex-end" alignItems="center">
           <Text>Your Balance: </Text>
           <Text bold color={COLORS.activeText} size="lg">
-            {profile.balance}
+            {profile?.balance}
           </Text>
         </HStack>
 

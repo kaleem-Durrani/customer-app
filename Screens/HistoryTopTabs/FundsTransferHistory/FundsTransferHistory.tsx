@@ -40,7 +40,9 @@ const FundsTransferHistory = () => {
 
     return (
       <View style={styles.transferCard}>
-        <Text style={styles.tag}>{isSent ? "Sent" : "Received"}</Text>
+        <Text style={isSent ? styles.sentTag : styles.receivedTag}>
+          {isSent ? "Sent" : "Received"}
+        </Text>
         <Text style={styles.amount}>Amount: ${transaction.amount}</Text>
         <Text style={styles.name}>Name: {user.name}</Text>
         <Text style={styles.email}>Email: {user.email}</Text>
@@ -101,10 +103,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2, // For iOS
     shadowRadius: 2, // For iOS
   },
-  tag: {
+  sentTag: {
     fontSize: 18,
     fontWeight: "bold",
     color: "red",
+  },
+  receivedTag: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "green",
   },
   amount: {
     fontSize: 16,

@@ -10,7 +10,7 @@ import {
 import TransactionCard from "../components/TransactionCard"; // Import your TransactionCard component
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../Constants/Constants";
-import useHistory from "../../../hooks/useHistory";
+import useTransactionHistory from "../../../hooks/useTransactionHistory";
 
 interface Transaction {
   amount: string;
@@ -35,9 +35,27 @@ const organizeByMonth = (transactions: Transaction[]) => {
 };
 
 const TransactionHistory = () => {
-  const { transactionHistory } = useHistory();
+  const {
+    transactionHistory,
+    fetchHistory,
+    isError,
+    error,
+    errorStatus,
+    errorProblem,
+    loading,
+  } = useTransactionHistory();
+  // console.log(transactionHistory);
+  // console.log(error);
+  // console.log(isError);
+  // console.log(errorStatus);
+  // console.log(errorProblem);
+  // console.log(loading);
 
-  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetchHistory();
+  }, []);
+
+  const [sorting, setSorting] = useState(false);
   const [transactionsByMonth, setTransactionsByMonth] = useState<
     Record<string, Transaction[]>
   >({});
@@ -45,6 +63,9 @@ const TransactionHistory = () => {
 
   useEffect(() => {
     if (transactionHistory) {
+      setSorting(true);
+      // set a time out for 5 seconds
+
       const transactions = transactionHistory.map((transaction) => ({
         amount: transaction.amount.toString(),
         date: new Date(transaction.createdAt).toISOString().split("T")[0],
@@ -62,7 +83,10 @@ const TransactionHistory = () => {
 
       setTransactionsByMonth(transactionsByMonthData);
       setSortedMonths(sortedMonthsData);
-      setLoading(false);
+
+      setTimeout(() => {
+        setSorting(false);
+      }, 1000); // Adjust s value as needed
     }
   }, [transactionHistory]);
 
@@ -73,6 +97,31 @@ const TransactionHistory = () => {
           <Spinner size="large" />
           <Text ml={"$3"} size="2xl">
             Loading...
+          </Text>
+        </HStack>
+      </Center>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Center flex={1}>
+        <Text ml={"$3"} size="2xl">
+          {errorProblem || "Unknown error"}: {errorStatus || ""}
+          {"\n"}
+          {error || ""}
+        </Text>
+      </Center>
+    );
+  }
+
+  if (sorting) {
+    return (
+      <Center flex={1}>
+        <HStack alignItems="center">
+          <Spinner size="large" />
+          <Text ml={"$3"} size="2xl">
+            Sorting...
           </Text>
         </HStack>
       </Center>
