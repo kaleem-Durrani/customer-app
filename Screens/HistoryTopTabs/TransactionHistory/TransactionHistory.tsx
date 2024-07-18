@@ -10,6 +10,7 @@ import {
 import TransactionCard from "../components/TransactionCard"; // Import your TransactionCard component
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../Constants/Constants";
+import useHistory from "../../../hooks/useHistory";
 
 interface Transaction {
   amount: string;
@@ -18,32 +19,6 @@ interface Transaction {
   paymentMethod: string;
   fuelType: string;
 }
-
-const randomTransaction = (): Transaction => {
-  const paymentMethods = ["cash", "app", "points", "app+points"];
-  const fuelTypes = ["Petrol", "Diesel", "CNG", "Electric"];
-  const pumpNames = ["Pump A", "Pump B", "Pump C", "Pump D"];
-
-  const getRandomItem = (array: string[]) =>
-    array[Math.floor(Math.random() * array.length)];
-
-  return {
-    amount: (Math.random() * 100).toFixed(2),
-    date: new Date(
-      2023,
-      Math.floor(Math.random() * 6),
-      Math.ceil(Math.random() * 28)
-    )
-      .toISOString()
-      .split("T")[0],
-    pumpName: getRandomItem(pumpNames),
-    paymentMethod: getRandomItem(paymentMethods),
-    fuelType: getRandomItem(fuelTypes),
-  };
-};
-
-const generateTransactions = (num: number): Transaction[] =>
-  Array.from({ length: num }, randomTransaction);
 
 const organizeByMonth = (transactions: Transaction[]) => {
   return transactions.reduce((acc, transaction) => {
@@ -60,6 +35,8 @@ const organizeByMonth = (transactions: Transaction[]) => {
 };
 
 const TransactionHistory = () => {
+  const { transactionHistory } = useHistory();
+
   const [loading, setLoading] = useState(true);
   const [transactionsByMonth, setTransactionsByMonth] = useState<
     Record<string, Transaction[]>
@@ -67,25 +44,33 @@ const TransactionHistory = () => {
   const [sortedMonths, setSortedMonths] = useState<string[]>([]);
 
   useEffect(() => {
-    const transactions = generateTransactions(20);
-    const transactionsByMonthData = organizeByMonth(transactions);
-    const sortedMonthsData = Object.keys(transactionsByMonthData).sort(
-      (a, b) => new Date(b) - new Date(a)
-    );
+    if (transactionHistory) {
+      const transactions = transactionHistory.map((transaction) => ({
+        amount: transaction.amount.toString(),
+        date: new Date(transaction.createdAt).toISOString().split("T")[0],
+        // Format date to 'YYYY-MM-DD'
+        time: new Date(transaction.createdAt).toISOString().split("T")[1],
+        pumpName: transaction.pumpId?.name || "Unknown Pump", // Handle possible missing pump name
+        paymentMethod: transaction.paymentMethod,
+        fuelType: transaction.fuelType,
+      }));
 
-    setTimeout(() => {
+      const transactionsByMonthData = organizeByMonth(transactions);
+      const sortedMonthsData = Object.keys(transactionsByMonthData).sort(
+        (a, b) => new Date(b).getTime() - new Date(a).getTime()
+      );
+
       setTransactionsByMonth(transactionsByMonthData);
       setSortedMonths(sortedMonthsData);
       setLoading(false);
-    }, 2500); // Adjust this delay as per your requirement
-  }, []);
+    }
+  }, [transactionHistory]);
 
   if (loading) {
     return (
       <Center flex={1}>
         <HStack alignItems="center">
           <Spinner size="large" />
-
           <Text ml={"$3"} size="2xl">
             Loading...
           </Text>
@@ -103,7 +88,9 @@ const TransactionHistory = () => {
             <TransactionCard
               key={index}
               amount={transaction.amount}
-              date={transaction.date}
+              date={`${transaction.date.slice(
+                8
+              )}, Time: ${transaction.time.slice(0, 5)}`}
               pumpName={transaction.pumpName}
               paymentMethod={transaction.paymentMethod}
               fuelType={transaction.fuelType}

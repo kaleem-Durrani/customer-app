@@ -18,9 +18,85 @@ import { COLORS, PERCENT } from "../../../Constants/Constants";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import MyToast from "../../../components/MyToast";
+
+import authApi from "../../../api/auth";
 
 export default function Signup({ navigation }: any) {
   const [showPassword, setShowPassword] = useState(false);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const toast = MyToast();
+
+  const handleSignup = async () => {
+    // TODO: Implement signup logic here
+    console.log("Signup", {
+      name,
+      email,
+      phoneNumber,
+      password,
+      confirmPassword,
+    });
+
+    if (
+      name.trim() === "" ||
+      email.trim() === "" ||
+      password.trim() === "" ||
+      confirmPassword.trim() === "" ||
+      phoneNumber.trim() === ""
+    ) {
+      toast.error("All fields are required", "Please fill in all fields");
+      return;
+    }
+    // verify email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.match(emailRegex)) {
+      return toast.error("Invalid email", "Please enter a valid email");
+    }
+    // verify password length is at least 6
+    if (password.length < 6) {
+      return toast.error(
+        "Invalid Password Length",
+        "Please enter a password of at least 6 characters"
+      );
+    }
+    // verify password and confirm password match
+    if (password !== confirmPassword) {
+      return toast.error(
+        "Passwords Mismatch",
+        "Please ensure the passwords match"
+      );
+    }
+
+    setLoading(true);
+    const result = await authApi.signup(
+      name,
+      email,
+      password,
+      confirmPassword,
+      phoneNumber
+    );
+    setLoading(false);
+
+    if (!result.ok) {
+      return toast.error(
+        `${result.problem} ${result.status}`,
+        `${result.data.error}`
+      );
+    }
+    console.log(result);
+    toast.success(
+      `Sign up successful ${result.status}`,
+      `${result.data.message}`
+    );
+  };
 
   return (
     <View flex={1}>
@@ -67,7 +143,12 @@ export default function Signup({ navigation }: any) {
             Name
           </Text>
           <Input variant="outline" size="lg" mt={"$1"}>
-            <InputField size="md" placeholder="Your Name" />
+            <InputField
+              size="md"
+              placeholder="Your Name"
+              value={name}
+              onChangeText={setName}
+            />
           </Input>
 
           {/* email */}
@@ -75,7 +156,12 @@ export default function Signup({ navigation }: any) {
             Email
           </Text>
           <Input variant="outline" size="lg" mt={"$1"}>
-            <InputField size="md" placeholder="Your Email Address" />
+            <InputField
+              size="md"
+              placeholder="Your Email Address"
+              value={email}
+              onChangeText={setEmail}
+            />
           </Input>
 
           {/* phone Number */}
@@ -83,7 +169,17 @@ export default function Signup({ navigation }: any) {
             Phone Number
           </Text>
           <Input variant="outline" size="lg" mt={"$1"}>
-            <InputField size="md" placeholder="Your Phone Number" />
+            <InputField
+              inputMode="decimal"
+              size="md"
+              placeholder="Your Phone Number"
+              value={phoneNumber}
+              onChangeText={(e) => {
+                // make sure only digits are allowed
+                const cleanedPhoneNumber = e.replace(/[^0-9]/g, "");
+                setPhoneNumber(cleanedPhoneNumber);
+              }}
+            />
           </Input>
 
           {/* password  */}
@@ -95,6 +191,8 @@ export default function Signup({ navigation }: any) {
               size="md"
               placeholder="Your Password"
               type={showPassword ? "text" : "password"}
+              value={password}
+              onChangeText={setPassword}
             />
             <InputSlot mr={"$3"} bg={COLORS.secondary}>
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
@@ -117,6 +215,8 @@ export default function Signup({ navigation }: any) {
               size="md"
               placeholder="Your Confirm Password"
               type={showPassword ? "text" : "password"}
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
             />
             <InputSlot mr={"$3"} bg={COLORS.secondary}>
               <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
@@ -131,12 +231,10 @@ export default function Signup({ navigation }: any) {
 
           {/* sign up button */}
           <Button
+            isDisabled={loading}
             mt={"$6"}
             borderRadius={PERCENT[3]}
-            onPress={() => {
-              console.log("Sign up button clicked");
-              // alert("yoo");
-            }}
+            onPress={handleSignup}
           >
             <ButtonText>Sign Up</ButtonText>
           </Button>

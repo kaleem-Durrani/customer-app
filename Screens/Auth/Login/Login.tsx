@@ -1,3 +1,6 @@
+import { decode } from "base-64";
+global.atob = decode;
+
 import {
   View,
   Text,
@@ -9,21 +12,24 @@ import {
   HStack,
   Image,
 } from "@gluestack-ui/themed";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
-import { AuthContext } from "../../../Contexts/AuthContext";
 import MyToast from "../../../components/MyToast";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function Login({ navigation }: any) {
-  const { user, setUser } = useContext(AuthContext);
-  const [showPassword, setShowPassword] = useState(false);
+import authApi from "../../../api/auth";
+import useAuth from "../../../auth/useAuth";
 
+export default function Login({ navigation }: any) {
+  const auth = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [loading, setLoading] = useState(false);
 
   const toast = MyToast();
 
@@ -31,30 +37,31 @@ export default function Login({ navigation }: any) {
     // verify email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email.match(emailRegex)) {
-      toast.show(
-        "accent",
-        "error",
-        "Invalid email",
-        "Please enter a valid email",
-        3000
-      );
-      return;
+      return toast.error("Invalid email", "Please enter a valid email");
     }
 
     // make sure password length is at least 6
     if (password.length < 6) {
-      toast.show(
-        "accent",
-        "error",
+      return toast.error(
         "Invalid Password Length",
-        "Please enter a password of at least 6 characters",
-        3000
+        "Please enter a password of at least 6 characters"
       );
-      return;
     }
 
-    console.log("calling api");
+    setLoading(true);
+    const result = await authApi.login(email, password);
+    setLoading(false);
+
+    if (!result.ok) {
+      console.log("error");
+      return toast.error(
+        `${result.problem} ${result.status}`,
+        `${result.data.error}`
+      );
+    }
+    auth.login(result.data.token);
   };
+
   return (
     <View flex={1}>
       <LinearGradient
@@ -127,7 +134,7 @@ export default function Login({ navigation }: any) {
         </Input>
 
         <View mt={"$3"}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("OTPScreen")}>
             <Text alignSelf="flex-end" color={COLORS.activeText}>
               Forgot Password?
             </Text>
@@ -137,7 +144,9 @@ export default function Login({ navigation }: any) {
         <Button
           mt={"$3"}
           borderRadius={PERCENT[3]}
-          onPress={() => setUser(true)}
+          onPress={() => handleLogin()}
+          // disabled={loading}
+          isDisabled={loading}
         >
           <ButtonText>Sign in</ButtonText>
         </Button>

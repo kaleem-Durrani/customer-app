@@ -20,7 +20,7 @@ const TransactionCard: React.FC<TransactionCardProps> = ({
 }) => {
   return (
     <View style={styles.card}>
-      <Text style={styles.date}>Date: {date.slice(8)}</Text>
+      <Text style={styles.date}>Date: {date}</Text>
 
       <HStack justifyContent="space-between">
         <VStack>

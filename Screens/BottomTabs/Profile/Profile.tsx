@@ -13,10 +13,13 @@ import RecordCard from "./components/RecordCard";
 import NavigationCard from "./components/NavigationCard";
 import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { AuthContext } from "../../../Contexts/AuthContext";
+import useAuth from "../../../auth/useAuth";
+import ProfileContext from "../../../Contexts/ProfileContext";
+import useProfile from "../../../hooks/useProfile";
 
 const Profile = ({ navigation }: any) => {
-  const { user, setUser } = useContext(AuthContext);
+  const { logOut } = useAuth();
+  const { profile } = useProfile();
 
   return (
     <View mt={"$0"} bg={COLORS.primary} flex={1}>
@@ -62,10 +65,10 @@ const Profile = ({ navigation }: any) => {
         />
       </Avatar>
       <Text fontWeight="bold" alignSelf="center">
-        User-Name
+        {profile ? profile.name : "Loading..."}
       </Text>
       <Text color="gray" size="2xs" alignSelf="center">
-        user1234@gmail.com
+        {profile ? profile.email : "Loading..."}
       </Text>
 
       <ScrollView mx={"$3"} showsVerticalScrollIndicator={false}>
@@ -115,7 +118,7 @@ const Profile = ({ navigation }: any) => {
           <NavigationCard
             name={"log-out"}
             title={"Logout"}
-            onPress={() => setUser(false)}
+            onPress={() => logOut()}
           />
         </View>
       </ScrollView>

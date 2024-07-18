@@ -5,6 +5,7 @@ import {
   VStack,
   useToast,
 } from "@gluestack-ui/themed";
+import { useState } from "react";
 
 interface ShowToast {
   (
@@ -14,6 +15,14 @@ interface ShowToast {
     description: string,
     duration: number
   ): void;
+}
+
+interface ErrorToast {
+  (title: string, description: string): void;
+}
+
+interface SuccessToast {
+  (title: string, description: string): void;
 }
 
 const GlobalToast = () => {
@@ -37,7 +46,15 @@ const GlobalToast = () => {
     });
   };
 
-  return { show };
+  const error: ErrorToast = (title, text) => {
+    show("accent", "error", title, text, 3000);
+  };
+
+  const success: SuccessToast = (title, text) => {
+    show("accent", "success", title, text, 3000);
+  };
+
+  return { show, error, success };
 };
 
 export default GlobalToast;

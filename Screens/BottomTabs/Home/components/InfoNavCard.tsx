@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-const InfoNavCard = ({ navigation }: any) => {
+const InfoNavCard = ({ navigation, balance, points }: any) => {
   return (
     <View
       borderRadius={20}
@@ -40,14 +40,14 @@ const InfoNavCard = ({ navigation }: any) => {
             </Text>
 
             <Text ml={"$2"} size="md" color={COLORS.activeText}>
-              1000
+              {balance}
             </Text>
             <Divider my={"$1"} />
             <Text size="lg" color={COLORS.text}>
               Points
             </Text>
             <Text ml={"$2"} size="md" color={COLORS.activeText}>
-              100
+              {points}
             </Text>
           </LinearGradient>
 

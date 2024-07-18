@@ -1,19 +1,27 @@
 import { View, Text, HStack } from "@gluestack-ui/themed";
-import React from "react";
+import React, { useContext } from "react";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
 import TopRibbon from "../../../components/TopRibbon";
 import { LinearGradient } from "expo-linear-gradient";
 import DetailCard from "./components/DetailCard";
+import ProfileContext from "../../../Contexts/ProfileContext";
 
 const PersonalDetails = ({ navigation }: any) => {
+  const { profile } = useContext(ProfileContext);
+
   return (
     <View bg={COLORS.primary} flex={1}>
       <TopRibbon navigation={navigation} title={"Personal Details"} />
 
       <LinearGradient
-        colors={[COLORS.tertiary, COLORS.primary, COLORS.tertiary]}
-        start={[1, -0.7]}
-        end={[0.7, 0.8]}
+        colors={[
+          COLORS.tertiary,
+          COLORS.primary,
+          COLORS.primary,
+          COLORS.tertiary,
+        ]}
+        start={[1, -0.6]}
+        end={[-0.7, 0.8]}
         style={{
           elevation: 5,
           flex: 1,
@@ -21,9 +29,9 @@ const PersonalDetails = ({ navigation }: any) => {
         }}
       >
         <View mt={"$16"} mx={"$6"}>
-          <DetailCard title={"Name"} info={"John"} />
-          <DetailCard title={"Email"} info={"John@gmail.com"} />
-          <DetailCard title={"Phone Number"} info={"090078601"} />
+          <DetailCard title={"Name"} info={profile?.name} />
+          <DetailCard title={"Email"} info={profile?.email} />
+          <DetailCard title={"Phone Number"} info={profile?.phoneNumber} />
           {/* <DetailCard title={"Email"} info={"John@gmail.com"} /> */}
 
           <HStack gap={"$12"} mt={"$6"}>
@@ -40,7 +48,7 @@ const PersonalDetails = ({ navigation }: any) => {
                 Balance
               </Text>
               <Text size="xl" color={COLORS.activeText} fontWeight="bold">
-                100
+                {profile?.balance}
               </Text>
             </View>
 
@@ -57,7 +65,7 @@ const PersonalDetails = ({ navigation }: any) => {
                 Points
               </Text>
               <Text size="xl" color={COLORS.activeText} fontWeight="bold">
-                100
+                {profile?.points}
               </Text>
             </View>
           </HStack>

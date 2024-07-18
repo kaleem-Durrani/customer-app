@@ -1,5 +1,5 @@
-import { View, Text } from "@gluestack-ui/themed";
-import React from "react";
+import { View, Text, Input, InputField } from "@gluestack-ui/themed";
+import React, { useState } from "react";
 import { COLORS, PERCENT } from "../../Constants/Constants";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
