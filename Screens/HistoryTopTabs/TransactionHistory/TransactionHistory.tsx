@@ -35,6 +35,7 @@ const organizeByMonth = (transactions: Transaction[]) => {
 };
 
 const TransactionHistory = () => {
+  const [sorting, setSorting] = useState(false);
   const {
     transactionHistory,
     fetchHistory,
@@ -44,18 +45,11 @@ const TransactionHistory = () => {
     errorProblem,
     loading,
   } = useTransactionHistory();
-  // console.log(transactionHistory);
-  // console.log(error);
-  // console.log(isError);
-  // console.log(errorStatus);
-  // console.log(errorProblem);
-  // console.log(loading);
 
   useEffect(() => {
     fetchHistory();
   }, []);
 
-  const [sorting, setSorting] = useState(false);
   const [transactionsByMonth, setTransactionsByMonth] = useState<
     Record<string, Transaction[]>
   >({});

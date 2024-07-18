@@ -1,19 +1,34 @@
-import { View, Text, ScrollView } from "@gluestack-ui/themed";
-import React, { useEffect } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Center,
+  HStack,
+  Spinner,
+} from "@gluestack-ui/themed";
+import React, { useEffect, useState } from "react";
 import useHistory from "../../../hooks/useHistory";
 import useProfile from "../../../hooks/useProfile";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../Constants/Constants";
+import useFundsTransferHistory from "../../../hooks/useFundsTransferHistory";
 
 const FundsTransferHistory = () => {
-  const { fundsTransferHistory } = useHistory();
   const { profile } = useProfile();
 
+  const {
+    fetchFundsTransferHistory,
+    fundsTransferHistory,
+    isError,
+    error,
+    errorStatus,
+    errorProblem,
+    loading,
+  } = useFundsTransferHistory();
+
   useEffect(() => {
-    if (fundsTransferHistory) {
-      // console.log(fundsTransferHistory);
-    }
-  }, [fundsTransferHistory]);
+    fetchFundsTransferHistory();
+  }, []);
 
   const organizeByMonth = (transactions) => {
     return transactions.reduce((acc, transaction) => {
@@ -35,7 +50,7 @@ const FundsTransferHistory = () => {
   );
 
   const TransferCard = ({ transaction }) => {
-    const isSent = profile._id === transaction.senderId._id;
+    const isSent = profile?._id === transaction.senderId._id;
     const user = isSent ? transaction.receiverId : transaction.senderId;
 
     return (
@@ -54,6 +69,31 @@ const FundsTransferHistory = () => {
       </View>
     );
   };
+
+  if (loading) {
+    return (
+      <Center flex={1}>
+        <HStack alignItems="center">
+          <Spinner size="large" />
+          <Text ml={"$3"} size="2xl">
+            Loading...
+          </Text>
+        </HStack>
+      </Center>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Center flex={1}>
+        <Text ml={"$3"} size="2xl">
+          {errorProblem || "Unknown error"}: {errorStatus || ""}
+          {"\n"}
+          {error || ""}
+        </Text>
+      </Center>
+    );
+  }
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
