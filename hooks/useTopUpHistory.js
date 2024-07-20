@@ -27,6 +27,7 @@ export default useTransactionHistory = () => {
       toast.success("Loaded successfully", `${topUpHistoryApi.data.message}`);
 
       setTopUpHistory(topUpHistoryApi.data.topUpHistory);
+      return;
     }
   }, [topUpHistoryApi.error, topUpHistoryApi.data]);
 

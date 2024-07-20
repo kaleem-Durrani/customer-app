@@ -15,7 +15,7 @@ const getTransactionHistory = () =>
 const getFundsTransferHistory = () =>
   client.get("fundsTransfer/getHistory", {});
 
-const getTopUpHistory = () => client.get("topUp/history", {});
+const getTopUpHistory = () => client.get("/topUp/history", {});
 
 const findReceiver = (phoneNumber) =>
   client.post("fundsTransfer/findReceiver", { phoneNumber });
@@ -27,6 +27,9 @@ const transferFunds = (amount, entityTransfered, receiverId) =>
     receiverId,
   });
 
+const topUpAccount = (topUpThrough, amount) =>
+  client.post("/topUp/topUpAccount", { topUpThrough, amount });
+
 export default {
   getProfile,
   changePassword,
@@ -35,4 +38,5 @@ export default {
   getTopUpHistory,
   findReceiver,
   transferFunds,
+  topUpAccount,
 };
