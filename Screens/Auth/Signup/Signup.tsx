@@ -13,7 +13,7 @@ import {
   Image,
 } from "@gluestack-ui/themed";
 import React, { useState } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -37,13 +37,13 @@ export default function Signup({ navigation }: any) {
 
   const handleSignup = async () => {
     // TODO: Implement signup logic here
-    console.log("Signup", {
-      name,
-      email,
-      phoneNumber,
-      password,
-      confirmPassword,
-    });
+    // console.log("Signup", {
+    //   name,
+    //   email,
+    //   phoneNumber,
+    //   password,
+    //   confirmPassword,
+    // });
 
     if (
       name.trim() === "" ||
@@ -65,6 +65,13 @@ export default function Signup({ navigation }: any) {
       return toast.error(
         "Invalid Password Length",
         "Please enter a password of at least 6 characters"
+      );
+    }
+    // verifty phone number legnth is 11
+    if (phoneNumber.length !== 11) {
+      return toast.error(
+        "Invalid Phone Number",
+        "Please enter a valid 11-digit phone number"
       );
     }
     // verify password and confirm password match
@@ -95,6 +102,18 @@ export default function Signup({ navigation }: any) {
     toast.success(
       `Sign up successful ${result.status}`,
       `${result.data.message}`
+    );
+    Alert.alert(
+      "Account Created Successfully",
+      "An OTP has been sent to your email.\nPlease log in and verify your Account to start using the app.",
+      [
+        {
+          text: "Log in",
+          onPress: () => {
+            navigation.goBack();
+          },
+        },
+      ]
     );
   };
 
