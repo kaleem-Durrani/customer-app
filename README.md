@@ -1,11 +1,23 @@
+
+https://github.com/user-attachments/assets/b2ce2d94-8f13-4622-a05c-f7909581b370
 https://github.com/kaleem-Durrani/refueler-app/assets/160228066/42e33c59-04f9-4b25-825b-91ffd7d94b8a
 This is a React Native + [Gluestack-ui](https://ui.gluestack.io/) project template bootstrapped with [`create-expo-app`](https://docs.expo.dev/get-started/create-a-project/).
 
 # Project Demo :
 
-<video controls src="Creating new account.mp4" title="Title"></video>
 
-<video controls src="customer functionality.mp4" title="Title"></video>
+
+
+
+https://github.com/user-attachments/assets/5a4541bd-99f6-477b-9772-df93a73243e7
+
+
+
+
+https://github.com/user-attachments/assets/b0e098eb-58cd-40f5-a92f-fc574abd5d53
+
+
+
 
 ## Getting Started
 
