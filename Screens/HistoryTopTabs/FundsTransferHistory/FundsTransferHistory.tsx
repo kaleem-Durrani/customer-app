@@ -7,7 +7,6 @@ import {
   Spinner,
 } from "@gluestack-ui/themed";
 import React, { useEffect, useState } from "react";
-import useHistory from "../../../hooks/useHistory";
 import useProfile from "../../../hooks/useProfile";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../Constants/Constants";
@@ -27,7 +26,9 @@ const FundsTransferHistory = () => {
   } = useFundsTransferHistory();
 
   useEffect(() => {
-    fetchFundsTransferHistory();
+    if (!fundsTransferHistory) {
+      fetchFundsTransferHistory();
+    }
   }, []);
 
   const organizeByMonth = (transactions) => {

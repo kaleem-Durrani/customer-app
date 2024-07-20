@@ -12,12 +12,13 @@ import React, { useEffect, useState } from "react";
 import MyToast from "../../components/MyToast";
 
 import TopRibbon from "../../components/TopRibbon";
-import { COLORS, PERCENT } from "../../Constants/Constants";
+import { COLORS, HEIGHT, PERCENT } from "../../Constants/Constants";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import customerApis from "../../api/customer";
 import useApi from "../../hooks/useApi";
 import useProfile from "../../hooks/useProfile";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Transfer = ({ navigation }: any) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -119,81 +120,98 @@ const Transfer = ({ navigation }: any) => {
 
   return (
     <View bg={COLORS.primary} flex={1}>
-      <TopRibbon navigation={navigation} title={"Transfer Funds"} />
+      <LinearGradient
+        colors={[
+          COLORS.tertiary,
+          COLORS.primary,
+          COLORS.primary,
+          COLORS.primary,
+          COLORS.tertiary,
+        ]}
+        start={[0.9, -0.1]}
+        end={[0.1, 1]}
+        style={{
+          minHeight: HEIGHT,
+        }}
+      >
+        <TopRibbon navigation={navigation} title={"Transfer Funds"} />
 
-      <View px={"$8"}>
-        <Text bold size="lg" mt={"$4"}>
-          {receiver
-            ? "Enter balance to transfer"
-            : "Find user with phone number"}
-        </Text>
-
-        <HStack mt={"$2"} alignSelf="flex-end" alignItems="center">
-          <Text>Your Balance: </Text>
-          <Text bold color={COLORS.activeText} size="lg">
-            {profile?.balance}
+        <View px={"$8"}>
+          <Text bold size="lg" mt={"$4"}>
+            {receiver
+              ? "Enter balance to transfer"
+              : "Find user with phone number"}
           </Text>
-        </HStack>
 
-        <Text fontWeight="bold" color={COLORS.activeText} mt={"$4"}>
-          {receiver ? "Amount" : "Phone Number"}
-        </Text>
-        <Input
-          // isDisabled={receiver ? true : false}
-          variant="outline"
-          size="lg"
-          mt={"$1"}
-        >
-          <InputField
-            inputMode="decimal"
-            size="md"
-            placeholder={
-              receiver ? "Enter amount to transfer" : "Receiver's Phone Number"
-            }
-            value={receiver ? amount : phoneNumber}
-            onChangeText={(e) => {
-              const cleanedNumber = e.replace(/[^0-9]/g, "");
-              receiver
-                ? setAmount(cleanedNumber)
-                : setPhoneNumber(cleanedNumber);
-            }}
-          />
-        </Input>
-
-        <Button
-          onPress={handleTransfer}
-          isDisabled={loading}
-          variant="outline"
-          mt={"$10"}
-        >
-          <ButtonText>{receiver ? "Send" : "Find User"}</ButtonText>
-        </Button>
-
-        <VStack mt={"$8"}>
-          <HStack justifyContent="space-between" px={"$4"}>
-            <Text size="xl" bold color={COLORS.activeText}>
-              {receiver?.name}
+          <HStack mt={"$2"} alignSelf="flex-end" alignItems="center">
+            <Text>Your Balance: </Text>
+            <Text bold color={COLORS.activeText} size="lg">
+              {profile?.balance}
             </Text>
-            <Text size="lg">{receiver?.phoneNumber}</Text>
           </HStack>
-          <Text mt={"$4"} color="gray" alignSelf="center">
-            {receiver?.email}
-          </Text>
-        </VStack>
 
-        <Button
-          display={receiver ? "flex" : "none"}
-          onPress={() => {
-            setReceiver(null);
-            setPhoneNumber("");
-          }}
-          isDisabled={loading}
-          variant="outline"
-          mt={"$10"}
-        >
-          <ButtonText>Find Another User</ButtonText>
-        </Button>
-      </View>
+          <Text fontWeight="bold" color={COLORS.activeText} mt={"$4"}>
+            {receiver ? "Amount" : "Phone Number"}
+          </Text>
+          <Input
+            // isDisabled={receiver ? true : false}
+            variant="outline"
+            size="lg"
+            mt={"$1"}
+          >
+            <InputField
+              inputMode="decimal"
+              size="md"
+              placeholder={
+                receiver
+                  ? "Enter amount to transfer"
+                  : "Receiver's Phone Number"
+              }
+              value={receiver ? amount : phoneNumber}
+              onChangeText={(e) => {
+                const cleanedNumber = e.replace(/[^0-9]/g, "");
+                receiver
+                  ? setAmount(cleanedNumber)
+                  : setPhoneNumber(cleanedNumber);
+              }}
+            />
+          </Input>
+
+          <Button
+            onPress={handleTransfer}
+            isDisabled={loading}
+            variant="outline"
+            mt={"$10"}
+          >
+            <ButtonText>{receiver ? "Send" : "Find User"}</ButtonText>
+          </Button>
+
+          <VStack mt={"$8"}>
+            <HStack justifyContent="space-between" px={"$4"}>
+              <Text size="xl" bold color={COLORS.activeText}>
+                {receiver?.name}
+              </Text>
+              <Text size="lg">{receiver?.phoneNumber}</Text>
+            </HStack>
+            <Text mt={"$4"} color="gray" alignSelf="center">
+              {receiver?.email}
+            </Text>
+          </VStack>
+
+          <Button
+            display={receiver ? "flex" : "none"}
+            onPress={() => {
+              setReceiver(null);
+              setPhoneNumber("");
+            }}
+            isDisabled={loading}
+            variant="outline"
+            mt={"$10"}
+          >
+            <ButtonText>Find Another User</ButtonText>
+          </Button>
+        </View>
+      </LinearGradient>
     </View>
   );
 };

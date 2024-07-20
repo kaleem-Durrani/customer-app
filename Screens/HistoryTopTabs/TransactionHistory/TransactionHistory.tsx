@@ -47,7 +47,10 @@ const TransactionHistory = () => {
   } = useTransactionHistory();
 
   useEffect(() => {
-    fetchHistory();
+    // console.log(transactionHistory);
+    if (!transactionHistory) {
+      fetchHistory();
+    }
   }, []);
 
   const [transactionsByMonth, setTransactionsByMonth] = useState<

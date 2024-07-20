@@ -17,9 +17,11 @@ import PrivacyPolicy from "../../Screens/ProfileTabInnerScreens/PrivacyPolicy/Pr
 import HistoryContainer from "../HistoryTopTabNavigator/HistoryContainer";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import OTPScreen from "../../Screens/Auth/otpScreen/OTPScreen";
+import OTPScreen from "../../Screens/Auth/VerifyAccount/VerifyAccount";
 
 import useAuth from "../../auth/useAuth";
+import VerifyAccount from "../../Screens/Auth/VerifyAccount/VerifyAccount";
+import UnverifiedAccountHome from "../../Screens/Auth/UnverifiedAccountHome/UnverifiedAccountHome";
 
 // const Stack = createStackNavigator();
 
@@ -117,11 +119,18 @@ export default function StackNavigator() {
             />
           </Stack.Group>
         ) : (
-          <Stack.Screen
-            options={{ animation: "slide_from_right" }}
-            name="VerifyOTPScreen"
-            component={OTPScreen}
-          />
+          <Stack.Group>
+            <Stack.Screen
+              options={{ animation: "slide_from_right" }}
+              name="UnverifiedAccountHome"
+              component={UnverifiedAccountHome}
+            />
+            <Stack.Screen
+              options={{ animation: "slide_from_right" }}
+              name="VerifyAccount"
+              component={VerifyAccount}
+            />
+          </Stack.Group>
         )
       ) : (
         <Stack.Group>

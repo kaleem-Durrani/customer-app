@@ -13,7 +13,13 @@ const signup = (name, email, password, confirmPassword, phoneNumber) => {
   });
 };
 
+const requestNewOtp = () => client.get("/auth/customer/requestNewOtp", {});
+
+const verifyOtp = (otp) => client.post("auth/customer/verify-otp", { otp });
+
 export default {
   login,
   signup,
+  requestNewOtp,
+  verifyOtp,
 };

@@ -12,7 +12,6 @@ import authStorage from "./auth/storage";
 
 export default function App() {
   const [user, setUser] = useState(null);
-  // const [isVerified, setIsVerified] = useState(null);
   const [profile, setProfile] = useState(null);
   const [isReady, setIsReady] = useState(false);
 
@@ -33,7 +32,6 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AuthContext.Provider value={{ user, setUser }}>
         <ProfileContext.Provider value={{ profile, setProfile }}>
-          {/* other screens */}
           <NavigationContainer>
             <GluestackUIProvider config={config}>
               <StatusBar

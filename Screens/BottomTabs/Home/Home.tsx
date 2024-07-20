@@ -2,23 +2,17 @@ import {
   View,
   Text,
   HStack,
-  VStack,
-  Image,
-  Divider,
   Center,
-  ButtonText,
   Button,
+  Spinner,
 } from "@gluestack-ui/themed";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import ButtonCard from "./components/ButtonCard";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import InfoNavCard from "./components/InfoNavCard";
 import MiniMap from "./components/MiniMap";
-import ProfileContext from "../../../Contexts/ProfileContext";
-import useApi from "../../../hooks/useApi";
-import customerApis from "../../../api/customer";
 import useProfile from "../../../hooks/useProfile";
+import { FontAwesome } from "@expo/vector-icons";
 
 const Home = ({ navigation }: any) => {
   const { profile, fetchProfile, refreshProfile } = useProfile();
@@ -30,16 +24,25 @@ const Home = ({ navigation }: any) => {
   return (
     <View flex={1} pt={"$1"} px={"$4"} bg={COLORS.primary}>
       <Button
+        variant="outline"
         position="absolute"
         right={20}
         top={10}
         zIndex={10}
         onPress={() => refreshProfile()}
       >
-        <ButtonText>refresh profile</ButtonText>
+        {profile ? (
+          <FontAwesome
+            name="refresh"
+            size={PERCENT[6]}
+            color={COLORS.tertiary}
+          />
+        ) : (
+          <Spinner size="small" />
+        )}
       </Button>
       <Text ml={"$2"} fontWeight="bold" size="3xl" color={COLORS.activeText}>
-        Hello {profile ? profile.name : "Loading..."}
+        {profile ? "Hello " + profile.name : "Loading..."}
       </Text>
       <Text ml={"$2"} mt={-6} mb={"$1"} size="sm" color="gray">
         Good Morning
