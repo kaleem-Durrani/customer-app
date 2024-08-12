@@ -30,6 +30,8 @@ const transferFunds = (amount, entityTransfered, receiverId) =>
 const topUpAccount = (topUpThrough, amount) =>
   client.post("/topUp/topUpAccount", { topUpThrough, amount });
 
+const getPumpLocations = () => client.get("/pump/pumpLocations", {});
+
 export default {
   getProfile,
   changePassword,
@@ -39,4 +41,5 @@ export default {
   findReceiver,
   transferFunds,
   topUpAccount,
+  getPumpLocations,
 };

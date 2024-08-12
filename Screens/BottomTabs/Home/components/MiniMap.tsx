@@ -34,8 +34,8 @@ const MiniMap = () => {
         // Watch location updates
         locationSubscription = await Location.watchPositionAsync(
           {
-            accuracy: Location.Accuracy.High,
-            timeInterval: 200, // Update every 0.2 second
+            accuracy: Location.Accuracy.Low,
+            timeInterval: 700, // Update every 0.2 second
             distanceInterval: 3, // Update every 3 meters
           },
           (newLocation) => {

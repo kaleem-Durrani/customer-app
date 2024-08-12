@@ -15,15 +15,19 @@ import FuelTypeAmountCard from "./components/FuelTypeAmountCard";
 import MyToast from "../../../components/MyToast";
 import QRModal from "./components/QRModal";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import useAuth from "../../../auth/useAuth";
 
 interface QRDictionary {
   selectedFuel: string;
   amount: string;
   litres: string;
   selectedPaymentMethod: string;
+  userId: any;
 }
 
 const Purchase = () => {
+  const { user } = useAuth();
+
   const toast = MyToast();
   const [showingToast, setShowingToast] = useState(false);
 
@@ -79,6 +83,7 @@ const Purchase = () => {
       amount,
       litres,
       selectedPaymentMethod,
+      userId: user?.userId,
     };
 
     setQRDictionary(myDictionary);

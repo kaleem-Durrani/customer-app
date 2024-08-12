@@ -3,10 +3,6 @@ This is a React Native + [Gluestack-ui](https://ui.gluestack.io/) project templa
 
 # Project Demo :
 
-<video controls src="Creating new account.mp4" title="Title"></video>
-
-<video controls src="customer functionality.mp4" title="Title"></video>
-
 ## Getting Started
 
 First, run the development server:

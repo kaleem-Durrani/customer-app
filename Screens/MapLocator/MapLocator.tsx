@@ -15,6 +15,8 @@ import {
   SelectItem,
   ChevronDownIcon,
 } from "@gluestack-ui/themed";
+import customerApis from "../../api/customer";
+import useApi from "../../hooks/useApi";
 
 interface Pump {
   id: number;
@@ -32,6 +34,8 @@ const MapLocator: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [pumps, setPumps] = useState<Pump[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<string>("all");
 
+  const getPumpLocationsApi = useApi(customerApis.getPumpLocations);
+
   useEffect(() => {
     let locationSubscription: Location.LocationSubscription | null = null;
     let headingSubscription: Location.LocationSubscription | null = null;
@@ -46,7 +50,7 @@ const MapLocator: React.FC<{ navigation: any }> = ({ navigation }) => {
       // Initial location
       let initialLocation = await Location.getCurrentPositionAsync({});
       setLocation(initialLocation.coords);
-      fetchPumps(initialLocation.coords, selectedBrand);
+      getPumpLocationsApi.request();
 
       // Watch location updates
       locationSubscription = await Location.watchPositionAsync(
@@ -77,34 +81,34 @@ const MapLocator: React.FC<{ navigation: any }> = ({ navigation }) => {
     };
   }, [selectedBrand]);
 
-  const fetchPumps = async (
-    coords: Location.LocationObjectCoords,
-    brand: string
-  ) => {
-    const samplePumps: Pump[] = [
-      {
-        id: 1,
-        latitude: coords.latitude + 0.01,
-        longitude: coords.longitude + 0.01,
-        name: "Shell Pump",
-        brand: "shell",
-      },
-      {
-        id: 2,
-        latitude: coords.latitude - 0.01,
-        longitude: coords.longitude - 0.01,
-        name: "PSO Pump",
-        brand: "pso",
-      },
-      // Add more sample pumps
-    ];
+  // const fetchPumps = async (
+  //   coords: Location.LocationObjectCoords,
+  //   brand: string
+  // ) => {
+  //   const samplePumps: Pump[] = [
+  //     {
+  //       id: 1,
+  //       latitude: coords.latitude + 0.01,
+  //       longitude: coords.longitude + 0.01,
+  //       name: "Shell Pump",
+  //       brand: "shell",
+  //     },
+  //     {
+  //       id: 2,
+  //       latitude: coords.latitude - 0.01,
+  //       longitude: coords.longitude - 0.01,
+  //       name: "PSO Pump",
+  //       brand: "pso",
+  //     },
+  //     // Add more sample pumps
+  //   ];
 
-    const filteredPumps =
-      brand === "all"
-        ? samplePumps
-        : samplePumps.filter((pump) => pump.brand === brand);
-    setPumps(filteredPumps);
-  };
+  //   const filteredPumps =
+  //     brand === "all"
+  //       ? samplePumps
+  //       : samplePumps.filter((pump) => pump.brand === brand);
+  //   setPumps(filteredPumps);
+  // };
 
   if (!location) {
     return (
@@ -166,16 +170,17 @@ const MapLocator: React.FC<{ navigation: any }> = ({ navigation }) => {
         showsTraffic={true}
         loadingEnabled={true}
       >
-        {pumps.map((pump) => (
-          <Marker
-            key={pump.id}
-            coordinate={{
-              latitude: pump.latitude,
-              longitude: pump.longitude,
-            }}
-            title={pump.name}
-          />
-        ))}
+        {getPumpLocationsApi.data &&
+          getPumpLocationsApi.data.pumps.map((pump) => (
+            <Marker
+              key={pump._id}
+              coordinate={{
+                latitude: pump.coordinates.latitude,
+                longitude: pump.coordinates.longitude,
+              }}
+              title={pump.name}
+            />
+          ))}
       </MapView>
     </View>
   );

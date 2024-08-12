@@ -79,6 +79,7 @@ const QRModal = ({ showModal, setShowModal, QRDictionary }: any) => {
                   Payment Method: {QRDictionary?.selectedPaymentMethod}
                 </Text>
               </HStack>
+              <Text size="xs">user Id: {QRDictionary?.userId}</Text>
 
               <Button
                 alignSelf="flex-end"
