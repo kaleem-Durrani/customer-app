@@ -1,16 +1,8 @@
-import {
-  View,
-  Text,
-  HStack,
-  Center,
-  Button,
-  Spinner,
-} from "@gluestack-ui/themed";
+import { View, Text, HStack, Button, Spinner } from "@gluestack-ui/themed";
 import React, { useEffect } from "react";
 import ButtonCard from "./components/ButtonCard";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
 import InfoNavCard from "./components/InfoNavCard";
-import MiniMap from "./components/MiniMap";
 import useProfile from "../../../hooks/useProfile";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -74,17 +66,6 @@ const Home = ({ navigation }: any) => {
           onPress={() => navigation.navigate("FAQs")}
         />
       </HStack>
-
-      <Center
-        flex={1}
-        h={"$56"}
-        my={"$3"}
-        mx={"$2"}
-        borderRadius={10}
-        overflow="hidden"
-      >
-        <MiniMap />
-      </Center>
     </View>
   );
 };

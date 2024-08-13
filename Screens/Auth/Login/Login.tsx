@@ -12,7 +12,7 @@ import {
   HStack,
   Image,
 } from "@gluestack-ui/themed";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, PERCENT } from "../../../Constants/Constants";
 import MyToast from "../../../components/MyToast";

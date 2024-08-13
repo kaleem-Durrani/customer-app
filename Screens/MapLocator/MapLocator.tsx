@@ -1,199 +1,191 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
-import { COLORS } from "../../Constants/Constants";
-import TopRibbon from "../../components/TopRibbon";
+import { StyleSheet } from "react-native";
 import {
-  Select,
-  SelectTrigger,
-  SelectInput,
-  SelectIcon,
-  SelectPortal,
-  SelectBackdrop,
-  SelectContent,
-  SelectItem,
-  ChevronDownIcon,
+  View,
+  Text,
+  ScrollView,
+  Button,
+  ButtonText,
 } from "@gluestack-ui/themed";
+import Mapbox from "@rnmapbox/maps";
+import Bubble from "../../components/Bubble";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import customerApis from "../../api/customer";
 import useApi from "../../hooks/useApi";
+import { MAPBOX_ACCESS_TOKEN } from "@env";
+import TopRibbon from "../../components/TopRibbon";
 
 interface Pump {
-  id: number;
-  latitude: number;
-  longitude: number;
+  _id: number;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
   name: string;
-  brand: string;
 }
 
-const MapLocator: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const [location, setLocation] =
-    useState<Location.LocationObjectCoords | null>(null);
-  const [heading, setHeading] = useState<number | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+const MapLocator = ({ navigation }) => {
+  const [userLocation, setUserLocation] = useState(null);
+  const [route, setRoute] = useState(null);
+  const [instructions, setInstructions] = useState([]);
   const [pumps, setPumps] = useState<Pump[]>([]);
-  const [selectedBrand, setSelectedBrand] = useState<string>("all");
 
   const getPumpLocationsApi = useApi(customerApis.getPumpLocations);
 
   useEffect(() => {
-    let locationSubscription: Location.LocationSubscription | null = null;
-    let headingSubscription: Location.LocationSubscription | null = null;
-
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      // Initial location
-      let initialLocation = await Location.getCurrentPositionAsync({});
-      setLocation(initialLocation.coords);
-      getPumpLocationsApi.request();
-
-      // Watch location updates
-      locationSubscription = await Location.watchPositionAsync(
-        {
-          accuracy: Location.Accuracy.High,
-          timeInterval: 1000, // Update every 1 second
-          distanceInterval: 5, // Update every 5 meters
-        },
-        (newLocation) => {
-          setLocation(newLocation.coords);
-        }
-      );
-
-      // Watch heading updates
-      headingSubscription = await Location.watchHeadingAsync((newHeading) => {
-        setHeading(newHeading.trueHeading);
-      });
-    })();
-
-    // Clean up the subscription on component unmount
-    return () => {
-      if (locationSubscription) {
-        locationSubscription.remove();
-      }
-      if (headingSubscription) {
-        headingSubscription.remove();
-      }
+    const fetchPumpLocations = async () => {
+      await getPumpLocationsApi.request();
     };
-  }, [selectedBrand]);
+    fetchPumpLocations();
+  }, []);
 
-  // const fetchPumps = async (
-  //   coords: Location.LocationObjectCoords,
-  //   brand: string
-  // ) => {
-  //   const samplePumps: Pump[] = [
-  //     {
-  //       id: 1,
-  //       latitude: coords.latitude + 0.01,
-  //       longitude: coords.longitude + 0.01,
-  //       name: "Shell Pump",
-  //       brand: "shell",
-  //     },
-  //     {
-  //       id: 2,
-  //       latitude: coords.latitude - 0.01,
-  //       longitude: coords.longitude - 0.01,
-  //       name: "PSO Pump",
-  //       brand: "pso",
-  //     },
-  //     // Add more sample pumps
-  //   ];
+  useEffect(() => {
+    if (getPumpLocationsApi.data) {
+      setPumps(getPumpLocationsApi.data.pumps);
+      return;
+    }
+    if (getPumpLocationsApi.error) {
+      console.error(
+        "Error fetching pump locations:",
+        getPumpLocationsApi.error
+      );
+      return;
+    }
+  }, [getPumpLocationsApi.data, getPumpLocationsApi.error]);
 
-  //   const filteredPumps =
-  //     brand === "all"
-  //       ? samplePumps
-  //       : samplePumps.filter((pump) => pump.brand === brand);
-  //   setPumps(filteredPumps);
-  // };
+  Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
-  if (!location) {
-    return (
-      <View style={styles.container}>
-        <TopRibbon navigation={navigation} title={"Pump Locator"} />
-        <Text>Loading location...</Text>
-      </View>
+  const fetchRoute = async (start, end) => {
+    const query = await fetch(
+      `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${MAPBOX_ACCESS_TOKEN}`,
+      { method: "GET" }
     );
-  }
+    const json = await query.json();
+
+    return json.routes[0];
+  };
+
+  const onPressMap = async (e) => {
+    const clickedPoint = e.geometry.coordinates;
+    if (userLocation) {
+      try {
+        const routeData = await fetchRoute(userLocation, clickedPoint);
+        setRoute(routeData.geometry.coordinates);
+        setInstructions(
+          routeData.legs[0].steps.map((step) => step.maneuver.instruction)
+        );
+      } catch (error) {
+        console.error("Error fetching route:", error);
+      }
+    } else {
+      console.warn("User location not available");
+    }
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.matchParent}>
       <TopRibbon navigation={navigation} title={"Pump Locator"} />
-      {/* <Select>
-        <SelectTrigger variant="outline" size="md">
-          <SelectInput placeholder="Select Pump Brand" value={selectedBrand} />
-          <SelectIcon mr="$3">
-            <ChevronDownIcon />
-          </SelectIcon>
-        </SelectTrigger>
-        <SelectPortal>
-          <SelectBackdrop />
-          <SelectContent>
-            <SelectItem
-              label="All"
-              value="all"
-              onPress={() => setSelectedBrand("all")}
-            />
-            <SelectItem
-              label="Shell"
-              value="shell"
-              onPress={() => setSelectedBrand("shell")}
-            />
-            <SelectItem
-              label="PSO"
-              value="pso"
-              onPress={() => setSelectedBrand("pso")}
-            />
+      <Mapbox.MapView style={styles.matchParent}>
+        <Mapbox.Camera
+          defaultSettings={{
+            zoomLevel: 12,
+            centerCoordinate: [66.996452, 30.18327],
+          }}
+        />
 
-          </SelectContent>
-        </SelectPortal>
-      </Select> */}
+        <Mapbox.UserLocation
+          onUpdate={(location) =>
+            setUserLocation([
+              location.coords.longitude,
+              location.coords.latitude,
+            ])
+          }
+        />
 
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: location.latitude,
-          longitude: location.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-        showsUserLocation={true}
-        followsUserLocation={true}
-        showsMyLocationButton={true}
-        showsScale={true}
-        showsPointsOfInterest={true}
-        showsCompass={true}
-        showsBuildings={true}
-        showsTraffic={true}
-        loadingEnabled={true}
-      >
-        {getPumpLocationsApi.data &&
-          getPumpLocationsApi.data.pumps.map((pump) => (
-            <Marker
-              key={pump._id}
-              coordinate={{
-                latitude: pump.coordinates.latitude,
-                longitude: pump.coordinates.longitude,
-              }}
+        {pumps &&
+          pumps.map((pump) => (
+            <Mapbox.PointAnnotation
               title={pump.name}
-            />
+              key={pump._id}
+              id={`marker-${pump._id}`}
+              coordinate={[
+                pump.coordinates.longitude,
+                pump.coordinates.latitude,
+              ]}
+              onSelected={onPressMap}
+            >
+              <FontAwesome5 name="gas-pump" size={30} color="red" />
+            </Mapbox.PointAnnotation>
           ))}
-      </MapView>
+
+        {route && (
+          <Mapbox.ShapeSource
+            id="routeSource"
+            shape={{
+              type: "Feature",
+              properties: {},
+              geometry: {
+                type: "LineString",
+                coordinates: route,
+              },
+            }}
+          >
+            <Mapbox.LineLayer
+              id="routeFill"
+              style={{
+                lineColor: "blue",
+                lineWidth: 3,
+                lineCap: "round",
+                lineJoin: "round",
+              }}
+            />
+          </Mapbox.ShapeSource>
+        )}
+      </Mapbox.MapView>
+
+      <Bubble>
+        <Text>Tap on map to get directions</Text>
+      </Bubble>
+
+      {instructions.length > 0 && (
+        <ScrollView style={styles.instructionsContainer}>
+          <Text>Turn-by-turn instructions:</Text>
+          {instructions.map((instruction, index) => (
+            <Text key={index}>
+              {index + 1}. {instruction}
+            </Text>
+          ))}
+          <Button my={"$10"} onPress={() => setInstructions([])}>
+            <ButtonText>Hide</ButtonText>
+          </Button>
+        </ScrollView>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
+  matchParent: { flex: 1 },
+  instructionsContainer: {
+    position: "absolute",
+    bottom: 20,
+    left: 20,
+    right: 20,
+    backgroundColor: "white",
+    padding: 15,
+    borderRadius: 5,
+    maxHeight: 200,
+    overflow: "scroll",
+    // paddingBottom: HEIGHT * 0.5,
   },
-  map: {
-    flex: 1,
-    marginTop: -10,
+  marker: {
+    backgroundColor: "red",
+    padding: 10,
+    borderRadius: 5,
+  },
+  markerText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 
