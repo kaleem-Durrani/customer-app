@@ -32,6 +32,8 @@ const topUpAccount = (topUpThrough, amount) =>
 
 const getPumpLocations = () => client.get("/pump/pumpLocations", {});
 
+const uploadImage = (image) => client.post("/customer/image", { image });
+
 export default {
   getProfile,
   changePassword,
@@ -42,4 +44,5 @@ export default {
   transferFunds,
   topUpAccount,
   getPumpLocations,
+  uploadImage,
 };
