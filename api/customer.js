@@ -34,6 +34,9 @@ const getPumpLocations = () => client.get("/pump/pumpLocations", {});
 
 const uploadImage = (image) => client.post("/customer/image", { image });
 
+const updatePushToken = (pushToken) =>
+  client.post("/customer/updatePushToken", { pushToken });
+
 export default {
   getProfile,
   changePassword,
@@ -45,4 +48,5 @@ export default {
   topUpAccount,
   getPumpLocations,
   uploadImage,
+  updatePushToken,
 };
