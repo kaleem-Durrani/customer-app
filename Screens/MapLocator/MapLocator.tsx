@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import {
   View,
   Text,
@@ -26,6 +26,8 @@ interface Pump {
 
 const MapLocator = ({ navigation }) => {
   const [userLocation, setUserLocation] = useState(null);
+  const [cameraCenter, setCameraCenter] = useState([66.996452, 30.18327]);
+  const [cameraZoom, setCameraZoom] = useState(12);
   const [route, setRoute] = useState(null);
   const [instructions, setInstructions] = useState([]);
   const [pumps, setPumps] = useState<Pump[]>([]);
@@ -75,9 +77,16 @@ const MapLocator = ({ navigation }) => {
           routeData.legs[0].steps.map((step) => step.maneuver.instruction)
         );
       } catch (error) {
-        console.error("Error fetching route:", error);
+        Alert.alert(
+          "Error fetching route:",
+          "Distance Can't be More than 10,000 Miles"
+        );
       }
     } else {
+      Alert.alert(
+        "Location is Off!",
+        "Please ensure that the location permission is granted and location is on."
+      );
       console.warn("User location not available");
     }
   };
@@ -86,12 +95,7 @@ const MapLocator = ({ navigation }) => {
     <View style={styles.matchParent}>
       <TopRibbon navigation={navigation} title={"Pump Locator"} />
       <Mapbox.MapView style={styles.matchParent}>
-        <Mapbox.Camera
-          defaultSettings={{
-            zoomLevel: 12,
-            centerCoordinate: [66.996452, 30.18327],
-          }}
-        />
+        <Mapbox.Camera centerCoordinate={cameraCenter} zoomLevel={cameraZoom} />
 
         <Mapbox.UserLocation
           onUpdate={(location) =>
@@ -142,10 +146,25 @@ const MapLocator = ({ navigation }) => {
           </Mapbox.ShapeSource>
         )}
       </Mapbox.MapView>
-
-      <Bubble>
+      <Button
+        variant="solid"
+        onPress={() => {
+          if (userLocation) {
+            setCameraCenter([userLocation[0], userLocation[1]]);
+            setCameraZoom(12); // You can adjust the zoom level as needed
+          } else {
+            Alert.alert(
+              "Location is Off!",
+              "Please ensure that the location permission is granted and location is on."
+            );
+          }
+        }}
+      >
+        <ButtonText>My Location</ButtonText>
+      </Button>
+      {/* <Bubble>
         <Text>Tap on map to get directions</Text>
-      </Bubble>
+      </Bubble> */}
 
       {instructions.length > 0 && (
         <ScrollView style={styles.instructionsContainer}>

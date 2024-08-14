@@ -1,7 +1,7 @@
 import { config } from "@gluestack-ui/config";
 import { GluestackUIProvider, StatusBar } from "@gluestack-ui/themed";
 import { NavigationContainer } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-native-gesture-handler";
 import StackNavigator from "./Navigations/StackNavigator/StackNavigtor";
 import AuthContext from "./auth/context";
