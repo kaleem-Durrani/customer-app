@@ -11,6 +11,7 @@ import * as Device from "expo-device";
 import Constants from "expo-constants";
 import customerApis from "../../../api/customer";
 import useApi from "../../../hooks/useApi";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 ////////////////////////////////////////////////
 
@@ -130,11 +131,12 @@ const Home = ({ navigation }: any) => {
 
   return (
     <View flex={1} pt={"$1"} px={"$4"} bg={COLORS.primary}>
+      <NetworkStatusBadge />
       <Button
         variant="outline"
         position="absolute"
         right={20}
-        top={10}
+        top={30}
         zIndex={10}
         onPress={() => refreshProfile()}
       >
@@ -152,7 +154,11 @@ const Home = ({ navigation }: any) => {
         {profile ? "Hello " + profile.name : "Loading..."}
       </Text>
       <Text ml={"$2"} mt={-6} mb={"$1"} size="sm" color="gray">
-        Good Morning
+        {new Date().getHours() < 12
+          ? "Good Morning"
+          : new Date().getHours() < 18
+          ? "Good Afternoon"
+          : "Good Evening"}
       </Text>
 
       {/* info and navigation card */}

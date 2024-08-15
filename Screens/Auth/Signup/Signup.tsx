@@ -19,6 +19,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import MyToast from "../../../components/MyToast";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 import authApi from "../../../api/auth";
 
@@ -119,6 +120,7 @@ export default function Signup({ navigation }: any) {
 
   return (
     <View flex={1}>
+      <NetworkStatusBadge />
       <LinearGradient
         colors={[COLORS.tertiary, COLORS.secondary]}
         start={[0.1, 0.7]}

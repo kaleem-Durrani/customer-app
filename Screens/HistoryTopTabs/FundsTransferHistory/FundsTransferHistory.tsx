@@ -11,6 +11,7 @@ import useProfile from "../../../hooks/useProfile";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../Constants/Constants";
 import useFundsTransferHistory from "../../../hooks/useFundsTransferHistory";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 const FundsTransferHistory = () => {
   const { profile } = useProfile();
@@ -56,6 +57,7 @@ const FundsTransferHistory = () => {
 
     return (
       <View style={styles.transferCard}>
+        <NetworkStatusBadge />
         <Text style={isSent ? styles.sentTag : styles.receivedTag}>
           {isSent ? "Sent" : "Received"}
         </Text>
@@ -74,6 +76,7 @@ const FundsTransferHistory = () => {
   if (loading) {
     return (
       <Center flex={1}>
+        <NetworkStatusBadge />
         <HStack alignItems="center">
           <Spinner size="large" />
           <Text ml={"$3"} size="2xl">
@@ -87,6 +90,7 @@ const FundsTransferHistory = () => {
   if (isError) {
     return (
       <Center flex={1}>
+        <NetworkStatusBadge />
         <Text ml={"$3"} size="2xl">
           {errorProblem || "Unknown error"}: {errorStatus || ""}
           {"\n"}
@@ -98,6 +102,7 @@ const FundsTransferHistory = () => {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <NetworkStatusBadge />
       {sortedMonths.map((month) => (
         <View key={month} style={styles.monthCard}>
           <Text style={styles.month}>{month}</Text>

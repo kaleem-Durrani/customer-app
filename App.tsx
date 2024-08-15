@@ -9,6 +9,7 @@ import ProfileContext from "./Contexts/ProfileContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { COLORS } from "./Constants/Constants";
 import authStorage from "./auth/storage";
+import { NetworkProvider } from "./Contexts/NetworkContext";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -32,15 +33,17 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AuthContext.Provider value={{ user, setUser }}>
         <ProfileContext.Provider value={{ profile, setProfile }}>
-          <NavigationContainer>
-            <GluestackUIProvider config={config}>
-              <StatusBar
-                backgroundColor={`${COLORS.tertiary}`}
-                barStyle={"light-content"}
-              />
-              <StackNavigator />
-            </GluestackUIProvider>
-          </NavigationContainer>
+          <NetworkProvider>
+            <NavigationContainer>
+              <GluestackUIProvider config={config}>
+                <StatusBar
+                  backgroundColor={`${COLORS.tertiary}`}
+                  barStyle={"light-content"}
+                />
+                <StackNavigator />
+              </GluestackUIProvider>
+            </NavigationContainer>
+          </NetworkProvider>
         </ProfileContext.Provider>
       </AuthContext.Provider>
     </GestureHandlerRootView>

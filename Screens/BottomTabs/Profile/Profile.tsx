@@ -22,6 +22,7 @@ import useProfile from "../../../hooks/useProfile";
 import * as ImagePicker from "expo-image-picker";
 import { Alert } from "react-native";
 import * as FileSystem from "expo-file-system";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 const Profile = ({ navigation }: any) => {
   const { logOut } = useAuth();
@@ -100,6 +101,7 @@ const Profile = ({ navigation }: any) => {
 
   return (
     <View mt={"$0"} bg={COLORS.primary} flex={1}>
+      <NetworkStatusBadge />
       <LinearGradient
         colors={[COLORS.secondary, COLORS.primary, COLORS.secondary]}
         start={[0.4, -0.4]}

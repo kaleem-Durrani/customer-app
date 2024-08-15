@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+// import NetInfo from "@react-native-community/netinfo";
+// import MyToast from "../components/MyToast";
 
 export default useApi = (apiFunc) => {
   const [data, setData] = useState(null);
@@ -7,11 +9,31 @@ export default useApi = (apiFunc) => {
   const [errorStatus, setErronStatus] = useState(null);
   const [responseProblem, setResponseProblem] = useState(null);
   const [loading, setLoading] = useState(false);
+  // const [isConnected, setIsConnected] = useState(true);
+
+  // const toast = MyToast();
+
+  // useEffect(() => {
+  //   // Subscribe to network state updates
+  //   const unsubscribe = NetInfo.addEventListener((state) => {
+  //     setIsConnected(state.isConnected);
+  //   });
+
+  //   // Unsubscribe when the component unmounts
+  //   return () => unsubscribe();
+  // }, []);
 
   const request = async (...args) => {
     setData(null);
     setIsError(false);
     setError(null);
+    // if (!isConnected) {
+    //   toast.error(
+    //     "No Internet Connection",
+    //     "Please check your internet connection and try again."
+    //   );
+    //   return;
+    // }
 
     setLoading(true);
     const response = await apiFunc(...args);

@@ -13,6 +13,7 @@ const InfoNavCard = ({ navigation, balance, points }: any) => {
       overflow="visible"
       elevation={2}
       m={"$2"}
+      mt={"$5"}
     >
       <LinearGradient
         colors={[COLORS.secondary, COLORS.primary]}

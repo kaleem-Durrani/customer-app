@@ -10,6 +10,7 @@ import {
 import { COLORS, HEIGHT, PERCENT } from "../../../Constants/Constants";
 import useAuth from "../../../auth/useAuth";
 import { FontAwesome } from "@expo/vector-icons";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 import useApi from "../../../hooks/useApi";
 import MyToast from "../../../components/MyToast";
@@ -104,6 +105,7 @@ const VerifyAccount: React.FC<OTPScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <NetworkStatusBadge />
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{ position: "absolute", top: 20, left: 20 }}

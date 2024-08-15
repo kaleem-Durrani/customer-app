@@ -2,7 +2,7 @@ import { create } from "apisauce";
 import authStorage from "../auth/storage";
 
 const apiClient = create({
-  baseURL: "http://192.168.100.82:5000/api",
+  baseURL: "https://pakfuel.koyeb.app/api",
 });
 
 // applying the token if available to all api requests
