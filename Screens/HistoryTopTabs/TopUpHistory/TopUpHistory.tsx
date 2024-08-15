@@ -10,6 +10,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import useTopUpHistory from "../../../hooks/useTopUpHistory";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../Constants/Constants";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 const TopUpHistory = () => {
   const {
@@ -56,6 +57,7 @@ const TopUpHistory = () => {
   if (loading) {
     return (
       <Center flex={1}>
+        <NetworkStatusBadge />
         <HStack alignItems="center">
           <Spinner size="large" />
           <Text ml={"$3"} size="2xl">
@@ -69,6 +71,7 @@ const TopUpHistory = () => {
   if (sorting) {
     return (
       <Center flex={1}>
+        <NetworkStatusBadge />
         <HStack alignItems="center">
           <Spinner size="large" />
           <Text ml={"$3"} size="2xl">
@@ -82,6 +85,7 @@ const TopUpHistory = () => {
   if (isError) {
     return (
       <Center flex={1}>
+        <NetworkStatusBadge />
         <Text ml={"$3"} size="2xl">
           {errorProblem || "Unknown error"}: {errorStatus || ""}
           {"\n"}
@@ -93,6 +97,7 @@ const TopUpHistory = () => {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <NetworkStatusBadge />
       {sortedMonths.map((month) => (
         <View key={month} style={styles.monthCard}>
           <Text style={styles.month}>{month}</Text>

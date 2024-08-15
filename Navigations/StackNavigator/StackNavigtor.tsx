@@ -1,7 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../../Screens/Auth/Login/Login";
 import Signup from "../../Screens/Auth/Signup/Signup";
-import { useContext, useState } from "react";
 import BottomTabNavigator from "../BottomTabNavigator/BottomTabNavigator";
 import HistoryTopTabNavigator from "../HistoryTopTabNavigator/HistoryTopTabNavigator";
 import TopUp from "../../Screens/TopUp/TopUp";

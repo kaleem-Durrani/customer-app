@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "plugins": [
       [
         "expo-image-picker",
@@ -24,14 +22,14 @@
       [
         "@rnmapbox/maps",
         {
-          "RNMapboxMapsDownloadToken": "sk.eyJ1IjoiemVnb29wIiwiYSI6ImNsenM4azhwMTIwcmMycnI0aXQ0YnZqbzkifQ.ZvCNvdCbqXHr25nJRPJ3Ng",
+          "RNMapboxMapsDownloadToken": "@env:SECRET_ACCESS_TOKEN",
           "RNMapboxMapsVersion": "11.0.0"
         }
       ],
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+          "locationAlwaysAndWhenInUsePermission": "Allow Pakfuel to use your location."
         }
       ]
     ],
@@ -49,7 +47,7 @@
         "android.permission.ACCESS_FINE_LOCATION"
       ],
       "package": "com.zegoop.customer",
-      "googleServicesFile": "google-services.json"
+      "googleServicesFile": "@env:GOOGLE_SERVICES_JSON"
     },
     "web": {
       "favicon": "./assets/favicon.png"

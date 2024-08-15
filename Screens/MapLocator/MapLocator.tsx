@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, PermissionsAndroid, Platform } from "react-native";
 import {
   View,
   Text,
@@ -8,12 +8,12 @@ import {
   ButtonText,
 } from "@gluestack-ui/themed";
 import Mapbox from "@rnmapbox/maps";
-import Bubble from "../../components/Bubble";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import customerApis from "../../api/customer";
 import useApi from "../../hooks/useApi";
 import { MAPBOX_ACCESS_TOKEN } from "@env";
 import TopRibbon from "../../components/TopRibbon";
+import { NetworkStatusBadge } from "../../components/NetworkBadge";
 
 interface Pump {
   _id: number;
@@ -24,7 +24,9 @@ interface Pump {
   name: string;
 }
 
-const MapLocator = ({ navigation }) => {
+Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
+
+const MapLocator = ({ navigation }: any) => {
   const [userLocation, setUserLocation] = useState(null);
   const [cameraCenter, setCameraCenter] = useState([66.996452, 30.18327]);
   const [cameraZoom, setCameraZoom] = useState(12);
@@ -55,9 +57,29 @@ const MapLocator = ({ navigation }) => {
     }
   }, [getPumpLocationsApi.data, getPumpLocationsApi.error]);
 
-  Mapbox.setAccessToken(MAPBOX_ACCESS_TOKEN);
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === "android") {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: "Location Permission",
+              message: "This app needs access to your location.",
+              buttonNegative: "Cancel",
+              buttonPositive: "OK",
+            }
+          );
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+    };
 
-  const fetchRoute = async (start, end) => {
+    requestLocationPermission();
+  }, []);
+
+  const fetchRoute = async (start: number[], end: number[]) => {
     const query = await fetch(
       `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${MAPBOX_ACCESS_TOKEN}`,
       { method: "GET" }
@@ -67,14 +89,14 @@ const MapLocator = ({ navigation }) => {
     return json.routes[0];
   };
 
-  const onPressMap = async (e) => {
+  const onPressMap = async (e: any) => {
     const clickedPoint = e.geometry.coordinates;
     if (userLocation) {
       try {
         const routeData = await fetchRoute(userLocation, clickedPoint);
         setRoute(routeData.geometry.coordinates);
         setInstructions(
-          routeData.legs[0].steps.map((step) => step.maneuver.instruction)
+          routeData.legs[0].steps.map((step: any) => step.maneuver.instruction)
         );
       } catch (error) {
         Alert.alert(
@@ -93,8 +115,12 @@ const MapLocator = ({ navigation }) => {
 
   return (
     <View style={styles.matchParent}>
+      <NetworkStatusBadge />
       <TopRibbon navigation={navigation} title={"Pump Locator"} />
-      <Mapbox.MapView style={styles.matchParent}>
+      <Mapbox.MapView
+        style={styles.matchParent}
+        onDidFinishLoadingMap={() => console.log("Map has loaded")}
+      >
         <Mapbox.Camera centerCoordinate={cameraCenter} zoomLevel={cameraZoom} />
 
         <Mapbox.UserLocation
@@ -162,9 +188,6 @@ const MapLocator = ({ navigation }) => {
       >
         <ButtonText>My Location</ButtonText>
       </Button>
-      {/* <Bubble>
-        <Text>Tap on map to get directions</Text>
-      </Bubble> */}
 
       {instructions.length > 0 && (
         <ScrollView style={styles.instructionsContainer}>

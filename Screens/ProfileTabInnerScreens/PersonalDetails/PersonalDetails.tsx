@@ -5,12 +5,14 @@ import TopRibbon from "../../../components/TopRibbon";
 import { LinearGradient } from "expo-linear-gradient";
 import DetailCard from "./components/DetailCard";
 import ProfileContext from "../../../Contexts/ProfileContext";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 const PersonalDetails = ({ navigation }: any) => {
   const { profile } = useContext(ProfileContext);
 
   return (
     <View bg={COLORS.primary} flex={1}>
+      <NetworkStatusBadge />
       <TopRibbon navigation={navigation} title={"Personal Details"} />
 
       <LinearGradient

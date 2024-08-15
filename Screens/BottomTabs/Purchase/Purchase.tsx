@@ -16,6 +16,7 @@ import MyToast from "../../../components/MyToast";
 import QRModal from "./components/QRModal";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import useAuth from "../../../auth/useAuth";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 interface QRDictionary {
   selectedFuel: string;
@@ -92,6 +93,7 @@ const Purchase = () => {
 
   return (
     <View flex={1} bg={COLORS.primary} pt={"$1"} px={"$4"}>
+      <NetworkStatusBadge />
       {/* The top card of the screen containing the fuel type selection and form controls for the amount and number of litres */}
       <FuelTypeAmountCard
         selectedFuel={selectedFuel}

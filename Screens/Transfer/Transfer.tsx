@@ -19,7 +19,7 @@ import customerApis from "../../api/customer";
 import useApi from "../../hooks/useApi";
 import useProfile from "../../hooks/useProfile";
 import { LinearGradient } from "expo-linear-gradient";
-
+import { NetworkStatusBadge } from "../../components/NetworkBadge";
 const Transfer = ({ navigation }: any) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [amount, setAmount] = useState("");
@@ -120,6 +120,7 @@ const Transfer = ({ navigation }: any) => {
 
   return (
     <View bg={COLORS.primary} flex={1}>
+      <NetworkStatusBadge />
       <LinearGradient
         colors={[
           COLORS.tertiary,

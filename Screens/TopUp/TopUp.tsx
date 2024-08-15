@@ -14,7 +14,7 @@ import MyToast from "../../components/MyToast";
 import customerApis from "../../api/customer";
 import useApi from "../../hooks/useApi";
 import useProfile from "../../hooks/useProfile";
-
+import { NetworkStatusBadge } from "../../components/NetworkBadge";
 const TopUp = ({ navigation }: any) => {
   const [topUpThrough, setTopUpThrough] = useState("");
   const [amount, setAmount] = useState("");
@@ -75,6 +75,7 @@ const TopUp = ({ navigation }: any) => {
 
   return (
     <View bg={COLORS.primary} flex={1}>
+      <NetworkStatusBadge />
       <TopRibbon navigation={navigation} title={"Top Up"} />
 
       <View px={"$8"} pt={"$4"}>

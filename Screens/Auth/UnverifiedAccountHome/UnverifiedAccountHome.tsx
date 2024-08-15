@@ -11,6 +11,7 @@ import { Alert, TouchableOpacity } from "react-native";
 import { COLORS, HEIGHT, PERCENT } from "../../../Constants/Constants";
 import useAuth from "../../../auth/useAuth";
 import { FontAwesome } from "@expo/vector-icons";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 const UnverifiedAccountHome = ({ navigation }: any) => {
   const auth = useAuth();
@@ -36,6 +37,7 @@ const UnverifiedAccountHome = ({ navigation }: any) => {
 
   return (
     <View bg={COLORS.primary} flex={1} p={"$6"}>
+      <NetworkStatusBadge />
       <View position="absolute" top={0} right={0} p={"$4"}>
         <TouchableOpacity style={{ zIndex: 1 }} onPress={() => confirmLogOut()}>
           <FontAwesome

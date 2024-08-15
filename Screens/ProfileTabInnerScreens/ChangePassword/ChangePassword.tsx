@@ -14,6 +14,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import MyToast from "../../../components/MyToast";
 import customerApis from "../../../api/customer";
 import useApi from "../../../hooks/useApi";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 const ChangePassword = ({ navigation }: any) => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -69,6 +70,7 @@ const ChangePassword = ({ navigation }: any) => {
 
   return (
     <View bg={COLORS.primary} flex={1}>
+      <NetworkStatusBadge />
       <TopRibbon navigation={navigation} title={"Change Password"} />
 
       <LinearGradient

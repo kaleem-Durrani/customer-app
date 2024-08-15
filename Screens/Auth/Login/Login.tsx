@@ -19,7 +19,7 @@ import MyToast from "../../../components/MyToast";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 import authApi from "../../../api/auth";
 import useAuth from "../../../auth/useAuth";
 
@@ -53,7 +53,8 @@ export default function Login({ navigation }: any) {
     setLoading(false);
 
     if (!result.ok) {
-      console.log("error");
+      // console.log(result);
+      // console.log("error");
       return toast.error(
         `${result.problem} ${result.status}`,
         `${result.data.error}`
@@ -77,6 +78,7 @@ export default function Login({ navigation }: any) {
           justifyContent: "center",
         }}
       >
+        <NetworkStatusBadge />
         <Image
           source={require("../../../assets/images//auth/login.png")}
           alt="login"

@@ -2,4 +2,5 @@ node_modules
 .expo
 android
 .env
+.env*
 google-services.json

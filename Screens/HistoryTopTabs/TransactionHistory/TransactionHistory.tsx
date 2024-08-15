@@ -11,6 +11,7 @@ import TransactionCard from "../components/TransactionCard"; // Import your Tran
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../Constants/Constants";
 import useTransactionHistory from "../../../hooks/useTransactionHistory";
+import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
 interface Transaction {
   amount: string;
@@ -90,6 +91,7 @@ const TransactionHistory = () => {
   if (loading) {
     return (
       <Center flex={1}>
+        <NetworkStatusBadge />
         <HStack alignItems="center">
           <Spinner size="large" />
           <Text ml={"$3"} size="2xl">
@@ -103,6 +105,7 @@ const TransactionHistory = () => {
   if (isError) {
     return (
       <Center flex={1}>
+        <NetworkStatusBadge />
         <Text ml={"$3"} size="2xl">
           {errorProblem || "Unknown error"}: {errorStatus || ""}
           {"\n"}
@@ -115,6 +118,7 @@ const TransactionHistory = () => {
   if (sorting) {
     return (
       <Center flex={1}>
+        <NetworkStatusBadge />
         <HStack alignItems="center">
           <Spinner size="large" />
           <Text ml={"$3"} size="2xl">
@@ -127,6 +131,7 @@ const TransactionHistory = () => {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <NetworkStatusBadge />
       {sortedMonths.map((month) => (
         <View key={month} style={styles.monthCard}>
           <Text style={styles.month}>{month}</Text>

@@ -14,6 +14,7 @@
     "@gluestack-ui/config": "latest",
     "@gluestack-ui/themed": "latest",
     "@legendapp/motion": "latest",
+    "@react-native-community/netinfo": "^11.3.1",
     "@react-native-masked-view/masked-view": "0.3.1",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/material-top-tabs": "^6.6.13",
@@ -24,10 +25,13 @@
     "apisauce": "^3.0.1",
     "base-64": "^1.0.0",
     "expo": "^51.0.26",
+    "expo-constants": "~16.0.2",
+    "expo-device": "~6.0.2",
     "expo-file-system": "~17.0.1",
     "expo-image-picker": "~15.0.7",
     "expo-linear-gradient": "^13.0.2",
     "expo-location": "~17.0.1",
+    "expo-notifications": "~0.28.15",
     "expo-secure-store": "^13.0.2",
     "expo-status-bar": "~1.12.1",
     "jwt-decode": "^4.0.0",
@@ -44,10 +48,7 @@
     "react-native-screens": "3.31.1",
     "react-native-svg": "15.2.0",
     "react-native-tab-view": "^3.5.2",
-    "react-native-web": "~0.19.6",
-    "expo-notifications": "~0.28.15",
-    "expo-constants": "~16.0.2",
-    "expo-device": "~6.0.2"
+    "react-native-web": "~0.19.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
