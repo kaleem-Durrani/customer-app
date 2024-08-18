@@ -37,6 +37,8 @@ const uploadImage = (image) => client.post("/customer/image", { image });
 const updatePushToken = (pushToken) =>
   client.post("/customer/updatePushToken", { pushToken });
 
+const getLoyaltyPoints = () => client.get("/loyalty/points", {});
+
 export default {
   getProfile,
   changePassword,
@@ -49,4 +51,5 @@ export default {
   getPumpLocations,
   uploadImage,
   updatePushToken,
+  getLoyaltyPoints,
 };

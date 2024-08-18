@@ -137,7 +137,7 @@ const Purchase = () => {
           />
 
           <ImageButton
-            image={require("../../../assets/images/app+points.png")}
+            image={require("../../../assets/images/app_points.png")}
             alt={"app+points"}
             title={"App + Points"}
             selectedPaymentMethod={selectedPaymentMethod}
