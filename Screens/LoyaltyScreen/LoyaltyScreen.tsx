@@ -27,10 +27,10 @@ import useApi from "../../hooks/useApi";
 import { Alert } from "react-native";
 const LoyaltyScreen = ({ navigation }: any) => {
   const getLoyaltyPointsApi = useApi(customerApi.getLoyaltyPoints);
+  const redeemLoyaltyPointsApi = useApi(customerApi.redeemLoyaltyPoints);
   const [loyaltyPrograms, setLoyaltyPrograms] = useState([]);
   const [points, setPoints] = useState(0);
-  const [pump, setPump] = useState("");
-  const [selectedPump, setSelectedPump] = useState(loyaltyPrograms[0]);
+  const [selectedPump, setSelectedPump] = useState("");
 
   const getLoyaltyPoints = async () => {
     await getLoyaltyPointsApi.request();
@@ -38,11 +38,14 @@ const LoyaltyScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     getLoyaltyPoints();
+    console.log("loyaltyPrograms");
   }, []);
 
   useEffect(() => {
     if (getLoyaltyPointsApi.data) {
       setLoyaltyPrograms(getLoyaltyPointsApi.data.loyaltyPrograms);
+      setSelectedPump("");
+      setPoints(0);
     }
     if (getLoyaltyPointsApi.error) {
       Alert.alert("Error", "Error fetching loyalty points");
@@ -50,14 +53,32 @@ const LoyaltyScreen = ({ navigation }: any) => {
   }, [getLoyaltyPointsApi.data, getLoyaltyPointsApi.error]);
 
   const handlePumpChange = (itemValue: string) => {
-    setPump(itemValue);
     const selectedPump = loyaltyPrograms.find(
       (pump) => pump.pumpId.name === itemValue
     );
     if (selectedPump) {
+      setSelectedPump(selectedPump.pumpId.name);
+      console.log(selectedPump);
       setPoints(selectedPump.points);
     }
   };
+
+  const handleRedeem = async (itemValue: string) => {
+    const selectedPump = loyaltyPrograms.find(
+      (pump) => pump.pumpId.name === itemValue
+    );
+    await redeemLoyaltyPointsApi.request(selectedPump.pumpId._id);
+  };
+
+  useEffect(() => {
+    if (redeemLoyaltyPointsApi.data) {
+      Alert.alert(redeemLoyaltyPointsApi.data.message);
+      getLoyaltyPoints();
+    }
+    if (redeemLoyaltyPointsApi.error) {
+      Alert.alert("Error", "Error redeeming points");
+    }
+  }, [redeemLoyaltyPointsApi.data, redeemLoyaltyPointsApi.error]);
 
   return (
     <View bg={COLORS.primary} flex={1}>
@@ -70,7 +91,11 @@ const LoyaltyScreen = ({ navigation }: any) => {
           minWidth={250}
         >
           <SelectTrigger variant="outline" size="md">
-            <SelectInput placeholder="Choose Brand" />
+            <SelectInput
+              placeholder="Choose Pump"
+              value={selectedPump ? selectedPump : "Choose Pump"}
+              onChangeText={handlePumpChange}
+            />
             <SelectIcon
               as={MaterialIcons}
               name="arrow-drop-down"
@@ -138,7 +163,7 @@ const LoyaltyScreen = ({ navigation }: any) => {
           isDisabled={points < 100}
           variant="solid"
           size="lg"
-          onPress={() => alert("Points Redeemed!")}
+          onPress={() => handleRedeem(selectedPump)}
         >
           <ButtonText>Redeem</ButtonText>
         </Button>

@@ -39,6 +39,9 @@ const updatePushToken = (pushToken) =>
 
 const getLoyaltyPoints = () => client.get("/loyalty/points", {});
 
+const redeemLoyaltyPoints = (pumpId) =>
+  client.post("/loyalty/redeem", { pumpId });
+
 export default {
   getProfile,
   changePassword,
@@ -52,4 +55,5 @@ export default {
   uploadImage,
   updatePushToken,
   getLoyaltyPoints,
+  redeemLoyaltyPoints,
 };
