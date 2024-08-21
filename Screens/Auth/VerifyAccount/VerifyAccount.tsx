@@ -1,16 +1,18 @@
-import { Button, ButtonText, Text } from "@gluestack-ui/themed";
-import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+  Button,
+  ButtonText,
+  Text,
+  Input,
+  InputField,
+  InputSlot,
+} from "@gluestack-ui/themed";
+import React, { useEffect, useRef, useState } from "react";
+import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, HEIGHT, PERCENT } from "../../../Constants/Constants";
 import useAuth from "../../../auth/useAuth";
 import { FontAwesome } from "@expo/vector-icons";
 import { NetworkStatusBadge } from "../../../components/NetworkBadge";
+import {} from "@gluestack-ui/themed";
 
 import useApi from "../../../hooks/useApi";
 import MyToast from "../../../components/MyToast";
@@ -23,13 +25,12 @@ interface OTPScreenProps {
 const VerifyAccount: React.FC<OTPScreenProps> = ({ navigation }) => {
   const auth = useAuth();
 
-  const verifyOtpApi = useApi(authApis.verifyOtp);
-
-  const refreshOtpApi = useApi(authApis.requestNewOtp);
-
+  const verifyOtpForgetPasswordApi = useApi(authApis.verifyOtpForgetPassword);
+  const requestPasswordResetApi = useApi(authApis.requestPasswordReset);
   const toast = MyToast();
 
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
+  const [email, setEmail] = useState<string>("");
   const inputRefs = useRef<Array<TextInput | null>>([]);
 
   const handleChange = (text: string, index: number) => {
@@ -59,49 +60,57 @@ const VerifyAccount: React.FC<OTPScreenProps> = ({ navigation }) => {
   };
 
   const verifyOtp = async (enteredOtp: string) => {
-    verifyOtpApi.request(enteredOtp);
+    if (email) {
+      await verifyOtpForgetPasswordApi.request({ otp: enteredOtp, email });
+    } else {
+      toast.error("Error", "Email address not found");
+    }
   };
 
   // useEffect to handle verify Otp response
   useEffect(() => {
-    if (verifyOtpApi.data) {
-      toast.success(
-        `Success`,
-        `${verifyOtpApi.data.message} for ${verifyOtpApi.data.customer.name}`
-      );
-      auth.login(verifyOtpApi.data.token);
+    if (verifyOtpForgetPasswordApi.data) {
+      toast.success(`Success`, `${verifyOtpForgetPasswordApi.data.message}`);
+      navigation.navigate("ForgetPassword", {
+        email: email,
+        otp: otp.join(""),
+      });
       return;
     }
-    if (verifyOtpApi.error) {
+    if (verifyOtpForgetPasswordApi.error) {
       toast.error(
-        `${verifyOtpApi.responseProblem} ${verifyOtpApi.errorStatus}`,
-        `${verifyOtpApi.error}`
+        `${verifyOtpForgetPasswordApi.responseProblem} ${verifyOtpForgetPasswordApi.errorStatus}`,
+        `${verifyOtpForgetPasswordApi.error}`
       );
-      // verifyOtpApi.reset();
       return;
     }
-  }, [verifyOtpApi.data, verifyOtpApi.error]);
+  }, [verifyOtpForgetPasswordApi.data, verifyOtpForgetPasswordApi.error]);
 
   const handleNewOtpRequest = async () => {
-    refreshOtpApi.request();
+    if (email) {
+      requestPasswordResetApi.request(email);
+      toast.success(`Request Sent`, requestPasswordResetApi.data.message);
+    } else {
+      toast.error("Error", "Email address not found");
+    }
   };
 
   // useEffect to handle request new otp response
   useEffect(() => {
-    if (refreshOtpApi.data) {
-      toast.success(`Success`, `${refreshOtpApi.data.message}`);
+    if (requestPasswordResetApi.data) {
+      toast.success(`Success`, `Email has been sent to ${email}`);
 
       return;
     }
-    if (refreshOtpApi.error) {
+    if (requestPasswordResetApi.error) {
       toast.error(
-        `${refreshOtpApi.responseProblem} ${refreshOtpApi.errorStatus}`,
-        `${refreshOtpApi.error}`
+        `${requestPasswordResetApi.responseProblem} ${requestPasswordResetApi.errorStatus}`,
+        `${requestPasswordResetApi.error}`
       );
-      // refreshOtpApi.reset();
+
       return;
     }
-  }, [refreshOtpApi.data, refreshOtpApi.error]);
+  }, [requestPasswordResetApi.data, requestPasswordResetApi.error]);
 
   return (
     <View style={styles.container}>
@@ -126,9 +135,24 @@ const VerifyAccount: React.FC<OTPScreenProps> = ({ navigation }) => {
       <Text bold size="md" mb={"$2"}>
         OR
       </Text>
+      <Input variant="outline" size="lg" mt={"$1"}>
+        <InputField
+          size="md"
+          placeholder="Your Email Address"
+          type={"email"}
+          value={email}
+          onChangeText={setEmail}
+          required
+        />
+        <InputSlot mr={"$3"}>
+          <FontAwesome name="envelope" size={24} color={COLORS.tertiary} />
+        </InputSlot>
+      </Input>
       <TouchableOpacity
-        disabled={refreshOtpApi.loading || verifyOtpApi.loading}
-        onPress={() => handleNewOtpRequest()}
+        disabled={
+          requestPasswordResetApi.loading || verifyOtpForgetPasswordApi.loading
+        }
+        onPress={handleNewOtpRequest}
       >
         <Text bold size="lg" color={COLORS.activeText} mb={"$10"}>
           Request Another OTP
@@ -154,8 +178,8 @@ const VerifyAccount: React.FC<OTPScreenProps> = ({ navigation }) => {
       <Button
         isDisabled={
           otp.join("").length !== 6 ||
-          verifyOtpApi.loading ||
-          refreshOtpApi.loading
+          verifyOtpForgetPasswordApi.loading ||
+          requestPasswordResetApi.loading
         }
         mt={"$10"}
         onPress={() => verifyOtp(otp.join(""))}

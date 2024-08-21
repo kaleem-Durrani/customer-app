@@ -128,7 +128,7 @@ const Purchase = () => {
             setSelectedPaymentMethod={setSelectedPaymentMethod}
           />
 
-          <ImageButton
+          {/* <ImageButton
             image={require("../../../assets/images/bonusPoints.png")}
             alt={"points"}
             title={"Points"}
@@ -142,14 +142,10 @@ const Purchase = () => {
             title={"App + Points"}
             selectedPaymentMethod={selectedPaymentMethod}
             setSelectedPaymentMethod={setSelectedPaymentMethod}
-          />
+          /> */}
         </HStack>
 
         {/* Buy button */}
-
-        {/* giving a gluestack button a background color makes it lose its visual press effect
-            wrapping it in a touchable opacity brings back that press animation or visual effect
-        */}
 
         <TouchableOpacity>
           <Button

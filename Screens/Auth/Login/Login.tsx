@@ -18,7 +18,6 @@ import { COLORS, PERCENT } from "../../../Constants/Constants";
 import MyToast from "../../../components/MyToast";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
 import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 import authApi from "../../../api/auth";
 import useAuth from "../../../auth/useAuth";
@@ -53,8 +52,6 @@ export default function Login({ navigation }: any) {
     setLoading(false);
 
     if (!result.ok) {
-      // console.log(result);
-      // console.log("error");
       return toast.error(
         `${result.problem} ${result.status}`,
         `${result.data.error}`
@@ -147,16 +144,15 @@ export default function Login({ navigation }: any) {
           mt={"$3"}
           borderRadius={PERCENT[3]}
           onPress={() => handleLogin()}
-          // disabled={loading}
           isDisabled={loading}
         >
           <ButtonText>Sign in</ButtonText>
         </Button>
 
-        <Text alignSelf="center" mt={"$3"}>
+        {/* <Text alignSelf="center" mt={"$3"}>
           or Sign in with
-        </Text>
-
+        </Text> */}
+        {/* 
         <HStack mt={"$3"} alignSelf="center" gap={PERCENT[10]}>
           <TouchableOpacity
             style={{
@@ -186,7 +182,7 @@ export default function Login({ navigation }: any) {
               />
             </View>
           </TouchableOpacity>
-        </HStack>
+        </HStack> */}
 
         <HStack alignSelf="center" flex={1} alignItems="flex-end" mb={"$4"}>
           <Text>Dont have an account? </Text>

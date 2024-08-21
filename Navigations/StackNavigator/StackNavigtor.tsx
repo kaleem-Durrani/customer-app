@@ -10,10 +10,11 @@ import LoyaltyScreen from "../../Screens/LoyaltyScreen/LoyaltyScreen";
 import FAQs from "../../Screens/FAQs/FAQs";
 import PersonalDetails from "../../Screens/ProfileTabInnerScreens/PersonalDetails/PersonalDetails";
 import ChangePassword from "../../Screens/ProfileTabInnerScreens/ChangePassword/ChangePassword";
-import Notifications from "../../Screens/ProfileTabInnerScreens/Notifications/Notifications";
-import CustomerSupport from "../../Screens/ProfileTabInnerScreens/CustomerSupport/CustomerSupport";
-import PrivacyPolicy from "../../Screens/ProfileTabInnerScreens/PrivacyPolicy/PrivacyPolicy";
+// import Notifications from "../../Screens/ProfileTabInnerScreens/Notifications/Notifications";
+// import CustomerSupport from "../../Screens/ProfileTabInnerScreens/CustomerSupport/CustomerSupport";
+// import PrivacyPolicy from "../../Screens/ProfileTabInnerScreens/PrivacyPolicy/PrivacyPolicy";
 import HistoryContainer from "../HistoryTopTabNavigator/HistoryContainer";
+import ForgetPassword from "../../Screens/Auth/ForgetPassword/ForgetPassword";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import OTPScreen from "../../Screens/Auth/VerifyAccount/VerifyAccount";
@@ -99,6 +100,13 @@ export default function StackNavigator() {
               options={{
                 animation: "slide_from_right",
               }}
+              name="ForgetPassword"
+              component={ForgetPassword}
+            />
+            {/* <Stack.Screen
+              options={{
+                animation: "slide_from_right",
+              }}
               name="Notifications"
               component={Notifications}
             />
@@ -115,7 +123,7 @@ export default function StackNavigator() {
               }}
               name="PrivacyPolicy"
               component={PrivacyPolicy}
-            />
+            /> */}
           </Stack.Group>
         ) : (
           <Stack.Group>
@@ -124,10 +132,16 @@ export default function StackNavigator() {
               name="UnverifiedAccountHome"
               component={UnverifiedAccountHome}
             />
+
             <Stack.Screen
               options={{ animation: "slide_from_right" }}
               name="VerifyAccount"
               component={VerifyAccount}
+            />
+            <Stack.Screen
+              options={{ animation: "slide_from_right" }}
+              name="ForgetPassword"
+              component={ForgetPassword}
             />
           </Stack.Group>
         )
@@ -147,6 +161,11 @@ export default function StackNavigator() {
             options={{ animation: "slide_from_right" }}
             name="OTPScreen"
             component={OTPScreen}
+          />
+          <Stack.Screen
+            options={{ animation: "slide_from_right" }}
+            name="ForgetPassword"
+            component={ForgetPassword}
           />
         </Stack.Group>
       )}
