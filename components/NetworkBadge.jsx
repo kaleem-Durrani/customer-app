@@ -18,7 +18,7 @@ export const NetworkStatusBadge = () => {
         top: 0,
         width: "100%",
         // right: "40%",
-        zIndex: 10000,
+        zIndex: 100000,
       }}
     >
       <BadgeText>No Internet Connection</BadgeText>

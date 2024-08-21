@@ -21,6 +21,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 import authApi from "../../../api/auth";
 import useAuth from "../../../auth/useAuth";
+import { useNetworkStatus } from "../../../hooks/useNetworkStatus";
 
 export default function Login({ navigation }: any) {
   const auth = useAuth();
@@ -29,6 +30,7 @@ export default function Login({ navigation }: any) {
   const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const isConnected = useNetworkStatus();
 
   const toast = MyToast();
 
@@ -68,7 +70,7 @@ export default function Login({ navigation }: any) {
         end={[1, -0.3]}
         style={{
           position: "relative",
-          top: 0,
+          top: isConnected ? 0 : 20,
           height: "40%",
           elevation: 5,
           alignItems: "center",
