@@ -137,11 +137,6 @@ export default function StackNavigator() {
               name="VerifyAccount"
               component={VerifyAccount}
             />
-            <Stack.Screen
-              options={{ animation: "slide_from_right" }}
-              name="ForgetPassword"
-              component={ForgetPassword}
-            />
           </Stack.Group>
         )
       ) : (
