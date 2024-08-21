@@ -16,6 +16,7 @@ import {
   ButtonText,
   ProgressFilledTrack,
 } from "@gluestack-ui/themed";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import { COLORS, PERCENT } from "../../Constants/Constants";

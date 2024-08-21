@@ -44,12 +44,12 @@ const InfoNavCard = ({ navigation, balance, points }: any) => {
               {balance}
             </Text>
             <Divider my={"$1"} />
-            <Text size="lg" color={COLORS.text}>
+            {/* <Text size="lg" color={COLORS.text}>
               Points
             </Text>
             <Text ml={"$2"} size="md" color={COLORS.activeText}>
               {points}
-            </Text>
+            </Text> */}
           </LinearGradient>
 
           <LinearGradient
