@@ -260,12 +260,12 @@ export default function Signup({ navigation }: any) {
             <ButtonText>Sign Up</ButtonText>
           </Button>
 
-          <Text alignSelf="center" mt={"$4"}>
+          {/* <Text alignSelf="center" mt={"$4"}>
             or Sign in with
           </Text>
 
           {/* google and facebook buttons */}
-          <HStack mt={"$3"} alignSelf="center" gap={PERCENT[10]}>
+          {/* <HStack mt={"$3"} alignSelf="center" gap={PERCENT[10]}>
             <TouchableOpacity
               style={{
                 overflow: "hidden",
@@ -294,7 +294,7 @@ export default function Signup({ navigation }: any) {
                 />
               </View>
             </TouchableOpacity>
-          </HStack>
+          </HStack>  */}
 
           <HStack alignSelf="center" alignItems="flex-end" mt={"$10"} mb={"$6"}>
             <Text>Already have an Account? </Text>

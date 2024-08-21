@@ -133,7 +133,7 @@ export default function Login({ navigation }: any) {
         </Input>
 
         <View mt={"$3"}>
-          <TouchableOpacity onPress={() => navigation.navigate("OTPScreen")}>
+          <TouchableOpacity onPress={() => navigation.navigate("RequestOTP")}>
             <Text alignSelf="flex-end" color={COLORS.activeText}>
               Forgot Password?
             </Text>

@@ -17,8 +17,7 @@ import HistoryContainer from "../HistoryTopTabNavigator/HistoryContainer";
 import ForgetPassword from "../../Screens/Auth/ForgetPassword/ForgetPassword";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import OTPScreen from "../../Screens/Auth/VerifyAccount/VerifyAccount";
-
+import RequestOTP from "../../Screens/Auth/ForgetPassword/RequestOTP";
 import useAuth from "../../auth/useAuth";
 import VerifyAccount from "../../Screens/Auth/VerifyAccount/VerifyAccount";
 import UnverifiedAccountHome from "../../Screens/Auth/UnverifiedAccountHome/UnverifiedAccountHome";
@@ -159,8 +158,8 @@ export default function StackNavigator() {
           />
           <Stack.Screen
             options={{ animation: "slide_from_right" }}
-            name="OTPScreen"
-            component={OTPScreen}
+            name="RequestOTP"
+            component={RequestOTP}
           />
           <Stack.Screen
             options={{ animation: "slide_from_right" }}
