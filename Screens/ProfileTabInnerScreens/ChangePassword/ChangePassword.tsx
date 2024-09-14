@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { COLORS, HEIGHT, PERCENT } from "../../../Constants/Constants";
 import TopRibbon from "../../../components/TopRibbon";
 import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity } from "react-native-gesture-handler";
+
 import MyToast from "../../../components/MyToast";
 import customerApis from "../../../api/customer";
 import useApi from "../../../hooks/useApi";

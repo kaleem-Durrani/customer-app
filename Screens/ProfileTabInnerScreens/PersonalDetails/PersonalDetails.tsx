@@ -53,7 +53,7 @@ const PersonalDetails = ({ navigation }: any) => {
                 {profile?.balance}
               </Text>
             </View>
-
+            {/* 
             <View
               py={"$3"}
               flex={1}
@@ -62,14 +62,14 @@ const PersonalDetails = ({ navigation }: any) => {
               justifyContent="center"
               elevation={5}
               borderRadius={PERCENT[3]}
-            >
-              <Text size="md" fontWeight="bold">
+            > */}
+            {/* <Text size="md" fontWeight="bold">
                 Points
-              </Text>
-              <Text size="xl" color={COLORS.activeText} fontWeight="bold">
+              </Text> */}
+            {/* <Text size="xl" color={COLORS.activeText} fontWeight="bold">
                 {profile?.points}
-              </Text>
-            </View>
+              </Text> */}
+            {/* </View> */}
           </HStack>
         </View>
       </LinearGradient>
