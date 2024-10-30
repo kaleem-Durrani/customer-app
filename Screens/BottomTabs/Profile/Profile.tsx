@@ -20,7 +20,7 @@ import useApi from "../../../hooks/useApi";
 import ProfileContext from "../../../Contexts/ProfileContext";
 import useProfile from "../../../hooks/useProfile";
 import * as ImagePicker from "expo-image-picker";
-import { Alert } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 import * as FileSystem from "expo-file-system";
 import { NetworkStatusBadge } from "../../../components/NetworkBadge";
 
@@ -117,22 +117,27 @@ const Profile = ({ navigation }: any) => {
         <Text alignSelf="center" size="4xl" fontWeight="bold" mt={"$4"}>
           Profile
         </Text>
-        <Entypo
-          name="log-out"
-          size={PERCENT[10]}
-          color={COLORS.tertiary}
-          style={{
-            position: "absolute",
-            right: 5,
-            top: 5,
-            borderWidth: 3,
-            borderColor: COLORS.tertiary,
-            borderRadius: PERCENT[100],
-            paddingLeft: PERCENT[3],
-            paddingTop: PERCENT[2],
-            alignSelf: "center",
-          }}
-        />
+        <TouchableOpacity
+          style={{ position: "absolute", right: 5, top: 5 }}
+          onPress={() => logOut()}
+        >
+          <Entypo
+            name="log-out"
+            size={PERCENT[10]}
+            color={COLORS.tertiary}
+            style={{
+              position: "absolute",
+              right: 5,
+              top: 5,
+              borderWidth: 3,
+              borderColor: COLORS.tertiary,
+              borderRadius: PERCENT[100],
+              paddingLeft: PERCENT[3],
+              paddingTop: PERCENT[2],
+              alignSelf: "center",
+            }}
+          />
+        </TouchableOpacity>
       </LinearGradient>
       <Avatar size="2xl" alignSelf="center" mt={"-15%"} elevation={6}>
         <AvatarFallbackText>{profile?.name}</AvatarFallbackText>
@@ -162,7 +167,7 @@ const Profile = ({ navigation }: any) => {
       </Text>
 
       <ScrollView mx={"$3"} showsVerticalScrollIndicator={false}>
-        <HStack justifyContent="space-evenly" py={"$2"}>
+        {/* <HStack justifyContent="space-evenly" py={"$2"}>
           <RecordCard
             image={require("../../../assets/images/oil.png")}
             title={"Fuel Bought"}
@@ -178,7 +183,7 @@ const Profile = ({ navigation }: any) => {
             title={"Money Saved"}
             amount={500}
           />
-        </HStack>
+        </HStack> */}
         <View p={"$2"}>
           <NavigationCard
             name={"user"}
@@ -190,7 +195,7 @@ const Profile = ({ navigation }: any) => {
             title={"Change Password"}
             onPress={() => navigation.navigate("ChangePassword")}
           />
-          <NavigationCard
+          {/* <NavigationCard
             name={"bell"}
             title={"Notifications"}
             onPress={() => navigation.navigate("Notifications")}
@@ -204,7 +209,7 @@ const Profile = ({ navigation }: any) => {
             name={"documents"}
             title={"Privacy Policy"}
             onPress={() => navigation.navigate("PrivacyPolicy")}
-          />
+          /> */}
           <NavigationCard
             name={"log-out"}
             title={"Logout"}
